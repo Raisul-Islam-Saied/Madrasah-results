@@ -1,10 +1,9 @@
-12.15 2:33 PM
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আবদুর রাজ্জাক দাখিল মাদ্রাসা - রেজাল্ট সিস্টেম</title>
+    <title>আবদুর রাজ্জাক দাখিল মাদ্রাসা - রেজাল্ট ও মেরিট</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
         
@@ -70,16 +69,9 @@
 
         /* Buttons */
         .btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            color: white;
-            transition: 0.3s;
-            font-family: inherit;
+            width: 100%; padding: 12px; border: none; border-radius: 6px;
+            font-size: 18px; cursor: pointer; font-weight: bold; color: white;
+            transition: 0.3s; font-family: inherit;
         }
         .btn-next { background: #00796b; }
         .btn-next:hover { background: #004d40; }
@@ -108,6 +100,18 @@
         .status-pass { color: #388e3c; }
         .full-width { grid-column: span 2; }
 
+        /* Merit List Section */
+        #merit-list-section {
+            margin-top: 30px;
+            border-top: 2px dashed #bbb;
+            padding-top: 20px;
+            display: none;
+        }
+        .merit-table { width: 100%; border-collapse: collapse; text-align: center; }
+        .merit-table th { background: #37474f; color: white; padding: 10px; }
+        .merit-table td { border: 1px solid #ddd; padding: 8px; font-weight: bold; }
+        .merit-row-top { background-color: #e0f2f1; color: #004d40; } /* Top rank highlight */
+
     </style>
 </head>
 <body>
@@ -122,9 +126,7 @@
         <h3>ধাপ ১: বিষয় নির্বাচন ও পূর্ণমান নির্ধারণ</h3>
         <p style="font-size: 13px; color: #666; margin-bottom: 15px;">যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন এবং পূর্ণমান (৫০/১০০) ঠিক করুন।</p>
         
-        <div class="subject-grid" id="subject-selection-area">
-            </div>
-
+        <div class="subject-grid" id="subject-selection-area"></div>
         <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
         <button class="btn btn-next" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
     </div>
@@ -142,14 +144,13 @@
                     <th style="width: 25%">নম্বর</th>
                 </tr>
             </thead>
-            <tbody id="input-rows">
-                </tbody>
+            <tbody id="input-rows"></tbody>
         </table>
 
         <button class="btn btn-calc" onclick="calculateFinalResult()">ফলাফল দেখুন</button>
 
         <div id="result-area">
-            <h4 style="text-align:center; margin:0 0 15px 0; color:#00796b;">ফলাফল বিবরণী</h4>
+            <h4 style="text-align:center; margin:0 0 15px 0; color:#00796b;">সদ্য প্রস্তুতকৃত ফলাফল</h4>
             <div class="result-grid">
                 <div class="res-box">
                     <span>মোট নম্বর</span>
@@ -167,13 +168,11 @@
                     <span>মোট জিপি (GP)</span>
                     <strong id="r-total-gp">0.00</strong>
                 </div>
-
                 <div class="res-box full-width" style="background: #004d40; color: white;">
                     <span style="color: #b2dfdb;">অর্জিত জিপিএ (GPA)</span>
                     <strong style="font-size: 36px; color: white;" id="r-gpa">0.00</strong>
                     <small id="r-grade" style="color: #ffeb3b; font-weight: bold;"></small>
                 </div>
-
                 <div class="res-box">
                     <span>স্ট্যাটাস</span>
                     <strong id="r-status">--</strong>
@@ -184,10 +183,29 @@
                 </div>
             </div>
         </div>
+
+        <div id="merit-list-section">
+            <h3 style="text-align: center; color: #37474f;">মেধা তালিকা (Merit List)</h3>
+            <table class="merit-table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">মেরিট</th>
+                        <th style="width: 40%">মোট নম্বর</th>
+                        <th style="width: 40%">জিপিএ (GPA)</th>
+                    </tr>
+                </thead>
+                <tbody id="merit-rows">
+                    </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 
 <script>
+    // Global Storage for Merit List
+    let meritData = [];
+
     const subjectsDB = [
         { id: 'quran', name: 'কুরআন মাজিদ', def: 100 },
         { id: 'akaid', name: 'আকাইদ ও ফিকহ', def: 100 },
@@ -210,7 +228,7 @@
     window.onload = function() {
         const container = document.getElementById('subject-selection-area');
         subjectsDB.forEach((sub, index) => {
-            const isChecked = index < 2 ? 'checked' : ''; // শুধু প্রথম ২টি সিলেক্ট থাকবে
+            const isChecked = index < 2 ? 'checked' : ''; 
             createSubjectCard(sub.name, sub.def, isChecked);
         });
     };
@@ -272,6 +290,8 @@
         document.getElementById('step2').classList.add('hidden');
         document.getElementById('step1').classList.remove('hidden');
         document.getElementById('result-area').style.display = 'none';
+        document.getElementById('merit-list-section').style.display = 'none';
+        meritData = []; // Clear merit data if going back
     }
 
     function renderInputRows() {
@@ -291,22 +311,18 @@
         });
     }
 
-    // ইনপুট হ্যান্ডলিং এবং ভ্যালিডেশন
     function handleInput(input, index) {
         let val = input.value;
         const fullMark = parseFloat(input.getAttribute('data-full'));
         const allInputs = document.querySelectorAll('.input-mark');
 
-        // ১. ভ্যালিডেশন চেক (পূর্ণমানের বেশি হলে আটকাবে)
         if (val !== "" && parseFloat(val) > fullMark) {
             alert(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}। এর বেশি নম্বর দেওয়া যাবে না।`);
-            input.value = ""; // ভুল নম্বর মুছে ফেলা হবে
+            input.value = ""; 
             return;
         }
 
-        // ২. অটো ফোকাস লজিক
         if (val.length >= 2 && val !== "10") { 
-            // যদি ২ সংখ্যা হয় এবং ১০ না হয় (১০০ এর ক্ষেত্রে ১০ লেখা লাগতে পারে), তখন পরের ঘরে যাবে
             if (index + 1 < allInputs.length) {
                 setTimeout(() => allInputs[index + 1].focus(), 100); 
             }
@@ -350,15 +366,15 @@
             
             totalGP += gp;
 
-            if(percent < 33) {
-                failCount++;
-            }
+            if(percent < 33) failCount++;
         });
 
         let finalGPA = (totalGP / subjectCount).toFixed(2);
         let avgMarks = (totalObtained / subjectCount).toFixed(2);
 
         if(finalGPA > 5.00) finalGPA = "5.00";
+
+        // --- SHOW INDIVIDUAL RESULT ---
         document.getElementById('r-gpa').innerText = finalGPA;
         document.getElementById('r-total-marks').innerText = totalObtained;
         document.getElementById('r-full-marks').innerText = totalFullMarks;
@@ -390,11 +406,52 @@
 
         document.getElementById('result-area').style.display = 'block';
         
-        // অটোমেটিক ইনপুট ঘর খালি করা (কিন্তু ফোকাস জাম্প করবে না)
+        // --- ADD TO MERIT LIST LOGIC ---
+        
+        // 1. Add current result to array
+        meritData.push({
+            total: totalObtained,
+            gpa: parseFloat(finalGPA)
+        });
+
+        // 2. Sort Array (Higher GPA first, then Higher Total Marks)
+        meritData.sort((a, b) => {
+            if (b.gpa !== a.gpa) {
+                return b.gpa - a.gpa;
+            } else {
+                return b.total - a.total;
+            }
+        });
+
+        // 3. Update Merit Table HTML
+        updateMeritTableDisplay();
+
+        // 4. Clear Inputs (But keep focus manual)
         inputs.forEach(inp => inp.value = '');
+    }
+
+    function updateMeritTableDisplay() {
+        const tbody = document.getElementById('merit-rows');
+        tbody.innerHTML = '';
+        
+        meritData.forEach((student, index) => {
+            const meritPos = index + 1;
+            // Highlight top 3
+            const rowClass = meritPos <= 3 ? 'merit-row-top' : '';
+            
+            const row = `
+                <tr class="${rowClass}">
+                    <td>${meritPos}</td>
+                    <td>${student.total}</td>
+                    <td>${student.gpa.toFixed(2)}</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+
+        document.getElementById('merit-list-section').style.display = 'block';
     }
 </script>
 
 </body>
 </html>
-
