@@ -15,7 +15,7 @@
         }
 
         .container {
-            max-width: 850px;
+            max-width: 95%; /* একটু চওড়া করা হলো যাতে প্রিন্টে সব ধরে */
             margin: 0 auto;
             background: white;
             border-radius: 12px;
@@ -44,8 +44,8 @@
         /* Step 1: Subject Selection */
         .subject-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
             margin-bottom: 20px;
         }
         .sub-card {
@@ -59,58 +59,54 @@
         }
         .sub-card label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; width: 100%; }
         .sub-card input[type="checkbox"] { transform: scale(1.3); accent-color: #00796b; }
-        .fm-input { width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+        .fm-input { width: 50px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
 
         /* Step 2: Marks Input */
         .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .marks-table th { background: #00796b; color: white; padding: 10px; text-align: left; }
         .marks-table td { padding: 8px; border-bottom: 1px solid #eee; }
         .input-mark { width: 90%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; display: block; }
-        .input-mark:focus { border-color: #00796b; outline: none; background: #e0f2f1; }
 
         /* Buttons */
         .btn {
-            width: 100%; padding: 12px; border: none; border-radius: 6px;
-            font-size: 18px; cursor: pointer; font-weight: bold; color: white;
-            transition: 0.3s; font-family: inherit;
+            padding: 12px; border: none; border-radius: 6px; font-size: 16px; 
+            cursor: pointer; font-weight: bold; color: white; transition: 0.3s;
         }
-        .btn-next { background: #00796b; }
-        .btn-calc { background: #d81b60; margin-bottom: 10px; }
-        .btn-back { background: #546e7a; width: auto; padding: 8px 20px; font-size: 14px; margin-bottom: 10px; }
-        .btn-add { background: #0288d1; width: auto; padding: 10px 20px; font-size: 14px; margin-bottom: 20px; }
+        .btn-next { background: #00796b; width: 100%; }
+        .btn-calc { background: #d81b60; width: 100%; margin-bottom: 10px; }
+        .btn-back { background: #546e7a; padding: 8px 20px; margin-bottom: 10px; }
+        .btn-add { background: #0288d1; padding: 10px 20px; margin-bottom: 20px; }
         
-        .btn-print { background: #455a64; margin-top: 15px; width: 48%; display: inline-block; }
-        .btn-reset { background: #c62828; margin-top: 15px; width: 48%; display: inline-block; float: right; }
+        .btn-print { background: #455a64; margin-top: 15px; width: 48%; }
+        .btn-reset { background: #c62828; margin-top: 15px; width: 48%; float: right; }
         
-        .action-btn { padding: 5px 10px; font-size: 14px; margin: 2px; border-radius: 4px; border: none; cursor: pointer; color: white; }
+        /* Action Buttons (Hidden by default) */
+        .action-container {
+            opacity: 0; /* অদৃশ্য */
+            transition: opacity 0.3s ease;
+        }
+        /* Row Hover Effect */
+        tr:hover .action-container {
+            opacity: 1; /* মাউস নিলে দৃশ্যমান */
+        }
+
+        .action-btn { padding: 5px 8px; font-size: 12px; margin: 2px; border-radius: 4px; border: none; cursor: pointer; color: white; }
         .btn-edit { background: #fbc02d; color: black; }
         .btn-del { background: #e53935; }
 
-        /* Result Area */
+        /* Result Area (Individual) */
         #result-area {
-            background: #e8f5e9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
+            background: #e8f5e9; padding: 20px; border-radius: 8px; margin-top: 20px; display: none;
         }
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+        .result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .res-box { background: white; padding: 15px; border-radius: 6px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .res-box span { display: block; font-size: 14px; color: #666; }
         .res-box strong { display: block; font-size: 22px; color: #333; }
-        
-        .status-fail { color: #d32f2f; }
-        .status-pass { color: #388e3c; }
         .full-width { grid-column: span 2; }
 
-        /* Merit List Table */
-        .list-table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; }
-        .list-table th { background: #37474f; color: white; padding: 12px; border: 1px solid #37474f; }
-        .list-table td { border: 1px solid #ddd; padding: 10px; font-size: 16px; }
+        /* Merit List Table (Advanced) */
+        .list-table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; font-size: 14px; }
+        .list-table th { background: #37474f; color: white; padding: 8px; border: 1px solid #37474f; vertical-align: middle; }
+        .list-table td { border: 1px solid #ddd; padding: 6px; }
         
         .row-pass { background-color: #fff; color: #333; }
         .row-fail { background-color: #ffebee; color: #c62828; } 
@@ -118,18 +114,25 @@
         /* PRINT STYLES */
         @media print {
             body { background: white; padding: 0; margin: 0; }
-            .container { box-shadow: none; border: none; max-width: 100%; width: 100%; padding: 0; margin: 0; }
-            .step-container, button, #result-area, .action-col { display: none !important; }
+            .container { box-shadow: none; border: none; max-width: 100%; width: 100%; padding: 5px; margin: 0; }
+            .step-container, button, #result-area { display: none !important; }
             
-            /* Show only header and merit table */
-            header { border-bottom: 2px solid #000; padding: 10px 0; }
-            #merit-list-section { display: block !important; margin-top: 20px; }
-            .list-table { width: 100%; font-size: 12px; }
-            .list-table th, .list-table td { border: 1px solid #000; padding: 5px; color: black; }
+            /* Header Fix */
+            header { border-bottom: 2px solid #000; padding: 10px 0; display: block !important; }
             
-            /* Ensure background colors print */
-            .row-fail { background-color: #ffebee !important; -webkit-print-color-adjust: exact; }
-            .row-pass { background-color: #fff !important; }
+            /* Merit List Visible */
+            #merit-list-section { display: block !important; margin-top: 10px; }
+            
+            /* Table Formatting for Print */
+            .list-table { width: 100%; font-size: 10pt; page-break-inside: auto; }
+            .list-table tr { page-break-inside: avoid; page-break-after: auto; }
+            .list-table th, .list-table td { border: 1px solid #000 !important; padding: 4px; color: black; }
+            
+            /* Hide Action Column in Print */
+            .action-col, .action-container { display: none !important; }
+            
+            /* Colors */
+            .row-fail { background-color: #f2f2f2 !important; -webkit-print-color-adjust: exact; }
         }
 
     </style>
@@ -144,20 +147,15 @@
 
     <div id="step1" class="step-container">
         <h3>ধাপ ১: বিষয় নির্বাচন ও পূর্ণমান নির্ধারণ</h3>
-        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন।</p>
-        
         <div class="subject-grid" id="subject-selection-area"></div>
-
         <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
         <button class="btn btn-next" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
-        <br><br>
-        <small style="color: blue;">* অটো সেভ চালু আছে। পেজ কাটলে সমস্যা নেই।</small>
+        <br><br><small style="color: blue;">* অটো সেভ চালু আছে।</small>
     </div>
 
     <div id="step2" class="step-container hidden">
         <button class="btn btn-back" onclick="goBackToStep1()">&laquo; বিষয় পরিবর্তন</button>
         <h3>ধাপ ২: প্রাপ্ত নম্বর এন্ট্রি</h3>
-        
         <table class="marks-table">
             <thead>
                 <tr>
@@ -172,42 +170,43 @@
         <button class="btn btn-calc" onclick="calculateFinalResult()">ফলাফল দেখুন</button>
 
         <div id="result-area">
-            <h4 style="text-align:center; margin:0 0 15px 0; color:#00796b;">সদ্য এন্ট্রি করা ফলাফল</h4>
+            <h4 style="text-align:center; margin:0 0 10px 0;">সদ্য এন্ট্রি করা ফলাফল</h4>
             <div class="result-grid">
-                <div class="res-box"><span>মোট নম্বর</span><strong id="r-total-marks">0</strong></div>
-                <div class="res-box"><span>পূর্ণমান</span><strong id="r-full-marks">0</strong></div>
-                <div class="res-box"><span>গড় নম্বর</span><strong id="r-avg">0</strong></div>
-                <div class="res-box"><span>মোট জিপি</span><strong id="r-total-gp">0.00</strong></div>
+                <div class="res-box"><span>মোট নম্বর</span><strong id="r-total">0</strong></div>
+                <div class="res-box"><span>জিপিএ</span><strong id="r-gpa">0.00</strong></div>
                 <div class="res-box full-width" style="background: #004d40; color: white;">
-                    <span style="color: #b2dfdb;">অর্জিত জিপিএ (GPA)</span>
-                    <strong style="font-size: 36px; color: white;" id="r-gpa">0.00</strong>
-                    <small id="r-grade" style="color: #ffeb3b; font-weight: bold;"></small>
+                    <span>গ্রেড</span><strong style="color: yellow;" id="r-grade">--</strong>
                 </div>
-                <div class="res-box"><span>স্ট্যাটাস</span><strong id="r-status">--</strong></div>
-                <div class="res-box"><span>ফেল</span><strong id="r-fail-count" style="color: red;">0</strong> টি বিষয়ে</div>
             </div>
         </div>
 
         <div id="merit-list-section" style="display: none; border-top: 2px dashed #bbb; margin-top: 30px; padding-top: 10px;">
-            <h3 style="text-align: center; color: #37474f;">মেধা তালিকা (Merit List)</h3>
-            <table class="list-table">
-                <thead>
-                    <tr>
-                        <th style="width: 10%">সিরিয়াল</th>
-                        <th style="width: 20%">মোট নম্বর</th>
-                        <th style="width: 20%">জিপিএ (GPA)</th>
-                        <th style="width: 15%">মেরিট</th>
-                        <th class="action-col" style="width: 25%">অ্যাকশন</th>
-                    </tr>
-                </thead>
-                <tbody id="student-rows">
-                    </tbody>
-            </table>
+            <h3 style="text-align: center; color: #37474f;">ফলাফল তালিকা</h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>সিরিয়াল</th>
+                            <th>টোটাল</th>
+                            <th>গড়</th>
+                            <th>ফুল মার্ক</th>
+                            <th>হাইয়েস্ট</th>
+                            <th>টোটাল জিপি</th>
+                            <th>জিপিএ</th>
+                            <th>গ্রেড</th>
+                            <th>মেরিট</th>
+                            <th>স্ট্যাটাস</th>
+                            <th class="action-col">অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-rows"></tbody>
+                </table>
+            </div>
 
-            <button class="btn btn-print" onclick="window.print()">🖨️ তালিকা প্রিন্ট করুন</button>
-            <button class="btn btn-reset" onclick="clearAllData()">🗑️ সব মুছে ফেলুন</button>
+            <button class="btn btn-print" onclick="window.print()">🖨️ প্রিন্ট করুন</button>
+            <button class="btn btn-reset" onclick="clearAllData()">🗑️ রিসেট</button>
         </div>
-
     </div>
 </div>
 
@@ -217,346 +216,273 @@
     let entrySerial = 1;
     let selectedSubjects = [];
 
-    // Default DB
+    // Default Subjects
     const subjectsDB = [
-        { id: 'quran', name: 'কুরআন মাজিদ', def: 100 },
-        { id: 'akaid', name: 'আকাইদ ও ফিকহ', def: 100 },
-        { id: 'hadith', name: 'হাদিস শরীফ', def: 100 },
-        { id: 'arb1', name: 'আরবি ১ম পত্র', def: 100 },
-        { id: 'arb2', name: 'আরবি ২য় পত্র', def: 100 },
-        { id: 'ban1', name: 'বাংলা ১ম পত্র', def: 100 },
-        { id: 'ban2', name: 'বাংলা ২য় পত্র', def: 100 },
-        { id: 'eng1', name: 'ইংরেজি ১ম পত্র', def: 100 },
-        { id: 'eng2', name: 'ইংরেজি ২য় পত্র', def: 100 },
-        { id: 'math', name: 'গণিত', def: 100 },
-        { id: 'bgs', name: 'বাংলাদেশ ও বিশ্বপরিচয়', def: 100 },
-        { id: 'sci', name: 'বিজ্ঞান', def: 100 },
-        { id: 'agri', name: 'কৃষি শিক্ষা', def: 100 },
-        { id: 'ict', name: 'তথ্য ও যোগাযোগ প্রযুক্তি', def: 50 }
+        { name: 'কুরআন মাজিদ', def: 100 },
+        { name: 'আকাইদ ও ফিকহ', def: 100 },
+        { name: 'হাদিস শরীফ', def: 100 },
+        { name: 'আরবি ১ম পত্র', def: 100 },
+        { name: 'আরবি ২য় পত্র', def: 100 },
+        { name: 'বাংলা ১ম পত্র', def: 100 },
+        { name: 'বাংলা ২য় পত্র', def: 100 },
+        { name: 'ইংরেজি ১ম পত্র', def: 100 },
+        { name: 'ইংরেজি ২য় পত্র', def: 100 },
+        { name: 'গণিত', def: 100 },
+        { name: 'বাংলাদেশ ও বিশ্বপরিচয়', def: 100 },
+        { name: 'বিজ্ঞান', def: 100 },
+        { name: 'কৃষি শিক্ষা', def: 100 },
+        { name: 'আইসিটি', def: 50 }
     ];
 
-    // --- INITIALIZATION & LOCAL STORAGE ---
-    window.onload = function() {
-        loadData();
-    };
+    window.onload = function() { loadData(); };
 
-    function saveData() {
-        localStorage.setItem('madrasah_students', JSON.stringify(allStudents));
-        localStorage.setItem('madrasah_serial', entrySerial);
-        localStorage.setItem('madrasah_subjects', JSON.stringify(selectedSubjects));
-    }
-
-    function loadData() {
-        // Load Subjects Check
-        const savedSub = localStorage.getItem('madrasah_subjects');
-        const container = document.getElementById('subject-selection-area');
-        
-        // Render Default Subject List
-        subjectsDB.forEach((sub, index) => {
-            const isChecked = index < 2 ? 'checked' : ''; 
-            createSubjectCard(sub.name, sub.def, isChecked);
-        });
-
-        // If saved data exists, skip to step 2
-        if(savedSub) {
-            selectedSubjects = JSON.parse(savedSub);
-            if(selectedSubjects.length > 0) {
-                // Restore Serial and Students
-                if(localStorage.getItem('madrasah_students')) {
-                    allStudents = JSON.parse(localStorage.getItem('madrasah_students'));
-                    entrySerial = parseInt(localStorage.getItem('madrasah_serial')) || 1;
-                }
-                
-                // Go to step 2 directly
-                renderInputRows();
-                document.getElementById('step1').classList.add('hidden');
-                document.getElementById('step2').classList.remove('hidden');
-                
-                // Recalculate and Render Table
-                if(allStudents.length > 0) {
-                    calculateMeritPositions();
-                    renderStudentTable();
-                    document.getElementById('merit-list-section').style.display = 'block';
-                }
-            }
-        }
-    }
-
-    function clearAllData() {
-        if(confirm("আপনি কি নিশ্চিত যে সব ডাটা মুছে ফেলতে চান? এটি আর ফেরত পাওয়া যাবে না।")) {
-            localStorage.clear();
-            location.reload();
-        }
-    }
-
-    // --- DOM FUNCTIONS ---
+    // --- SETUP & NAVIGATION ---
     function createSubjectCard(name, fullMark, checkedAttr) {
         const container = document.getElementById('subject-selection-area');
         const div = document.createElement('div');
         div.className = 'sub-card';
         div.innerHTML = `
-            <label>
-                <input type="checkbox" class="sub-check" data-name="${name}" ${checkedAttr}>
-                ${name}
-            </label>
-            <input type="number" class="fm-input" value="${fullMark}" placeholder="Full">
+            <label><input type="checkbox" class="sub-check" data-name="${name}" ${checkedAttr}> ${name}</label>
+            <input type="number" class="fm-input" value="${fullMark}">
         `;
         container.appendChild(div);
     }
 
     function addNewSubject() {
-        let name = prompt("নতুন বিষয়ের নাম লিখুন:");
-        if (name && name.trim() !== "") {
-            createSubjectCard(name, 100, 'checked');
-        }
+        let name = prompt("নতুন বিষয়ের নাম:");
+        if (name && name.trim() !== "") createSubjectCard(name, 100, 'checked');
     }
 
     function goToStep2() {
         selectedSubjects = [];
         const cards = document.querySelectorAll('.sub-card');
-        
         cards.forEach(card => {
-            const checkbox = card.querySelector('.sub-check');
-            const fullMark = card.querySelector('.fm-input').value;
-            
-            if(checkbox.checked) {
-                selectedSubjects.push({
-                    name: checkbox.getAttribute('data-name'),
-                    full: parseInt(fullMark) || 100
-                });
+            const chk = card.querySelector('.sub-check');
+            const fm = card.querySelector('.fm-input').value;
+            if(chk.checked) {
+                selectedSubjects.push({ name: chk.getAttribute('data-name'), full: parseInt(fm)||100 });
             }
         });
 
-        if(selectedSubjects.length === 0) {
-            alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন।");
-            return;
-        }
+        if(selectedSubjects.length === 0) { alert("বিষয় নির্বাচন করুন!"); return; }
 
-        saveData(); // Save selection
+        saveData();
         renderInputRows();
         
         document.getElementById('step1').classList.add('hidden');
         document.getElementById('step2').classList.remove('hidden');
         
-        setTimeout(() => {
-            const inputs = document.querySelectorAll('.input-mark');
-            if(inputs.length > 0) inputs[0].focus();
-        }, 100);
+        setTimeout(() => document.querySelector('.input-mark')?.focus(), 100);
     }
 
     function goBackToStep1() {
-        if(confirm("পিছনে গেলে বর্তমান সেশন রিসেট হতে পারে। আপনি কি নিশ্চিত?")) {
-            localStorage.removeItem('madrasah_subjects'); // Clear session sub
+        if(confirm("পিছনে গেলে বর্তমান সেশন রিসেট হবে।")) {
+            localStorage.removeItem('madrasah_subjects');
             location.reload();
         }
     }
 
+    // --- INPUT HANDLING ---
     function renderInputRows() {
         const tbody = document.getElementById('input-rows');
         tbody.innerHTML = '';
-        selectedSubjects.forEach((sub, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${sub.name}</td>
-                <td style="text-align:center; font-weight:bold; color:#666;">${sub.full}</td>
-                <td>
-                    <input type="number" class="input-mark" data-full="${sub.full}" placeholder="Mark" oninput="handleInput(this, ${index})">
-                </td>
+        selectedSubjects.forEach((sub, idx) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${sub.name}</td>
+                    <td style="text-align:center;">${sub.full}</td>
+                    <td><input type="number" class="input-mark" data-full="${sub.full}" oninput="handleInput(this, ${idx})"></td>
+                </tr>
             `;
-            tbody.appendChild(tr);
         });
     }
 
     function handleInput(input, index) {
-        let val = input.value;
-        const fullMark = parseFloat(input.getAttribute('data-full'));
-        const allInputs = document.querySelectorAll('.input-mark');
-
-        if (val !== "" && parseFloat(val) > fullMark) {
-            alert(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}।`);
-            input.value = ""; 
-            return;
-        }
-        if (val.length >= 2 && val !== "10") { 
-            if (index + 1 < allInputs.length) {
-                setTimeout(() => allInputs[index + 1].focus(), 100); 
-            }
+        let val = parseFloat(input.value);
+        let max = parseFloat(input.getAttribute('data-full'));
+        if(val > max) { alert(`সর্বোচ্চ নম্বর ${max}`); input.value = ""; return; }
+        
+        if(input.value.length >= 2 && input.value !== "10") {
+            const inputs = document.querySelectorAll('.input-mark');
+            if(index + 1 < inputs.length) setTimeout(() => inputs[index+1].focus(), 100);
         }
     }
 
-    function getGP(percentage) {
-        if (percentage >= 80) return 5.00;
-        else if (percentage >= 70) return 4.00;
-        else if (percentage >= 60) return 3.50;
-        else if (percentage >= 50) return 3.00;
-        else if (percentage >= 40) return 2.00;
-        else if (percentage >= 33) return 1.00;
+    // --- CALCULATION ---
+    function getGP(percent) {
+        if (percent >= 80) return 5.00;
+        else if (percent >= 70) return 4.00;
+        else if (percent >= 60) return 3.50;
+        else if (percent >= 50) return 3.00;
+        else if (percent >= 40) return 2.00;
+        else if (percent >= 33) return 1.00;
         else return 0.00;
     }
 
-    // --- MAIN CALCULATION LOGIC ---
     function calculateFinalResult() {
         const inputs = document.querySelectorAll('.input-mark');
-        let totalObtained = 0;
-        let totalFullMarks = 0;
-        let totalGP = 0;
-        let failCount = 0;
-        let subjectCount = inputs.length;
-        
-        // Store marks for edit feature
-        let marksArray = [];
+        let totalObt = 0, totalFull = 0, totalGP = 0, failCount = 0;
+        let marksArr = [];
 
         for(let inp of inputs) {
-            if(inp.value === "") {
-                alert("সব বিষয়ের নম্বর পূরণ করুন!");
-                return;
-            }
+            if(inp.value === "") { alert("সব নম্বর দিন!"); return; }
         }
 
         inputs.forEach(inp => {
-            let marks = parseFloat(inp.value);
-            let full = parseFloat(inp.getAttribute('data-full'));
-            marksArray.push(marks); // Save raw marks
+            let m = parseFloat(inp.value);
+            let f = parseFloat(inp.getAttribute('data-full'));
+            marksArr.push(m);
+            totalObt += m;
+            totalFull += f;
             
-            totalObtained += marks;
-            totalFullMarks += full;
-
-            let percent = (marks / full) * 100;
-            let gp = getGP(percent);
-            totalGP += gp;
-            if(percent < 33) failCount++;
+            let p = (m/f)*100;
+            totalGP += getGP(p);
+            if(p < 33) failCount++;
         });
 
-        let finalGPA = (totalGP / subjectCount).toFixed(2);
-        let avgMarks = (totalObtained / subjectCount).toFixed(2);
-        if(finalGPA > 5.00) finalGPA = "5.00";
+        let gpa = (totalGP / inputs.length).toFixed(2);
+        if(gpa > 5) gpa = "5.00";
+        let avg = (totalObt / inputs.length).toFixed(2);
 
-        // Display Current Result
-        document.getElementById('r-gpa').innerText = finalGPA;
-        document.getElementById('r-total-marks').innerText = totalObtained;
-        document.getElementById('r-full-marks').innerText = totalFullMarks;
-        document.getElementById('r-avg').innerText = avgMarks;
-        document.getElementById('r-total-gp').innerText = totalGP.toFixed(2);
-        
-        let letter = "";
-        if(finalGPA == 5.00) letter = "(A+)";
-        else if(finalGPA >= 4.00) letter = "(A)";
-        else if(finalGPA >= 3.50) letter = "(A-)";
-        else if(finalGPA >= 3.00) letter = "(B)";
-        else if(finalGPA >= 2.00) letter = "(C)";
-        else letter = "(D)";
-        if(finalGPA < 1.00) letter = "(F)";
-        document.getElementById('r-grade').innerText = letter;
+        // Grade Calculation
+        let grade = "";
+        if(failCount > 0) grade = "F";
+        else if(gpa == 5) grade = "A+";
+        else if(gpa >= 4) grade = "A";
+        else if(gpa >= 3.5) grade = "A-";
+        else if(gpa >= 3) grade = "B";
+        else if(gpa >= 2) grade = "C";
+        else grade = "D";
 
-        const statusElem = document.getElementById('r-status');
-        if(failCount > 0) {
-            statusElem.innerText = "অকৃতকার্য";
-            statusElem.className = "status-fail";
-            document.getElementById('r-fail-count').innerText = failCount;
-        } else {
-            statusElem.innerText = "কৃতকার্য";
-            statusElem.className = "status-pass";
-            document.getElementById('r-fail-count').innerText = "0";
-        }
-        
+        // Show Preview
+        document.getElementById('r-total').innerText = totalObt;
+        document.getElementById('r-gpa').innerText = gpa;
+        document.getElementById('r-grade').innerText = grade;
         document.getElementById('result-area').style.display = 'block';
-        
-        // --- ADD TO LIST ---
-        let isPass = failCount === 0;
-        const newStudent = {
-            id: entrySerial,
-            total: totalObtained,
-            gpa: parseFloat(finalGPA),
-            isPass: isPass,
-            merit: 0,
-            rawMarks: marksArray // Save marks for editing
+
+        // Add to List
+        const student = {
+            id: entrySerial++,
+            total: totalObt,
+            fullMark: totalFull,
+            avg: avg,
+            totalGP: totalGP.toFixed(2),
+            gpa: parseFloat(gpa),
+            grade: grade,
+            isPass: failCount === 0,
+            failCount: failCount,
+            marks: marksArr
         };
 
-        allStudents.push(newStudent);
-        entrySerial++;
-
+        allStudents.push(student);
         calculateMeritPositions();
-        renderStudentTable();
-        saveData(); // Save to local storage
+        renderTable();
+        saveData();
 
         document.getElementById('merit-list-section').style.display = 'block';
-
-        // Auto Clear Inputs
-        inputs.forEach(inp => inp.value = '');
+        inputs.forEach(i => i.value = '');
     }
 
+    // --- MERIT & TABLE ---
     function calculateMeritPositions() {
-        let sortedList = [...allStudents];
-        sortedList.sort((a, b) => {
-            if (a.isPass && !b.isPass) return -1;
-            if (!a.isPass && b.isPass) return 1;
-            if (a.isPass && b.isPass) {
-                if (b.gpa !== a.gpa) return b.gpa - a.gpa;
-                return b.total - a.total;
-            }
-            if (!a.isPass && !b.isPass) return b.total - a.total;
+        let sorted = [...allStudents].sort((a,b) => {
+            if(a.isPass && !b.isPass) return -1;
+            if(!a.isPass && b.isPass) return 1;
+            if(a.isPass) return (b.gpa - a.gpa) || (b.total - a.total);
+            return b.total - a.total;
         });
 
-        sortedList.forEach((student, index) => {
-            const originalStudent = allStudents.find(s => s.id === student.id);
-            originalStudent.merit = index + 1;
+        sorted.forEach((s, i) => {
+            let orig = allStudents.find(x => x.id === s.id);
+            orig.merit = i + 1;
         });
     }
 
-    function renderStudentTable() {
+    function renderTable() {
         const tbody = document.getElementById('student-rows');
         tbody.innerHTML = '';
-        allStudents.forEach(student => {
-            let rowClass = student.isPass ? "row-pass" : "row-fail";
-            let gpaDisplay = student.gpa.toFixed(2); 
+        
+        // Find Class Highest Score
+        const maxScore = Math.max(...allStudents.map(s => s.total), 0);
 
-            const row = `
+        allStudents.forEach(s => {
+            let rowClass = s.isPass ? "row-pass" : "row-fail";
+            let status = s.isPass ? "Pass" : `Fail(${s.failCount})`;
+            
+            tbody.innerHTML += `
                 <tr class="${rowClass}">
-                    <td>${student.id}</td>
-                    <td>${student.total}</td>
-                    <td>${gpaDisplay}</td>
-                    <td style="font-weight:bold;">${student.merit}</td>
+                    <td>${s.id}</td>
+                    <td>${s.total}</td>
+                    <td>${s.avg}</td>
+                    <td>${s.fullMark}</td>
+                    <td>${maxScore}</td> <td>${s.totalGP}</td>
+                    <td>${s.gpa.toFixed(2)}</td>
+                    <td>${s.grade}</td>
+                    <td style="font-weight:bold;">${s.merit}</td>
+                    <td>${status}</td>
                     <td class="action-col">
-                        <button class="action-btn btn-edit" onclick="editStudent(${student.id})">✏️</button>
-                        <button class="action-btn btn-del" onclick="deleteStudent(${student.id})">🗑️</button>
+                        <div class="action-container">
+                            <button class="action-btn btn-edit" onclick="editStudent(${s.id})">✏️</button>
+                            <button class="action-btn btn-del" onclick="delStudent(${s.id})">🗑️</button>
+                        </div>
                     </td>
                 </tr>
             `;
-            tbody.innerHTML += row;
         });
     }
 
-    // --- ACTIONS: EDIT & DELETE ---
-    function deleteStudent(id) {
-        if(confirm("আপনি কি এই এন্ট্রি মুছে ফেলতে চান?")) {
+    // --- UTILS ---
+    function saveData() {
+        localStorage.setItem('md_students_v2', JSON.stringify(allStudents));
+        localStorage.setItem('md_serial_v2', entrySerial);
+        localStorage.setItem('md_subs_v2', JSON.stringify(selectedSubjects));
+    }
+
+    function loadData() {
+        // Load default checkboxes
+        subjectsDB.forEach((s, i) => createSubjectCard(s.name, s.def, i<2?'checked':''));
+        
+        // Load saved session
+        let savedSub = localStorage.getItem('md_subs_v2');
+        if(savedSub) {
+            selectedSubjects = JSON.parse(savedSub);
+            if(localStorage.getItem('md_students_v2')) {
+                allStudents = JSON.parse(localStorage.getItem('md_students_v2'));
+                entrySerial = parseInt(localStorage.getItem('md_serial_v2'));
+            }
+            
+            // Skip to step 2
+            renderInputRows();
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            if(allStudents.length) {
+                renderTable();
+                document.getElementById('merit-list-section').style.display = 'block';
+            }
+        }
+    }
+
+    function clearAllData() {
+        if(confirm("সব ডাটা মুছে যাবে!")) { localStorage.clear(); location.reload(); }
+    }
+
+    function delStudent(id) {
+        if(confirm("মুছে ফেলবেন?")) {
             allStudents = allStudents.filter(s => s.id !== id);
             calculateMeritPositions();
-            renderStudentTable();
+            renderTable();
             saveData();
         }
     }
 
     function editStudent(id) {
-        const student = allStudents.find(s => s.id === id);
-        if(!student) return;
-
-        if(confirm(`সিরিয়াল ${student.id} এর তথ্য এডিট করতে চান? (এটি উপরের ইনপুট বক্সে লোড হবে এবং তালিকা থেকে মুছে যাবে)`)) {
-            // Load marks back to inputs
-            const inputs = document.querySelectorAll('.input-mark');
-            if(student.rawMarks && student.rawMarks.length === inputs.length) {
-                inputs.forEach((inp, idx) => {
-                    inp.value = student.rawMarks[idx];
-                });
-                
-                // Remove from list
-                deleteStudent(id); 
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                inputs[0].focus();
-            } else {
-                alert("ডাটা লোড করতে সমস্যা হয়েছে (বিষয়ের সংখ্যা মিলছে না)।");
-            }
+        let s = allStudents.find(x => x.id === id);
+        if(confirm("এডিট করবেন? (ডাটা ইনপুট বক্সে চলে যাবে)")) {
+            let inputs = document.querySelectorAll('.input-mark');
+            s.marks.forEach((m, i) => { if(inputs[i]) inputs[i].value = m; });
+            delStudent(id);
+            window.scrollTo({top:0, behavior:'smooth'});
+            inputs[0].focus();
         }
     }
 </script>
