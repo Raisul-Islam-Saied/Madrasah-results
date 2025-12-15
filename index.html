@@ -236,7 +236,7 @@
     window.onload = function() {
         const container = document.getElementById('subject-selection-area');
         subjectsDB.forEach((sub, index) => {
-            const isChecked = index < 2 ? 'checked' : ''; // শুধু প্রথম ২টি সিলেক্ট থাকবে
+            const isChecked = index < 2 ? 'checked' : ''; 
             createSubjectCard(sub.name, sub.def, isChecked);
         });
     };
@@ -299,7 +299,7 @@
         document.getElementById('step1').classList.remove('hidden');
         document.getElementById('result-area').style.display = 'none';
         document.getElementById('merit-list-section').style.display = 'none';
-        allStudents = []; // Clear list
+        allStudents = []; 
         entrySerial = 1;
     }
 
@@ -415,12 +415,12 @@
 
         document.getElementById('result-area').style.display = 'block';
         
-        // --- MERIT LIST LOGIC START ---
+        // --- MERIT LIST LOGIC ---
         
         let isPass = failCount === 0;
 
         const newStudent = {
-            id: entrySerial, // সিরিয়াল নম্বর
+            id: entrySerial,
             total: totalObtained,
             gpa: parseFloat(finalGPA),
             isPass: isPass,
@@ -437,34 +437,30 @@
         renderStudentTable();
         document.getElementById('merit-list-section').style.display = 'block';
 
-        // --- MERIT LIST LOGIC END ---
-
-        // অটোমেটিক ইনপুট ঘর খালি করা (কিন্তু ফোকাস জাম্প করবে না)
+        // Auto Clear Inputs
         inputs.forEach(inp => inp.value = '');
     }
 
     function calculateMeritPositions() {
-        // ১. একটি কপি লিস্ট তৈরি করে সর্ট করা হবে (আসল লিস্ট সিরিয়াল ঠিক রাখবে)
         let sortedList = [...allStudents];
 
         sortedList.sort((a, b) => {
-            // নিয়ম ১: পাস করা ছাত্ররা আগে থাকবে
+            // Rule 1: Pass first
             if (a.isPass && !b.isPass) return -1;
             if (!a.isPass && b.isPass) return 1;
 
-            // নিয়ম ২: যদি উভয়ই পাস করে (জিপিএ > নম্বর)
+            // Rule 2: If Pass (High GPA > High Marks)
             if (a.isPass && b.isPass) {
                 if (b.gpa !== a.gpa) return b.gpa - a.gpa;
                 return b.total - a.total;
             }
 
-            // নিয়ম ৩: যদি উভয়ই ফেল করে (বেশি নম্বর > কম নম্বর)
+            // Rule 3: If Fail (High Marks > Low Marks)
             if (!a.isPass && !b.isPass) {
                 return b.total - a.total;
             }
         });
 
-        // সর্ট করা লিস্ট অনুযায়ী আসল লিস্টে মেরিট সেট করা
         sortedList.forEach((student, index) => {
             const originalStudent = allStudents.find(s => s.id === student.id);
             originalStudent.merit = index + 1;
@@ -475,10 +471,10 @@
         const tbody = document.getElementById('student-rows');
         tbody.innerHTML = '';
 
-        // সিরিয়াল অনুযায়ী দেখানো হবে (allStudents আগে থেকেই সিরিয়ালে আছে)
         allStudents.forEach(student => {
             let rowClass = student.isPass ? "row-pass" : "row-fail";
-            let gpaDisplay = student.isPass ? student.gpa.toFixed(2) : "0.00 (Fail)";
+            // শুধু জিপিএ সংখ্যাটি দেখাবে, ফেল টেক্সট নয়
+            let gpaDisplay = student.gpa.toFixed(2); 
 
             const row = `
                 <tr class="${rowClass}">
