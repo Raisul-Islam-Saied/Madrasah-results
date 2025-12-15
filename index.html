@@ -15,7 +15,7 @@
         }
 
         .container {
-            max-width: 95%; /* একটু চওড়া করা হলো যাতে প্রিন্টে সব ধরে */
+            max-width: 950px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
@@ -41,11 +41,11 @@
 
         h3 { border-left: 5px solid #00796b; padding-left: 10px; color: #333; }
 
-        /* Step 1: Subject Selection */
+        /* Subject Grid */
         .subject-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
             margin-bottom: 20px;
         }
         .sub-card {
@@ -59,13 +59,14 @@
         }
         .sub-card label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; width: 100%; }
         .sub-card input[type="checkbox"] { transform: scale(1.3); accent-color: #00796b; }
-        .fm-input { width: 50px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+        .fm-input { width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
 
-        /* Step 2: Marks Input */
+        /* Marks Table */
         .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .marks-table th { background: #00796b; color: white; padding: 10px; text-align: left; }
         .marks-table td { padding: 8px; border-bottom: 1px solid #eee; }
         .input-mark { width: 90%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; display: block; }
+        .input-mark:focus { border-color: #00796b; outline: none; background: #e0f2f1; }
 
         /* Buttons */
         .btn {
@@ -74,27 +75,19 @@
         }
         .btn-next { background: #00796b; width: 100%; }
         .btn-calc { background: #d81b60; width: 100%; margin-bottom: 10px; }
-        .btn-back { background: #546e7a; padding: 8px 20px; margin-bottom: 10px; }
-        .btn-add { background: #0288d1; padding: 10px 20px; margin-bottom: 20px; }
+        .btn-back { background: #546e7a; padding: 8px 20px; margin-bottom: 10px; width: auto; }
+        .btn-add { background: #0288d1; padding: 10px 20px; margin-bottom: 20px; width: auto; }
         
         .btn-print { background: #455a64; margin-top: 15px; width: 48%; }
         .btn-reset { background: #c62828; margin-top: 15px; width: 48%; float: right; }
-        
-        /* Action Buttons (Hidden by default) */
-        .action-container {
-            opacity: 0; /* অদৃশ্য */
-            transition: opacity 0.3s ease;
-        }
-        /* Row Hover Effect */
-        tr:hover .action-container {
-            opacity: 1; /* মাউস নিলে দৃশ্যমান */
-        }
 
-        .action-btn { padding: 5px 8px; font-size: 12px; margin: 2px; border-radius: 4px; border: none; cursor: pointer; color: white; }
+        /* Action Buttons (Always Visible) */
+        .action-col { white-space: nowrap; }
+        .action-btn { padding: 6px 10px; font-size: 14px; margin: 2px; border-radius: 4px; border: none; cursor: pointer; color: white; }
         .btn-edit { background: #fbc02d; color: black; }
         .btn-del { background: #e53935; }
 
-        /* Result Area (Individual) */
+        /* Result Preview */
         #result-area {
             background: #e8f5e9; padding: 20px; border-radius: 8px; margin-top: 20px; display: none;
         }
@@ -103,36 +96,36 @@
         .res-box strong { display: block; font-size: 22px; color: #333; }
         .full-width { grid-column: span 2; }
 
-        /* Merit List Table (Advanced) */
-        .list-table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; font-size: 14px; }
-        .list-table th { background: #37474f; color: white; padding: 8px; border: 1px solid #37474f; vertical-align: middle; }
-        .list-table td { border: 1px solid #ddd; padding: 6px; }
+        /* Merit List Table */
+        .list-table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; }
+        .list-table th { background: #37474f; color: white; padding: 8px; border: 1px solid #37474f; font-size: 14px; }
+        .list-table td { border: 1px solid #ddd; padding: 8px; font-size: 15px; }
         
         .row-pass { background-color: #fff; color: #333; }
         .row-fail { background-color: #ffebee; color: #c62828; } 
 
-        /* PRINT STYLES */
+        /* PRINT SETTINGS (Fixed) */
         @media print {
-            body { background: white; padding: 0; margin: 0; }
-            .container { box-shadow: none; border: none; max-width: 100%; width: 100%; padding: 5px; margin: 0; }
-            .step-container, button, #result-area { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .container { box-shadow: none; border: none; max-width: 100%; width: 100%; padding: 0; }
             
-            /* Header Fix */
-            header { border-bottom: 2px solid #000; padding: 10px 0; display: block !important; }
+            /* Hide non-print elements */
+            .step-container, .btn, #result-area, .marks-table, #step1 { display: none !important; }
             
-            /* Merit List Visible */
-            #merit-list-section { display: block !important; margin-top: 10px; }
+            /* Show Header & Merit Section */
+            header { display: block !important; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+            #merit-list-section { display: block !important; margin-top: 0; border: none; }
             
-            /* Table Formatting for Print */
-            .list-table { width: 100%; font-size: 10pt; page-break-inside: auto; }
-            .list-table tr { page-break-inside: avoid; page-break-after: auto; }
+            /* Table Styling for Print */
+            .list-table { width: 100%; font-size: 11px; }
             .list-table th, .list-table td { border: 1px solid #000 !important; padding: 4px; color: black; }
+            .list-table th { background-color: #ddd !important; -webkit-print-color-adjust: exact; }
             
             /* Hide Action Column in Print */
-            .action-col, .action-container { display: none !important; }
+            .action-col { display: none !important; }
             
-            /* Colors */
-            .row-fail { background-color: #f2f2f2 !important; -webkit-print-color-adjust: exact; }
+            /* Pass/Fail Colors */
+            .row-fail { background-color: #ffebee !important; -webkit-print-color-adjust: exact; }
         }
 
     </style>
@@ -147,7 +140,10 @@
 
     <div id="step1" class="step-container">
         <h3>ধাপ ১: বিষয় নির্বাচন ও পূর্ণমান নির্ধারণ</h3>
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন।</p>
+        
         <div class="subject-grid" id="subject-selection-area"></div>
+
         <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
         <button class="btn btn-next" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
         <br><br><small style="color: blue;">* অটো সেভ চালু আছে।</small>
@@ -156,6 +152,8 @@
     <div id="step2" class="step-container hidden">
         <button class="btn btn-back" onclick="goBackToStep1()">&laquo; বিষয় পরিবর্তন</button>
         <h3>ধাপ ২: প্রাপ্ত নম্বর এন্ট্রি</h3>
+        <p style="color: #d81b60; font-size: 12px; margin-top:0;">* ফলাফল দেখার পর ঘরগুলো অটোমেটিক খালি হয়ে যাবে।</p>
+        
         <table class="marks-table">
             <thead>
                 <tr>
@@ -205,18 +203,17 @@
             </div>
 
             <button class="btn btn-print" onclick="window.print()">🖨️ প্রিন্ট করুন</button>
-            <button class="btn btn-reset" onclick="clearAllData()">🗑️ রিসেট</button>
+            <button class="btn btn-reset" onclick="clearAllData()">🗑️ সব রিসেট</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Global Data
+    // Global Variables
     let allStudents = [];
     let entrySerial = 1;
     let selectedSubjects = [];
 
-    // Default Subjects
     const subjectsDB = [
         { name: 'কুরআন মাজিদ', def: 100 },
         { name: 'আকাইদ ও ফিকহ', def: 100 },
@@ -236,7 +233,7 @@
 
     window.onload = function() { loadData(); };
 
-    // --- SETUP & NAVIGATION ---
+    // --- DOM Functions ---
     function createSubjectCard(name, fullMark, checkedAttr) {
         const container = document.getElementById('subject-selection-area');
         const div = document.createElement('div');
@@ -276,13 +273,13 @@
     }
 
     function goBackToStep1() {
-        if(confirm("পিছনে গেলে বর্তমান সেশন রিসেট হবে।")) {
-            localStorage.removeItem('madrasah_subjects');
+        if(confirm("বিষয় পরিবর্তন করতে চাইলে পেজটি রিফ্রেশ হবে। আপনি কি নিশ্চিত?")) {
+            localStorage.removeItem('madrasah_subjects'); // সাবজেক্ট সিলেকশন রিসেট
             location.reload();
         }
     }
 
-    // --- INPUT HANDLING ---
+    // --- Input & Calculation ---
     function renderInputRows() {
         const tbody = document.getElementById('input-rows');
         tbody.innerHTML = '';
@@ -308,7 +305,6 @@
         }
     }
 
-    // --- CALCULATION ---
     function getGP(percent) {
         if (percent >= 80) return 5.00;
         else if (percent >= 70) return 4.00;
@@ -344,7 +340,7 @@
         if(gpa > 5) gpa = "5.00";
         let avg = (totalObt / inputs.length).toFixed(2);
 
-        // Grade Calculation
+        // Grade
         let grade = "";
         if(failCount > 0) grade = "F";
         else if(gpa == 5) grade = "A+";
@@ -354,13 +350,13 @@
         else if(gpa >= 2) grade = "C";
         else grade = "D";
 
-        // Show Preview
+        // Preview
         document.getElementById('r-total').innerText = totalObt;
         document.getElementById('r-gpa').innerText = gpa;
         document.getElementById('r-grade').innerText = grade;
         document.getElementById('result-area').style.display = 'block';
 
-        // Add to List
+        // Add to list
         const student = {
             id: entrySerial++,
             total: totalObt,
@@ -383,13 +379,13 @@
         inputs.forEach(i => i.value = '');
     }
 
-    // --- MERIT & TABLE ---
+    // --- Merit Logic ---
     function calculateMeritPositions() {
         let sorted = [...allStudents].sort((a,b) => {
             if(a.isPass && !b.isPass) return -1;
             if(!a.isPass && b.isPass) return 1;
             if(a.isPass) return (b.gpa - a.gpa) || (b.total - a.total);
-            return b.total - a.total;
+            return b.total - a.total; // Fail: High marks first
         });
 
         sorted.forEach((s, i) => {
@@ -402,8 +398,8 @@
         const tbody = document.getElementById('student-rows');
         tbody.innerHTML = '';
         
-        // Find Class Highest Score
-        const maxScore = Math.max(...allStudents.map(s => s.total), 0);
+        // Calculate Highest
+        const maxScore = allStudents.length > 0 ? Math.max(...allStudents.map(s => s.total)) : 0;
 
         allStudents.forEach(s => {
             let rowClass = s.isPass ? "row-pass" : "row-fail";
@@ -415,43 +411,40 @@
                     <td>${s.total}</td>
                     <td>${s.avg}</td>
                     <td>${s.fullMark}</td>
-                    <td>${maxScore}</td> <td>${s.totalGP}</td>
+                    <td>${maxScore}</td>
+                    <td>${s.totalGP}</td>
                     <td>${s.gpa.toFixed(2)}</td>
                     <td>${s.grade}</td>
                     <td style="font-weight:bold;">${s.merit}</td>
                     <td>${status}</td>
                     <td class="action-col">
-                        <div class="action-container">
-                            <button class="action-btn btn-edit" onclick="editStudent(${s.id})">✏️</button>
-                            <button class="action-btn btn-del" onclick="delStudent(${s.id})">🗑️</button>
-                        </div>
+                        <button class="action-btn btn-edit" onclick="editStudent(${s.id})">✏️</button>
+                        <button class="action-btn btn-del" onclick="delStudent(${s.id})">🗑️</button>
                     </td>
                 </tr>
             `;
         });
     }
 
-    // --- UTILS ---
+    // --- Storage & Utils ---
     function saveData() {
-        localStorage.setItem('md_students_v2', JSON.stringify(allStudents));
-        localStorage.setItem('md_serial_v2', entrySerial);
-        localStorage.setItem('md_subs_v2', JSON.stringify(selectedSubjects));
+        localStorage.setItem('md_data', JSON.stringify(allStudents));
+        localStorage.setItem('md_serial', entrySerial);
+        localStorage.setItem('md_subs', JSON.stringify(selectedSubjects));
     }
 
     function loadData() {
-        // Load default checkboxes
         subjectsDB.forEach((s, i) => createSubjectCard(s.name, s.def, i<2?'checked':''));
         
-        // Load saved session
-        let savedSub = localStorage.getItem('md_subs_v2');
+        let savedSub = localStorage.getItem('md_subs');
         if(savedSub) {
             selectedSubjects = JSON.parse(savedSub);
-            if(localStorage.getItem('md_students_v2')) {
-                allStudents = JSON.parse(localStorage.getItem('md_students_v2'));
-                entrySerial = parseInt(localStorage.getItem('md_serial_v2'));
+            if(localStorage.getItem('md_data')) {
+                allStudents = JSON.parse(localStorage.getItem('md_data'));
+                entrySerial = parseInt(localStorage.getItem('md_serial'));
             }
             
-            // Skip to step 2
+            // Auto Skip to Step 2
             renderInputRows();
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
@@ -480,7 +473,7 @@
         if(confirm("এডিট করবেন? (ডাটা ইনপুট বক্সে চলে যাবে)")) {
             let inputs = document.querySelectorAll('.input-mark');
             s.marks.forEach((m, i) => { if(inputs[i]) inputs[i].value = m; });
-            delStudent(id);
+            delStudent(id); // Remove from list temporarily
             window.scrollTo({top:0, behavior:'smooth'});
             inputs[0].focus();
         }
