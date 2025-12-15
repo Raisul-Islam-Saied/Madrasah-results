@@ -15,14 +15,13 @@
         }
 
         .container {
-            max-width: 950px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             border-top: 6px solid #00796b;
-            padding-bottom: 20px;
         }
 
         /* Header */
@@ -41,10 +40,10 @@
 
         h3 { border-left: 5px solid #00796b; padding-left: 10px; color: #333; }
 
-        /* Subject Grid */
+        /* Step 1: Subject Selection */
         .subject-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -61,7 +60,7 @@
         .sub-card input[type="checkbox"] { transform: scale(1.3); accent-color: #00796b; }
         .fm-input { width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
 
-        /* Marks Table */
+        /* Step 2: Marks Input */
         .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .marks-table th { background: #00796b; color: white; padding: 10px; text-align: left; }
         .marks-table td { padding: 8px; border-bottom: 1px solid #eee; }
@@ -70,63 +69,51 @@
 
         /* Buttons */
         .btn {
-            padding: 12px; border: none; border-radius: 6px; font-size: 16px; 
-            cursor: pointer; font-weight: bold; color: white; transition: 0.3s;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: 0.3s;
+            font-family: inherit;
         }
-        .btn-next { background: #00796b; width: 100%; }
-        .btn-calc { background: #d81b60; width: 100%; margin-bottom: 10px; }
-        .btn-back { background: #546e7a; padding: 8px 20px; margin-bottom: 10px; width: auto; }
-        .btn-add { background: #0288d1; padding: 10px 20px; margin-bottom: 20px; width: auto; }
-        
-        .btn-print { background: #455a64; margin-top: 15px; width: 48%; }
-        .btn-reset { background: #c62828; margin-top: 15px; width: 48%; float: right; }
+        .btn-next { background: #00796b; }
+        .btn-next:hover { background: #004d40; }
+        .btn-calc { background: #d81b60; margin-bottom: 10px; }
+        .btn-back { background: #546e7a; width: auto; padding: 8px 20px; font-size: 14px; margin-bottom: 10px; }
+        .btn-add { background: #0288d1; width: auto; padding: 10px 20px; font-size: 14px; margin-bottom: 20px; }
 
-        /* Action Buttons (Always Visible) */
-        .action-col { white-space: nowrap; }
-        .action-btn { padding: 6px 10px; font-size: 14px; margin: 2px; border-radius: 4px; border: none; cursor: pointer; color: white; }
-        .btn-edit { background: #fbc02d; color: black; }
-        .btn-del { background: #e53935; }
-
-        /* Result Preview */
+        /* Result Area */
         #result-area {
-            background: #e8f5e9; padding: 20px; border-radius: 8px; margin-top: 20px; display: none;
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
         }
-        .result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
         .res-box { background: white; padding: 15px; border-radius: 6px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .res-box span { display: block; font-size: 14px; color: #666; }
         .res-box strong { display: block; font-size: 22px; color: #333; }
+        
+        .status-fail { color: #d32f2f; }
+        .status-pass { color: #388e3c; }
         .full-width { grid-column: span 2; }
 
-        /* Merit List Table */
+        /* New Table Style for List */
         .list-table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; }
-        .list-table th { background: #37474f; color: white; padding: 8px; border: 1px solid #37474f; font-size: 14px; }
-        .list-table td { border: 1px solid #ddd; padding: 8px; font-size: 15px; }
+        .list-table th { background: #37474f; color: white; padding: 12px; border: 1px solid #37474f; }
+        .list-table td { border: 1px solid #ddd; padding: 10px; font-size: 16px; }
         
         .row-pass { background-color: #fff; color: #333; }
         .row-fail { background-color: #ffebee; color: #c62828; } 
-
-        /* PRINT SETTINGS (Fixed) */
-        @media print {
-            body { background: white; margin: 0; padding: 0; }
-            .container { box-shadow: none; border: none; max-width: 100%; width: 100%; padding: 0; }
-            
-            /* Hide non-print elements */
-            .step-container, .btn, #result-area, .marks-table, #step1 { display: none !important; }
-            
-            /* Show Header & Merit Section */
-            header { display: block !important; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
-            #merit-list-section { display: block !important; margin-top: 0; border: none; }
-            
-            /* Table Styling for Print */
-            .list-table { width: 100%; font-size: 11px; }
-            .list-table th, .list-table td { border: 1px solid #000 !important; padding: 4px; color: black; }
-            .list-table th { background-color: #ddd !important; -webkit-print-color-adjust: exact; }
-            
-            /* Hide Action Column in Print */
-            .action-col { display: none !important; }
-            
-            /* Pass/Fail Colors */
-            .row-fail { background-color: #ffebee !important; -webkit-print-color-adjust: exact; }
-        }
 
     </style>
 </head>
@@ -135,22 +122,21 @@
 <div class="container">
     <header>
         <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
-        <p>ফলাফল বিবরণী ও মেধা তালিকা</p>
+        <p>ফলাফল প্রস্তুতকারক ও জিপিএ ক্যালকুলেটর</p>
     </header>
 
     <div id="step1" class="step-container">
         <h3>ধাপ ১: বিষয় নির্বাচন ও পূর্ণমান নির্ধারণ</h3>
-        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন।</p>
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন এবং পূর্ণমান (৫০/১০০) ঠিক করুন।</p>
         
         <div class="subject-grid" id="subject-selection-area"></div>
 
         <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
         <button class="btn btn-next" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
-        <br><br><small style="color: blue;">* অটো সেভ চালু আছে।</small>
     </div>
 
     <div id="step2" class="step-container hidden">
-        <button class="btn btn-back" onclick="goBackToStep1()">&laquo; বিষয় পরিবর্তন</button>
+        <button class="btn btn-back" onclick="goBackToStep1()">&laquo; বিষয় পরিবর্তন করুন</button>
         <h3>ধাপ ২: প্রাপ্ত নম্বর এন্ট্রি</h3>
         <p style="color: #d81b60; font-size: 12px; margin-top:0;">* ফলাফল দেখার পর ঘরগুলো অটোমেটিক খালি হয়ে যাবে।</p>
         
@@ -168,315 +154,338 @@
         <button class="btn btn-calc" onclick="calculateFinalResult()">ফলাফল দেখুন</button>
 
         <div id="result-area">
-            <h4 style="text-align:center; margin:0 0 10px 0;">সদ্য এন্ট্রি করা ফলাফল</h4>
+            <h4 style="text-align:center; margin:0 0 15px 0; color:#00796b;">ফলাফল বিবরণী</h4>
             <div class="result-grid">
-                <div class="res-box"><span>মোট নম্বর</span><strong id="r-total">0</strong></div>
-                <div class="res-box"><span>জিপিএ</span><strong id="r-gpa">0.00</strong></div>
+                <div class="res-box">
+                    <span>মোট নম্বর</span>
+                    <strong id="r-total-marks">0</strong>
+                </div>
+                <div class="res-box">
+                    <span>পূর্ণমান</span>
+                    <strong id="r-full-marks">0</strong>
+                </div>
+                <div class="res-box">
+                    <span>গড় নম্বর</span>
+                    <strong id="r-avg">0</strong>
+                </div>
+                <div class="res-box">
+                    <span>মোট জিপি (GP)</span>
+                    <strong id="r-total-gp">0.00</strong>
+                </div>
+
                 <div class="res-box full-width" style="background: #004d40; color: white;">
-                    <span>গ্রেড</span><strong style="color: yellow;" id="r-grade">--</strong>
+                    <span style="color: #b2dfdb;">অর্জিত জিপিএ (GPA)</span>
+                    <strong style="font-size: 36px; color: white;" id="r-gpa">0.00</strong>
+                    <small id="r-grade" style="color: #ffeb3b; font-weight: bold;"></small>
+                </div>
+
+                <div class="res-box">
+                    <span>স্ট্যাটাস</span>
+                    <strong id="r-status">--</strong>
+                </div>
+                <div class="res-box">
+                    <span>ফেল করেছেন</span>
+                    <strong id="r-fail-count" style="color: red;">0</strong> টি বিষয়ে
                 </div>
             </div>
         </div>
 
         <div id="merit-list-section" style="display: none; border-top: 2px dashed #bbb; margin-top: 30px; padding-top: 10px;">
-            <h3 style="text-align: center; color: #37474f;">ফলাফল তালিকা</h3>
-            
-            <div style="overflow-x: auto;">
-                <table class="list-table">
-                    <thead>
-                        <tr>
-                            <th>সিরিয়াল</th>
-                            <th>টোটাল</th>
-                            <th>গড়</th>
-                            <th>ফুল মার্ক</th>
-                            <th>হাইয়েস্ট</th>
-                            <th>টোটাল জিপি</th>
-                            <th>জিপিএ</th>
-                            <th>গ্রেড</th>
-                            <th>মেরিট</th>
-                            <th>স্ট্যাটাস</th>
-                            <th class="action-col">অ্যাকশন</th>
-                        </tr>
-                    </thead>
-                    <tbody id="student-rows"></tbody>
-                </table>
-            </div>
-
-            <button class="btn btn-print" onclick="window.print()">🖨️ প্রিন্ট করুন</button>
-            <button class="btn btn-reset" onclick="clearAllData()">🗑️ সব রিসেট</button>
+            <h3 style="text-align: center; color: #37474f;">সংরক্ষিত ফলাফল ও মেরিট</h3>
+            <table class="list-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">সিরিয়াল</th>
+                        <th style="width: 30%">মোট নম্বর</th>
+                        <th style="width: 30%">জিপিএ (GPA)</th>
+                        <th style="width: 25%">মেরিট</th>
+                    </tr>
+                </thead>
+                <tbody id="student-rows">
+                    </tbody>
+            </table>
         </div>
+
     </div>
 </div>
 
 <script>
-    // Global Variables
+    // Global Storage
     let allStudents = [];
     let entrySerial = 1;
-    let selectedSubjects = [];
 
     const subjectsDB = [
-        { name: 'কুরআন মাজিদ', def: 100 },
-        { name: 'আকাইদ ও ফিকহ', def: 100 },
-        { name: 'হাদিস শরীফ', def: 100 },
-        { name: 'আরবি ১ম পত্র', def: 100 },
-        { name: 'আরবি ২য় পত্র', def: 100 },
-        { name: 'বাংলা ১ম পত্র', def: 100 },
-        { name: 'বাংলা ২য় পত্র', def: 100 },
-        { name: 'ইংরেজি ১ম পত্র', def: 100 },
-        { name: 'ইংরেজি ২য় পত্র', def: 100 },
-        { name: 'গণিত', def: 100 },
-        { name: 'বাংলাদেশ ও বিশ্বপরিচয়', def: 100 },
-        { name: 'বিজ্ঞান', def: 100 },
-        { name: 'কৃষি শিক্ষা', def: 100 },
-        { name: 'আইসিটি', def: 50 }
+        { id: 'quran', name: 'কুরআন মাজিদ', def: 100 },
+        { id: 'akaid', name: 'আকাইদ ও ফিকহ', def: 100 },
+        { id: 'hadith', name: 'হাদিস শরীফ', def: 100 },
+        { id: 'arb1', name: 'আরবি ১ম পত্র', def: 100 },
+        { id: 'arb2', name: 'আরবি ২য় পত্র', def: 100 },
+        { id: 'ban1', name: 'বাংলা ১ম পত্র', def: 100 },
+        { id: 'ban2', name: 'বাংলা ২য় পত্র', def: 100 },
+        { id: 'eng1', name: 'ইংরেজি ১ম পত্র', def: 100 },
+        { id: 'eng2', name: 'ইংরেজি ২য় পত্র', def: 100 },
+        { id: 'math', name: 'গণিত', def: 100 },
+        { id: 'bgs', name: 'বাংলাদেশ ও বিশ্বপরিচয়', def: 100 },
+        { id: 'sci', name: 'বিজ্ঞান', def: 100 },
+        { id: 'agri', name: 'কৃষি শিক্ষা', def: 100 },
+        { id: 'ict', name: 'তথ্য ও যোগাযোগ প্রযুক্তি', def: 50 }
     ];
 
-    window.onload = function() { loadData(); };
+    let selectedSubjects = [];
 
-    // --- DOM Functions ---
+    window.onload = function() {
+        const container = document.getElementById('subject-selection-area');
+        subjectsDB.forEach((sub, index) => {
+            const isChecked = index < 2 ? 'checked' : ''; 
+            createSubjectCard(sub.name, sub.def, isChecked);
+        });
+    };
+
     function createSubjectCard(name, fullMark, checkedAttr) {
         const container = document.getElementById('subject-selection-area');
         const div = document.createElement('div');
         div.className = 'sub-card';
         div.innerHTML = `
-            <label><input type="checkbox" class="sub-check" data-name="${name}" ${checkedAttr}> ${name}</label>
-            <input type="number" class="fm-input" value="${fullMark}">
+            <label>
+                <input type="checkbox" class="sub-check" data-name="${name}" ${checkedAttr}>
+                ${name}
+            </label>
+            <input type="number" class="fm-input" value="${fullMark}" placeholder="Full">
         `;
         container.appendChild(div);
     }
 
     function addNewSubject() {
-        let name = prompt("নতুন বিষয়ের নাম:");
-        if (name && name.trim() !== "") createSubjectCard(name, 100, 'checked');
+        let name = prompt("নতুন বিষয়ের নাম লিখুন:");
+        if (name && name.trim() !== "") {
+            createSubjectCard(name, 100, 'checked');
+        }
     }
 
     function goToStep2() {
         selectedSubjects = [];
         const cards = document.querySelectorAll('.sub-card');
+        
         cards.forEach(card => {
-            const chk = card.querySelector('.sub-check');
-            const fm = card.querySelector('.fm-input').value;
-            if(chk.checked) {
-                selectedSubjects.push({ name: chk.getAttribute('data-name'), full: parseInt(fm)||100 });
+            const checkbox = card.querySelector('.sub-check');
+            const fullMark = card.querySelector('.fm-input').value;
+            
+            if(checkbox.checked) {
+                selectedSubjects.push({
+                    name: checkbox.getAttribute('data-name'),
+                    full: parseInt(fullMark) || 100
+                });
             }
         });
 
-        if(selectedSubjects.length === 0) { alert("বিষয় নির্বাচন করুন!"); return; }
+        if(selectedSubjects.length === 0) {
+            alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন।");
+            return;
+        }
 
-        saveData();
         renderInputRows();
         
         document.getElementById('step1').classList.add('hidden');
         document.getElementById('step2').classList.remove('hidden');
         
-        setTimeout(() => document.querySelector('.input-mark')?.focus(), 100);
+        setTimeout(() => {
+            const inputs = document.querySelectorAll('.input-mark');
+            if(inputs.length > 0) inputs[0].focus();
+        }, 100);
     }
 
     function goBackToStep1() {
-        if(confirm("বিষয় পরিবর্তন করতে চাইলে পেজটি রিফ্রেশ হবে। আপনি কি নিশ্চিত?")) {
-            localStorage.removeItem('madrasah_subjects'); // সাবজেক্ট সিলেকশন রিসেট
-            location.reload();
-        }
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step1').classList.remove('hidden');
+        document.getElementById('result-area').style.display = 'none';
+        document.getElementById('merit-list-section').style.display = 'none';
+        allStudents = []; 
+        entrySerial = 1;
     }
 
-    // --- Input & Calculation ---
     function renderInputRows() {
         const tbody = document.getElementById('input-rows');
         tbody.innerHTML = '';
-        selectedSubjects.forEach((sub, idx) => {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${sub.name}</td>
-                    <td style="text-align:center;">${sub.full}</td>
-                    <td><input type="number" class="input-mark" data-full="${sub.full}" oninput="handleInput(this, ${idx})"></td>
-                </tr>
+
+        selectedSubjects.forEach((sub, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${sub.name}</td>
+                <td style="text-align:center; font-weight:bold; color:#666;">${sub.full}</td>
+                <td>
+                    <input type="number" class="input-mark" data-full="${sub.full}" placeholder="Mark" oninput="handleInput(this, ${index})">
+                </td>
             `;
+            tbody.appendChild(tr);
         });
     }
 
     function handleInput(input, index) {
-        let val = parseFloat(input.value);
-        let max = parseFloat(input.getAttribute('data-full'));
-        if(val > max) { alert(`সর্বোচ্চ নম্বর ${max}`); input.value = ""; return; }
-        
-        if(input.value.length >= 2 && input.value !== "10") {
-            const inputs = document.querySelectorAll('.input-mark');
-            if(index + 1 < inputs.length) setTimeout(() => inputs[index+1].focus(), 100);
+        let val = input.value;
+        const fullMark = parseFloat(input.getAttribute('data-full'));
+        const allInputs = document.querySelectorAll('.input-mark');
+
+        if (val !== "" && parseFloat(val) > fullMark) {
+            alert(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}। এর বেশি নম্বর দেওয়া যাবে না।`);
+            input.value = ""; 
+            return;
+        }
+
+        if (val.length >= 2 && val !== "10") { 
+            if (index + 1 < allInputs.length) {
+                setTimeout(() => allInputs[index + 1].focus(), 100); 
+            }
         }
     }
 
-    function getGP(percent) {
-        if (percent >= 80) return 5.00;
-        else if (percent >= 70) return 4.00;
-        else if (percent >= 60) return 3.50;
-        else if (percent >= 50) return 3.00;
-        else if (percent >= 40) return 2.00;
-        else if (percent >= 33) return 1.00;
+    function getGP(percentage) {
+        if (percentage >= 80) return 5.00;
+        else if (percentage >= 70) return 4.00;
+        else if (percentage >= 60) return 3.50;
+        else if (percentage >= 50) return 3.00;
+        else if (percentage >= 40) return 2.00;
+        else if (percentage >= 33) return 1.00;
         else return 0.00;
     }
 
     function calculateFinalResult() {
         const inputs = document.querySelectorAll('.input-mark');
-        let totalObt = 0, totalFull = 0, totalGP = 0, failCount = 0;
-        let marksArr = [];
+        let totalObtained = 0;
+        let totalFullMarks = 0;
+        let totalGP = 0;
+        let failCount = 0;
+        let subjectCount = inputs.length;
 
         for(let inp of inputs) {
-            if(inp.value === "") { alert("সব নম্বর দিন!"); return; }
+            if(inp.value === "") {
+                alert("সব বিষয়ের নম্বর পূরণ করুন!");
+                return;
+            }
         }
 
         inputs.forEach(inp => {
-            let m = parseFloat(inp.value);
-            let f = parseFloat(inp.getAttribute('data-full'));
-            marksArr.push(m);
-            totalObt += m;
-            totalFull += f;
+            let marks = parseFloat(inp.value);
+            let full = parseFloat(inp.getAttribute('data-full'));
             
-            let p = (m/f)*100;
-            totalGP += getGP(p);
-            if(p < 33) failCount++;
+            totalObtained += marks;
+            totalFullMarks += full;
+
+            let percent = (marks / full) * 100;
+            let gp = getGP(percent);
+            
+            totalGP += gp;
+
+            if(percent < 33) {
+                failCount++;
+            }
         });
 
-        let gpa = (totalGP / inputs.length).toFixed(2);
-        if(gpa > 5) gpa = "5.00";
-        let avg = (totalObt / inputs.length).toFixed(2);
+        let finalGPA = (totalGP / subjectCount).toFixed(2);
+        let avgMarks = (totalObtained / subjectCount).toFixed(2);
 
-        // Grade
-        let grade = "";
-        if(failCount > 0) grade = "F";
-        else if(gpa == 5) grade = "A+";
-        else if(gpa >= 4) grade = "A";
-        else if(gpa >= 3.5) grade = "A-";
-        else if(gpa >= 3) grade = "B";
-        else if(gpa >= 2) grade = "C";
-        else grade = "D";
+        if(finalGPA > 5.00) finalGPA = "5.00";
+        document.getElementById('r-gpa').innerText = finalGPA;
+        document.getElementById('r-total-marks').innerText = totalObtained;
+        document.getElementById('r-full-marks').innerText = totalFullMarks;
+        document.getElementById('r-avg').innerText = avgMarks;
+        document.getElementById('r-total-gp').innerText = totalGP.toFixed(2);
 
-        // Preview
-        document.getElementById('r-total').innerText = totalObt;
-        document.getElementById('r-gpa').innerText = gpa;
-        document.getElementById('r-grade').innerText = grade;
+        let letter = "";
+        if(finalGPA == 5.00) letter = "(A+)";
+        else if(finalGPA >= 4.00) letter = "(A)";
+        else if(finalGPA >= 3.50) letter = "(A-)";
+        else if(finalGPA >= 3.00) letter = "(B)";
+        else if(finalGPA >= 2.00) letter = "(C)";
+        else letter = "(D)";
+        if(finalGPA < 1.00) letter = "(F)";
+
+        document.getElementById('r-grade').innerText = letter;
+
+        const statusElem = document.getElementById('r-status');
+        const failElem = document.getElementById('r-fail-count');
+        failElem.innerText = failCount;
+
+        if(failCount > 0) {
+            statusElem.innerText = "অকৃতকার্য";
+            statusElem.className = "status-fail";
+        } else {
+            statusElem.innerText = "কৃতকার্য";
+            statusElem.className = "status-pass";
+        }
+
         document.getElementById('result-area').style.display = 'block';
+        
+        // --- MERIT LIST LOGIC ---
+        
+        let isPass = failCount === 0;
 
-        // Add to list
-        const student = {
-            id: entrySerial++,
-            total: totalObt,
-            fullMark: totalFull,
-            avg: avg,
-            totalGP: totalGP.toFixed(2),
-            gpa: parseFloat(gpa),
-            grade: grade,
-            isPass: failCount === 0,
-            failCount: failCount,
-            marks: marksArr
+        const newStudent = {
+            id: entrySerial,
+            total: totalObtained,
+            gpa: parseFloat(finalGPA),
+            isPass: isPass,
+            merit: 0
         };
 
-        allStudents.push(student);
+        allStudents.push(newStudent);
+        entrySerial++;
+
+        // Recalculate Merit
         calculateMeritPositions();
-        renderTable();
-        saveData();
 
+        // Show Table
+        renderStudentTable();
         document.getElementById('merit-list-section').style.display = 'block';
-        inputs.forEach(i => i.value = '');
+
+        // Auto Clear Inputs
+        inputs.forEach(inp => inp.value = '');
     }
 
-    // --- Merit Logic ---
     function calculateMeritPositions() {
-        let sorted = [...allStudents].sort((a,b) => {
-            if(a.isPass && !b.isPass) return -1;
-            if(!a.isPass && b.isPass) return 1;
-            if(a.isPass) return (b.gpa - a.gpa) || (b.total - a.total);
-            return b.total - a.total; // Fail: High marks first
+        let sortedList = [...allStudents];
+
+        sortedList.sort((a, b) => {
+            // Rule 1: Pass first
+            if (a.isPass && !b.isPass) return -1;
+            if (!a.isPass && b.isPass) return 1;
+
+            // Rule 2: If Pass (High GPA > High Marks)
+            if (a.isPass && b.isPass) {
+                if (b.gpa !== a.gpa) return b.gpa - a.gpa;
+                return b.total - a.total;
+            }
+
+            // Rule 3: If Fail (High Marks > Low Marks)
+            if (!a.isPass && !b.isPass) {
+                return b.total - a.total;
+            }
         });
 
-        sorted.forEach((s, i) => {
-            let orig = allStudents.find(x => x.id === s.id);
-            orig.merit = i + 1;
+        sortedList.forEach((student, index) => {
+            const originalStudent = allStudents.find(s => s.id === student.id);
+            originalStudent.merit = index + 1;
         });
     }
 
-    function renderTable() {
+    function renderStudentTable() {
         const tbody = document.getElementById('student-rows');
         tbody.innerHTML = '';
-        
-        // Calculate Highest
-        const maxScore = allStudents.length > 0 ? Math.max(...allStudents.map(s => s.total)) : 0;
 
-        allStudents.forEach(s => {
-            let rowClass = s.isPass ? "row-pass" : "row-fail";
-            let status = s.isPass ? "Pass" : `Fail(${s.failCount})`;
-            
-            tbody.innerHTML += `
+        allStudents.forEach(student => {
+            let rowClass = student.isPass ? "row-pass" : "row-fail";
+            // শুধু জিপিএ সংখ্যাটি দেখাবে, ফেল টেক্সট নয়
+            let gpaDisplay = student.gpa.toFixed(2); 
+
+            const row = `
                 <tr class="${rowClass}">
-                    <td>${s.id}</td>
-                    <td>${s.total}</td>
-                    <td>${s.avg}</td>
-                    <td>${s.fullMark}</td>
-                    <td>${maxScore}</td>
-                    <td>${s.totalGP}</td>
-                    <td>${s.gpa.toFixed(2)}</td>
-                    <td>${s.grade}</td>
-                    <td style="font-weight:bold;">${s.merit}</td>
-                    <td>${status}</td>
-                    <td class="action-col">
-                        <button class="action-btn btn-edit" onclick="editStudent(${s.id})">✏️</button>
-                        <button class="action-btn btn-del" onclick="delStudent(${s.id})">🗑️</button>
-                    </td>
+                    <td>${student.id}</td>
+                    <td>${student.total}</td>
+                    <td>${gpaDisplay}</td>
+                    <td style="font-weight:bold;">${student.merit}</td>
                 </tr>
             `;
+            tbody.innerHTML += row;
         });
-    }
-
-    // --- Storage & Utils ---
-    function saveData() {
-        localStorage.setItem('md_data', JSON.stringify(allStudents));
-        localStorage.setItem('md_serial', entrySerial);
-        localStorage.setItem('md_subs', JSON.stringify(selectedSubjects));
-    }
-
-    function loadData() {
-        subjectsDB.forEach((s, i) => createSubjectCard(s.name, s.def, i<2?'checked':''));
-        
-        let savedSub = localStorage.getItem('md_subs');
-        if(savedSub) {
-            selectedSubjects = JSON.parse(savedSub);
-            if(localStorage.getItem('md_data')) {
-                allStudents = JSON.parse(localStorage.getItem('md_data'));
-                entrySerial = parseInt(localStorage.getItem('md_serial'));
-            }
-            
-            // Auto Skip to Step 2
-            renderInputRows();
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-            if(allStudents.length) {
-                renderTable();
-                document.getElementById('merit-list-section').style.display = 'block';
-            }
-        }
-    }
-
-    function clearAllData() {
-        if(confirm("সব ডাটা মুছে যাবে!")) { localStorage.clear(); location.reload(); }
-    }
-
-    function delStudent(id) {
-        if(confirm("মুছে ফেলবেন?")) {
-            allStudents = allStudents.filter(s => s.id !== id);
-            calculateMeritPositions();
-            renderTable();
-            saveData();
-        }
-    }
-
-    function editStudent(id) {
-        let s = allStudents.find(x => x.id === id);
-        if(confirm("এডিট করবেন? (ডাটা ইনপুট বক্সে চলে যাবে)")) {
-            let inputs = document.querySelectorAll('.input-mark');
-            s.marks.forEach((m, i) => { if(inputs[i]) inputs[i].value = m; });
-            delStudent(id); // Remove from list temporarily
-            window.scrollTo({top:0, behavior:'smooth'});
-            inputs[0].focus();
-        }
     }
 </script>
 
