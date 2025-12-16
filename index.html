@@ -22,6 +22,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             border-top: 6px solid #00796b;
+            padding-bottom: 10px;
         }
 
         /* Header */
@@ -40,7 +41,7 @@
 
         h3 { border-left: 5px solid #00796b; padding-left: 10px; color: #333; }
 
-        /* Step 1: Subject Selection */
+        /* Subject Selection */
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -60,14 +61,14 @@
         .sub-card input[type="checkbox"] { transform: scale(1.3); accent-color: #00796b; }
         .fm-input { width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
 
-        /* Step 2: Marks Input */
+        /* Marks Input */
         .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .marks-table th { background: #00796b; color: white; padding: 10px; text-align: left; }
         .marks-table td { padding: 8px; border-bottom: 1px solid #eee; }
         .input-mark { width: 90%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; display: block; }
         .input-mark:focus { border-color: #00796b; outline: none; background: #e0f2f1; }
 
-        /* Buttons */
+        /* Buttons & Animation */
         .btn {
             width: 100%;
             padding: 12px;
@@ -77,14 +78,33 @@
             cursor: pointer;
             font-weight: bold;
             color: white;
-            transition: 0.3s;
-            font-family: inherit;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-next { background: #00796b; }
-        .btn-next:hover { background: #004d40; }
-        .btn-calc { background: #d81b60; margin-bottom: 10px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn:active { transform: scale(0.98); }
+
+        .btn-next { background: linear-gradient(45deg, #00796b, #004d40); }
+        .btn-calc { background: linear-gradient(45deg, #d81b60, #ad1457); margin-bottom: 10px; }
         .btn-back { background: #546e7a; width: auto; padding: 8px 20px; font-size: 14px; margin-bottom: 10px; }
         .btn-add { background: #0288d1; width: auto; padding: 10px 20px; font-size: 14px; margin-bottom: 20px; }
+        .btn-reset { background: #c62828; margin-top: 20px; }
+
+        /* Decimal Toggle */
+        .toggle-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff3e0;
+            padding: 8px 12px;
+            border: 1px solid #ffe0b2;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .toggle-container input { transform: scale(1.3); accent-color: #f57c00; cursor: pointer; }
+        .toggle-label { font-weight: bold; color: #e65100; cursor: pointer; }
 
         /* Result Area */
         #result-area {
@@ -107,13 +127,29 @@
         .status-pass { color: #388e3c; }
         .full-width { grid-column: span 2; }
 
-        /* New Table Style for List */
+        /* List Table */
         .list-table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; }
         .list-table th { background: #37474f; color: white; padding: 12px; border: 1px solid #37474f; }
         .list-table td { border: 1px solid #ddd; padding: 10px; font-size: 16px; }
         
         .row-pass { background-color: #fff; color: #333; }
         .row-fail { background-color: #ffebee; color: #c62828; } 
+
+        /* Developer Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #f1f1f1;
+            font-size: 14px;
+            color: #555;
+            border-top: 1px solid #ddd;
+        }
+        .footer a {
+            color: #00796b;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
     </style>
 </head>
@@ -126,19 +162,28 @@
     </header>
 
     <div id="step1" class="step-container">
-        <h3>ধাপ ১: বিষয় নির্বাচন ও পূর্ণমান নির্ধারণ</h3>
-        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন এবং পূর্ণমান (৫০/১০০) ঠিক করুন।</p>
+        <h3>ধাপ ১: বিষয় নির্বাচন</h3>
+        <p style="font-size: 14px; color: #555; margin-bottom: 15px;">
+            যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন। প্রয়োজনে পূর্ণমান পরিবর্তন বা নতুন বিষয় যুক্ত করুন।
+        </p>
         
         <div class="subject-grid" id="subject-selection-area"></div>
 
         <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
+        
+        <div class="toggle-container">
+            <input type="checkbox" id="decimal-toggle" onchange="toggleDecimal()">
+            <label for="decimal-toggle" class="toggle-label">প্রাপ্ত নম্বর দশমিকে হলে (যেমন: ৮০.৫০) এখানে টিক দিন</label>
+        </div>
+        <br><br>
+
         <button class="btn btn-next" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
+        <p style="font-size:12px; color:green; margin-top:10px;">* অটো সেভ চালু আছে।</p>
     </div>
 
     <div id="step2" class="step-container hidden">
         <button class="btn btn-back" onclick="goBackToStep1()">&laquo; বিষয় পরিবর্তন করুন</button>
         <h3>ধাপ ২: প্রাপ্ত নম্বর এন্ট্রি</h3>
-        <p style="color: #d81b60; font-size: 12px; margin-top:0;">* ফলাফল দেখার পর ঘরগুলো অটোমেটিক খালি হয়ে যাবে।</p>
         
         <table class="marks-table">
             <thead>
@@ -204,8 +249,14 @@
                 <tbody id="student-rows">
                     </tbody>
             </table>
+
+            <button class="btn btn-reset" onclick="clearAllData()">সব মুছে ফেলুন (Reset)</button>
         </div>
 
+    </div>
+
+    <div class="footer">
+        Developed by <a href="https://www.facebook.com/raisulislamsaied" target="_blank">Raisul Islam Saied</a>
     </div>
 </div>
 
@@ -213,6 +264,8 @@
     // Global Storage
     let allStudents = [];
     let entrySerial = 1;
+    let selectedSubjects = [];
+    let isDecimalEnabled = false;
 
     const subjectsDB = [
         { id: 'quran', name: 'কুরআন মাজিদ', def: 100 },
@@ -231,16 +284,55 @@
         { id: 'ict', name: 'তথ্য ও যোগাযোগ প্রযুক্তি', def: 50 }
     ];
 
-    let selectedSubjects = [];
-
+    // --- LOAD DATA ON START ---
     window.onload = function() {
+        const savedSubjects = localStorage.getItem('madrasah_subjects');
+        const savedStudents = localStorage.getItem('madrasah_students');
+        const savedDecimal = localStorage.getItem('madrasah_decimal');
+        
+        // Load default subjects
         const container = document.getElementById('subject-selection-area');
         subjectsDB.forEach((sub, index) => {
             const isChecked = index < 2 ? 'checked' : ''; 
             createSubjectCard(sub.name, sub.def, isChecked);
         });
+
+        // Restore State
+        if(savedSubjects) {
+            selectedSubjects = JSON.parse(savedSubjects);
+            if(savedStudents) {
+                allStudents = JSON.parse(savedStudents);
+                entrySerial = allStudents.length + 1;
+            }
+            if(savedDecimal === 'true') {
+                isDecimalEnabled = true;
+            }
+            
+            renderInputRows();
+            document.getElementById('decimal-toggle').checked = isDecimalEnabled;
+            
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            
+            if(allStudents.length > 0) {
+                renderStudentTable();
+                document.getElementById('merit-list-section').style.display = 'block';
+            }
+        }
     };
 
+    function saveData() {
+        localStorage.setItem('madrasah_subjects', JSON.stringify(selectedSubjects));
+        localStorage.setItem('madrasah_students', JSON.stringify(allStudents));
+        localStorage.setItem('madrasah_decimal', isDecimalEnabled);
+    }
+
+    function clearAllData() {
+        localStorage.clear(); // No confirmation needed
+        location.reload();
+    }
+
+    // --- DOM FUNCTIONS ---
     function createSubjectCard(name, fullMark, checkedAttr) {
         const container = document.getElementById('subject-selection-area');
         const div = document.createElement('div');
@@ -262,6 +354,11 @@
         }
     }
 
+    function toggleDecimal() {
+        const checkbox = document.getElementById('decimal-toggle');
+        isDecimalEnabled = checkbox.checked;
+    }
+
     function goToStep2() {
         selectedSubjects = [];
         const cards = document.querySelectorAll('.sub-card');
@@ -269,7 +366,6 @@
         cards.forEach(card => {
             const checkbox = card.querySelector('.sub-check');
             const fullMark = card.querySelector('.fm-input').value;
-            
             if(checkbox.checked) {
                 selectedSubjects.push({
                     name: checkbox.getAttribute('data-name'),
@@ -283,6 +379,7 @@
             return;
         }
 
+        saveData(); 
         renderInputRows();
         
         document.getElementById('step1').classList.add('hidden');
@@ -295,17 +392,15 @@
     }
 
     function goBackToStep1() {
-        document.getElementById('step2').classList.add('hidden');
-        document.getElementById('step1').classList.remove('hidden');
-        document.getElementById('result-area').style.display = 'none';
-        document.getElementById('merit-list-section').style.display = 'none';
-        allStudents = []; 
-        entrySerial = 1;
+        localStorage.clear(); // No confirmation
+        location.reload();
     }
 
     function renderInputRows() {
         const tbody = document.getElementById('input-rows');
         tbody.innerHTML = '';
+        
+        const stepVal = isDecimalEnabled ? "0.01" : "1";
 
         selectedSubjects.forEach((sub, index) => {
             const tr = document.createElement('tr');
@@ -313,11 +408,27 @@
                 <td>${sub.name}</td>
                 <td style="text-align:center; font-weight:bold; color:#666;">${sub.full}</td>
                 <td>
-                    <input type="number" class="input-mark" data-full="${sub.full}" placeholder="Mark" oninput="handleInput(this, ${index})">
+                    <input type="number" class="input-mark" step="${stepVal}" data-full="${sub.full}" placeholder="Mark" oninput="handleInput(this, ${index})" onkeydown="handleEnter(event, ${index})">
                 </td>
             `;
             tbody.appendChild(tr);
         });
+    }
+
+    // --- Key and Input Handling ---
+    function handleEnter(event, index) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            const allInputs = document.querySelectorAll('.input-mark');
+            
+            if (index === allInputs.length - 1) {
+                calculateFinalResult();
+            } else {
+                if (index + 1 < allInputs.length) {
+                    allInputs[index + 1].focus();
+                }
+            }
+        }
     }
 
     function handleInput(input, index) {
@@ -326,14 +437,28 @@
         const allInputs = document.querySelectorAll('.input-mark');
 
         if (val !== "" && parseFloat(val) > fullMark) {
-            alert(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}। এর বেশি নম্বর দেওয়া যাবে না।`);
+            alert(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}।`);
             input.value = ""; 
             return;
         }
 
-        if (val.length >= 2 && val !== "10") { 
-            if (index + 1 < allInputs.length) {
-                setTimeout(() => allInputs[index + 1].focus(), 100); 
+        // Logic: 
+        if (!isDecimalEnabled) {
+            // Integer Mode Auto Jump
+            if (val.length >= 2 && val !== "10") { 
+                if (index + 1 < allInputs.length) {
+                    setTimeout(() => allInputs[index + 1].focus(), 100); 
+                }
+            }
+        } else {
+            // Decimal Mode Smart Auto Jump (Jumps after 2 decimal places e.g. .50)
+            if (val.includes('.')) {
+                const parts = val.split('.');
+                if (parts[1] && parts[1].length === 2) {
+                    if (index + 1 < allInputs.length) {
+                        setTimeout(() => allInputs[index + 1].focus(), 100);
+                    }
+                }
             }
         }
     }
@@ -372,13 +497,14 @@
 
             let percent = (marks / full) * 100;
             let gp = getGP(percent);
-            
             totalGP += gp;
 
-            if(percent < 33) {
-                failCount++;
-            }
+            if(percent < 33) failCount++;
         });
+
+        if (!Number.isInteger(totalObtained)) {
+            totalObtained = parseFloat(totalObtained.toFixed(2));
+        }
 
         let finalGPA = (totalGP / subjectCount).toFixed(2);
         let avgMarks = (totalObtained / subjectCount).toFixed(2);
@@ -413,12 +539,14 @@
             statusElem.className = "status-pass";
         }
 
-        document.getElementById('result-area').style.display = 'block';
+        const resArea = document.getElementById('result-area');
+        resArea.style.display = 'block';
         
-        // --- MERIT LIST LOGIC ---
+        // Auto Scroll to Result (Center of Screen)
+        resArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
+        // --- MERIT LOGIC ---
         let isPass = failCount === 0;
-
         const newStudent = {
             id: entrySerial,
             total: totalObtained,
@@ -430,35 +558,25 @@
         allStudents.push(newStudent);
         entrySerial++;
 
-        // Recalculate Merit
+        saveData();
         calculateMeritPositions();
-
-        // Show Table
         renderStudentTable();
         document.getElementById('merit-list-section').style.display = 'block';
 
-        // Auto Clear Inputs
+        // Auto Clear (No Focus Jump)
         inputs.forEach(inp => inp.value = '');
     }
 
     function calculateMeritPositions() {
         let sortedList = [...allStudents];
-
         sortedList.sort((a, b) => {
-            // Rule 1: Pass first
             if (a.isPass && !b.isPass) return -1;
             if (!a.isPass && b.isPass) return 1;
-
-            // Rule 2: If Pass (High GPA > High Marks)
             if (a.isPass && b.isPass) {
                 if (b.gpa !== a.gpa) return b.gpa - a.gpa;
                 return b.total - a.total;
             }
-
-            // Rule 3: If Fail (High Marks > Low Marks)
-            if (!a.isPass && !b.isPass) {
-                return b.total - a.total;
-            }
+            if (!a.isPass && !b.isPass) return b.total - a.total;
         });
 
         sortedList.forEach((student, index) => {
@@ -473,7 +591,6 @@
 
         allStudents.forEach(student => {
             let rowClass = student.isPass ? "row-pass" : "row-fail";
-            // শুধু জিপিএ সংখ্যাটি দেখাবে, ফেল টেক্সট নয়
             let gpaDisplay = student.gpa.toFixed(2); 
 
             const row = `
@@ -490,4 +607,4 @@
 </script>
 
 </body>
-</html>
+        </html>
