@@ -37,10 +37,7 @@
       color:var(--text);
     }
 
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-    }
+    .wrap{max-width: 980px; margin: 0 auto;}
 
     /* Top Hero Header */
     .hero{
@@ -69,38 +66,10 @@
       justify-content:space-between;
       flex-wrap:wrap;
     }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.18);
-      font-size: 13px;
-      letter-spacing:.2px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.10);
-    }
-    .hero h1{
-      margin:0;
-      font-size: 28px;
-      line-height:1.15;
-      letter-spacing:.2px;
-    }
-    .hero p{
-      margin:6px 0 0;
-      opacity:.92;
-      font-size: 14px;
-    }
-    .hero-right{
-      text-align:right;
-      min-width: 220px;
-    }
-    .hero-right small{
-      display:block;
-      opacity:.9;
-      font-size: 12px;
-    }
+    .hero h1{ margin:0; font-size: 28px; line-height:1.15; letter-spacing:.2px; }
+    .hero p{ margin:6px 0 0; opacity:.92; font-size: 14px; }
+    .hero-right{ text-align:right; min-width: 220px; }
+    .hero-right small{ display:block; opacity:.9; font-size: 12px; }
 
     /* App Card */
     .card{
@@ -111,7 +80,6 @@
       border: 1px solid rgba(229,231,235,.85);
       overflow:hidden;
     }
-
     .card-head{
       padding: 16px 18px;
       background: linear-gradient(180deg, rgba(15,118,110,.06), rgba(15,118,110,0));
@@ -122,13 +90,7 @@
       gap:10px;
       flex-wrap:wrap;
     }
-
-    .steps{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
+    .steps{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
     .step-pill{
       display:inline-flex;
       align-items:center;
@@ -154,7 +116,6 @@
       background: var(--brand);
       box-shadow: 0 0 0 4px rgba(15,118,110,.12);
     }
-
     .autosave{
       font-size: 12px;
       color: var(--muted);
@@ -206,8 +167,7 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px;
-      background:
-        linear-gradient(180deg, rgba(15,118,110,.06), rgba(255,255,255,0));
+      background: linear-gradient(180deg, rgba(15,118,110,.06), rgba(255,255,255,0));
       transition: .18s ease;
     }
     .sub-card:hover{
@@ -242,10 +202,6 @@
       align-items:flex-end;
       min-width: 86px;
     }
-    .fm-wrap small{
-      font-size: 11px;
-      color: var(--muted);
-    }
     .fm-input{
       width: 86px;
       padding: 8px 10px;
@@ -262,7 +218,7 @@
       box-shadow: 0 0 0 4px rgba(37,99,235,.12);
     }
 
-    /* toggle */
+    /* toggles */
     .toggle{
       display:flex;
       align-items:center;
@@ -272,19 +228,14 @@
       background: rgba(245,158,11,.08);
       border-radius: 999px;
       margin-top: 14px;
-      width: 100%;
-      max-width: 100%;
-      flex-wrap: nowrap;
     }
     .toggle input{
-      flex: 0 0 auto;
       transform: scale(1.25);
       accent-color: var(--warn);
       cursor:pointer;
       margin: 0;
     }
     .toggle label{
-      flex: 1 1 auto;
       cursor:pointer;
       font-weight: 700;
       color:#7c2d12;
@@ -314,13 +265,7 @@
     .btn-add{ background: linear-gradient(135deg, #0284c7, #1d4ed8); }
     .btn-warn{ background: linear-gradient(135deg, #f59e0b, #d97706); color:#111827; }
     .btn-danger{ background: linear-gradient(135deg, #ef4444, #b91c1c); }
-
-    .btn-small{
-      padding: 9px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      box-shadow:none;
-    }
+    .btn-small{ padding: 9px 12px; border-radius: 10px; font-size: 14px; box-shadow:none; }
 
     /* Marks table */
     .marks-table{
@@ -348,7 +293,6 @@
       font-size: 15px;
     }
     .marks-table tr:last-child td{ border-bottom:none; }
-
     .input-mark{
       width: 100%;
       padding: 12px 12px;
@@ -449,14 +393,12 @@
       font-size: 18px;
       font-weight: 1000;
     }
-
     .table-responsive{
       overflow:auto;
       border:1px solid var(--line);
       border-radius: 14px;
       background:#fff;
     }
-
     .list-table{
       width:100%;
       border-collapse: collapse;
@@ -483,11 +425,8 @@
     }
     .row-fail td{ background: rgba(220,38,38,.08); color:#7f1d1d; font-weight: 800; }
     .row-pass td{ color:#111827; }
-    .hl{
-      font-weight: 1000;
-    }
+    .hl{ font-weight: 1000; }
 
-    /* edit button in row */
     .btn-edit{
       border:none;
       border-radius: 10px;
@@ -500,42 +439,21 @@
     }
     .btn-edit:hover{ transform: translateY(-1px); }
 
-    /* Footer */
-    .footer{
-      margin-top: 14px;
-      text-align:center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .footer a{
-      color: var(--brand);
-      text-decoration:none;
-      font-weight: 900;
-    }
+    .footer{ margin-top: 14px; text-align:center; color: var(--muted); font-size: 13px; }
+    .footer a{ color: var(--brand); text-decoration:none; font-weight: 900; }
 
-    /* ==============================
-       PRINT (Landscape + Rotated headers + Nice header)
-       ============================== */
+    /* PRINT */
     @media print{
       @page { size: landscape; margin: 6mm; }
-
       body{ background:#fff; padding:0; }
       body *{ visibility:hidden; }
 
       #print-area, #print-area *{ visibility: visible; }
-      #print-area{
-        position:absolute;
-        left:0; top:0;
-        width:100%;
-      }
+      #print-area{ position:absolute; left:0; top:0; width:100%; }
 
-      /* hide buttons and action */
       .no-print, .action-col, .btn-edit { display:none !important; }
-
-      /* hide duplicate title */
       .section-title{ display:none !important; }
 
-      /* print header */
       .print-head{
         display:block !important;
         text-align:center;
@@ -547,22 +465,10 @@
       .print-head h2{ margin:4px 0 0; font-size: 14px; font-weight: 800; }
       .print-head p{ margin:2px 0 0; font-size: 12px; }
 
-      .table-responsive{
-        border:none;
-        border-radius: 0;
-      }
+      .table-responsive{ border:none; border-radius: 0; }
 
-      /* make table print-friendly */
-      .list-table{
-        min-width: 0 !important;
-        width: 100% !important;
-        font-size: 12px;
-        border-collapse: collapse;
-      }
-      .list-table th, .list-table td{
-        border: 1px solid #000 !important;
-        color:#000 !important;
-      }
+      .list-table{ min-width: 0 !important; width: 100% !important; font-size: 12px; border-collapse: collapse; }
+      .list-table th, .list-table td{ border: 1px solid #000 !important; color:#000 !important; }
       .list-table td{ padding: 2px 3px !important; }
       .list-table th{
         background: #eee !important;
@@ -575,8 +481,6 @@
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-
-      /* rotate headers 90deg */
       .list-table th span{
         display:block;
         transform: rotate(-90deg);
@@ -586,8 +490,7 @@
         font-size: 12px;
       }
     }
-  
-    
+
     /* Toast (Alert Alternative) */
     .toast {
       position: fixed;
@@ -615,6 +518,7 @@
     .toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
     }
     .toast-content{
       display:flex;
@@ -638,97 +542,79 @@
       font-weight: 700;
       letter-spacing: .1px;
     }
-    }
-
     .toast.warn { background: rgba(245, 158, 11, 0.92); color: #111827; border-color: rgba(17,24,39,0.08); }
     .toast.warn .toast-icon{ background: rgba(17,24,39,0.12); }
-    .toast.warn .toast-bar{ background: rgba(17,24,39,0.10); }
-    .toast.warn .toast-bar > i{ background: rgba(17,24,39,0.38); }
-
     .toast.danger { background: rgba(239, 68, 68, 0.92); color: #fff; border-color: rgba(255,255,255,0.18); }
-    .toast.danger .toast-bar > i{ background: rgba(255,255,255,0.55); }
-
     .toast.success { background: rgba(5, 150, 105, 0.92); }
-    .toast.success .toast-bar > i{ background: rgba(255,255,255,0.55); }
 
-
-
-/* Floating Focus Button (Premium) */
-.fab-focus{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  width:45px;
-  height:45px;
-  border-radius:999px;
-  background: radial-gradient(120% 120% at 30% 20%, #10b981 0%, #00796b 40%, #004d40 100%);
-  color:#fff;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  box-shadow: 0 16px 35px rgba(0,0,0,.30);
-  cursor:pointer;
-  z-index:9999;
-  font-size: 24px;
-  user-select:none;
-  -webkit-tap-highlight-color: transparent;
-  border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  overflow:hidden;
-  transform: translateZ(0);
-}
-.fab-focus svg{
-  width:35px;
-  height:35px;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,.25));
-}
-.fab-focus.show{
-  display:flex;
-  animation: fabFloat 2.8s ease-in-out infinite;
-}
-@keyframes fabFloat{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-4px); }
-}
-/* subtle glow ring */
-.fab-focus::after{
-  content:"";
-  position:absolute;
-  inset:-10px;
-  border-radius:999px;
-  border: 2px solid rgba(16,185,129,.0);
-  opacity:0;
-}
-.fab-focus.show::after{
-  animation: fabGlow 2.8s ease-in-out infinite;
-}
-@keyframes fabGlow{
-  0%,100%{ opacity:.0; border-color: rgba(16,185,129,.0); }
-  50%{ opacity:.35; border-color: rgba(16,185,129,.55); }
-}
-/* click ripple */
-.fab-focus:active{
-  transform: scale(.96);
-  animation: none;
-}
-.fab-focus:active::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  transform: translate(-50%,-50%);
-  background: rgba(255,255,255,.55);
-  animation: fabRipple .45s ease-out forwards;
-}
-@keyframes fabRipple{
-  to{ width:140px; height:140px; opacity:0; }
-}
-
-</style>
+    /* Floating Focus Button (Premium) */
+    .fab-focus{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:45px;
+      height:45px;
+      border-radius:999px;
+      background: radial-gradient(120% 120% at 30% 20%, #10b981 0%, #00796b 40%, #004d40 100%);
+      color:#fff;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 16px 35px rgba(0,0,0,.30);
+      cursor:pointer;
+      z-index:9999;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      overflow:hidden;
+      transform: translateZ(0);
+      font-weight: 1000;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .fab-focus.show{
+      display:flex;
+      animation: fabFloat 2.8s ease-in-out infinite;
+    }
+    @keyframes fabFloat{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-4px); }
+    }
+    .fab-focus::after{
+      content:"";
+      position:absolute;
+      inset:-10px;
+      border-radius:999px;
+      border: 2px solid rgba(16,185,129,.0);
+      opacity:0;
+    }
+    .fab-focus.show::after{ animation: fabGlow 2.8s ease-in-out infinite; }
+    @keyframes fabGlow{
+      0%,100%{ opacity:.0; border-color: rgba(16,185,129,.0); }
+      50%{ opacity:.35; border-color: rgba(16,185,129,.55); }
+    }
+    .fab-focus:active{
+      transform: scale(.96);
+      animation: none;
+    }
+    .fab-focus:active::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      transform: translate(-50%,-50%);
+      background: rgba(255,255,255,.55);
+      animation: fabRipple .45s ease-out forwards;
+    }
+    @keyframes fabRipple{
+      to{ width:140px; height:140px; opacity:0; }
+    }
+  </style>
 </head>
 
 <body>
@@ -737,7 +623,7 @@
     <div class="hero">
       <div class="hero-top">
         <div>
-                    <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
+          <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
           <p>একাডেমিক ফলাফল ব্যবস্থাপনা সিস্টেম</p>
         </div>
         <div class="hero-right">
@@ -780,7 +666,6 @@
             <input type="checkbox" id="auto-result-toggle" checked onchange="toggleAutoResult()">
             <label for="auto-result-toggle">শেষ বিষয়ের নম্বর পূর্ণ হলে অটো রেজাল্ট দেখাবে</label>
           </div>
-
 
           <div class="btnrow">
             <button class="btn btn-primary" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
@@ -893,6 +778,10 @@
     </div>
   </div>
 
+  <!-- Toast + Floating Button (must be outside Excel export) -->
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <div id="fabFocus" class="fab-focus" title="প্রথম ইনপুটে যান" onclick="focusFirstMarkInput()">+</div>
+
 <script>
   // Global Storage
   let allStudents = [];
@@ -908,7 +797,6 @@
     if(!t) return;
 
     const icon = (type==='success') ? '✓' : (type==='warn' ? '!' : '×');
-    t.style.setProperty('--toast-ms', ms + 'ms');
     t.className = 'toast ' + (type || 'danger');
 
     t.innerHTML = `
@@ -918,7 +806,6 @@
       </div>
     `;
 
-    // Tap to dismiss
     t.onclick = () => t.classList.remove('show');
 
     requestAnimationFrame(() => t.classList.add('show'));
@@ -930,7 +817,6 @@
   }
 
   let autoResultEnabled = true; // auto result on last input
-
 
   const subjectsDB = [
     { name: 'কুরআন মাজিদ', short: 'Quran', def: 100 },
@@ -1011,14 +897,14 @@
     localStorage.setItem(KEY_DEC, isDecimalEnabled);
   }
 
-    function blurFocus(){
+  function blurFocus(){
     try{
       const el = document.activeElement;
       if(el && typeof el.blur === 'function') el.blur();
     }catch(e){}
   }
 
-function clearAllData() {
+  function clearAllData() {
     localStorage.removeItem(KEY_SUBS);
     localStorage.removeItem(KEY_STDS);
     localStorage.removeItem(KEY_DEC);
@@ -1085,12 +971,11 @@ function clearAllData() {
 
     if (selectedSubjects.length === 0) {
       showToast("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন।",'warn');
-            return;
+      return;
     }
 
     saveData();
     renderInputRows();
-
     goToStep2UIOnly();
 
     setTimeout(() => {
@@ -1107,8 +992,8 @@ function clearAllData() {
   function renderInputRows() {
     const tbody = document.getElementById('input-rows');
     tbody.innerHTML = '';
-        const fabH = document.getElementById('fabFocus');
-        if(fabH){ fabH.style.display='none'; fabH.classList.remove('show'); }
+    const fabH = document.getElementById('fabFocus');
+    if(fabH){ fabH.style.display='none'; fabH.classList.remove('show'); }
     const stepVal = isDecimalEnabled ? "0.01" : "1";
 
     selectedSubjects.forEach((sub, index) => {
@@ -1137,6 +1022,7 @@ function clearAllData() {
     }
   }
 
+  // Your requested handleInput (same logic)
   function handleInput(input, index) {
     let val = input.value;
     const fullMark = parseFloat(input.getAttribute('data-full'));
@@ -1144,8 +1030,8 @@ function clearAllData() {
     const isLast = index === allInputs.length - 1;
 
     if (val !== "" && parseFloat(val) > fullMark) {
-      showToast(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}।`,'warn');
-            input.value = "";
+      showToast(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}।`, 'warn');
+      input.value = "";
       return;
     }
 
@@ -1158,7 +1044,8 @@ function clearAllData() {
     };
 
     if (!isDecimalEnabled) {
-      if (val.length >= 2 && val !== "10") {
+      let requiredLength = fullMark.toString().length;
+      if (val.length >= requiredLength || (val !== "0" && parseInt(val) * 10 > fullMark)) {
         jumpOrCalc();
       }
     } else {
@@ -1193,7 +1080,7 @@ function clearAllData() {
     for (let inp of inputs) {
       if (inp.value === "") {
         showToast("সব বিষয়ের নম্বর পূরণ করুন!",'warn');
-            return;
+        return;
       }
     }
 
@@ -1247,8 +1134,10 @@ function clearAllData() {
 
     const resArea = document.getElementById('result-area');
     resArea.style.display = 'block';
-        const fab = document.getElementById('fabFocus');
-        if(fab){ fab.style.display = 'flex'; fab.classList.add('show'); }
+
+    const fab = document.getElementById('fabFocus');
+    if(fab){ fab.style.display = 'flex'; fab.classList.add('show'); }
+
     resArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     const studentData = {
@@ -1287,9 +1176,7 @@ function clearAllData() {
 
     inputs.forEach(inp => inp.value = '');
 
-    // After result, remove focus so keyboard can close
     blurFocus();
-    // Scroll a bit upward after result
     setTimeout(() => {
       const res = document.getElementById('result-area');
       if(res){
@@ -1306,7 +1193,7 @@ function clearAllData() {
     const inputs = document.querySelectorAll('.input-mark');
     if (inputs.length !== student.marks.length) {
       showToast("বিষয় পরিবর্তন হওয়ায় এই ছাত্রের তথ্য এডিট করা সম্ভব নয়।",'warn');
-            return;
+      return;
     }
 
     student.marks.forEach((mark, index) => inputs[index].value = mark);
@@ -1415,13 +1302,7 @@ function clearAllData() {
         <body>
           <h2 style="text-align:center">Result Sheet</h2>
           ${tempTable.outerHTML}
-        
-<div id="toast" class="toast" aria-live="polite"></div>
-
-<div id="fabFocus" class="fab-focus" title="প্রথম ইনপুটে যান" onclick="focusFirstMarkInput()"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-  <path d="M6.7 14.8a1 1 0 0 1 0-1.4l4.6-4.6a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1-1.4 1.4L12 10.9l-3.9 3.9a1 1 0 0 1-1.4 0z" fill="currentColor"/>
-</svg></div>
-</body>
+        </body>
       </html>`;
 
     let blob = new Blob(['\ufeff', html], { type: 'application/vnd.ms-excel' });
@@ -1433,37 +1314,25 @@ function clearAllData() {
     document.body.removeChild(a);
   }
 
-    // Make entire subject card clickable (without breaking checkbox/label clicks)
-    document.addEventListener('click', function(e){
-        const card = e.target.closest('.sub-card');
-        if(!card) return;
+  // Make entire subject card clickable (without breaking checkbox/label clicks)
+  document.addEventListener('click', function(e){
+    const card = e.target.closest('.sub-card');
+    if(!card) return;
 
-        // Let native behavior handle checkbox/label clicks
-        if (e.target.classList.contains('sub-check')) return;
-        if (e.target.closest('label')) return;
+    if (e.target.classList.contains('sub-check')) return;
+    if (e.target.closest('label')) return;
+    if(e.target.classList.contains('fm-input')) return;
 
-        // Ignore clicks on full mark input
-        if(e.target.classList.contains('fm-input')) return;
+    const checkbox = card.querySelector('.sub-check');
+    if(checkbox){ checkbox.checked = !checkbox.checked; }
+  });
 
-        const checkbox = card.querySelector('.sub-check');
-        if(checkbox){
-            checkbox.checked = !checkbox.checked;
-        }
-    });
-
-
-    // Focus first mark input (for floating button)
-    function focusFirstMarkInput(){
-        const first = document.querySelector('.input-mark');
-        if(!first) return;
-        try{ first.focus(); }catch(e){}
-        try{ first.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){ first.scrollIntoView(); }
-    }
-
+  function focusFirstMarkInput(){
+    const first = document.querySelector('.input-mark');
+    if(!first) return;
+    try{ first.focus(); }catch(e){}
+    try{ first.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){ first.scrollIntoView(); }
+  }
 </script>
-
-<div id="toast" class="toast" aria-live="polite"></div>
-
-<div id="fabFocus" class="fab-focus" title="প্রথম ইনপুটে যান" onclick="focusFirstMarkInput()">+</div>
 </body>
-</html>
+  </html>
