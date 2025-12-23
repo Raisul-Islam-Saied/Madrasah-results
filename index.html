@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abdur Razzaq Dakhil Madrasah - Result System v2.0</title>
+  <title>Abdur Razzaq Dakhil Madrasah - Result System</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
@@ -116,7 +116,26 @@
       background: var(--brand);
       box-shadow: 0 0 0 4px rgba(15,118,110,.12);
     }
-    
+    .autosave{
+      font-size: 12px;
+      color: var(--muted);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .autosave b{color: var(--brand2)}
+    .autosave .pulse{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 0 rgba(22,163,74,.30);
+      animation:pulse 1.6s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(22,163,74,.30)}
+      70%{box-shadow:0 0 0 10px rgba(22,163,74,0)}
+      100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}
+    }
+
     .card-body{ padding: 18px; }
     .hidden{ display:none; }
 
@@ -135,34 +154,6 @@
       margin:0 0 14px;
       font-size: 13px;
       color: var(--muted);
-    }
-
-    /* Form Styles for Step 1 */
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-    .form-group label {
-        display: block;
-        font-weight: 700;
-        margin-bottom: 6px;
-        font-size: 14px;
-    }
-    .form-select, .form-input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        font-size: 15px;
-        outline: none;
-        background: #fff;
-        font-family: inherit;
-    }
-    .form-select:focus, .form-input:focus {
-        border-color: var(--brand);
-        box-shadow: 0 0 0 3px rgba(15,118,110,.1);
     }
 
     /* Subject selection cards */
@@ -227,29 +218,30 @@
       box-shadow: 0 0 0 4px rgba(37,99,235,.12);
     }
 
-    /* Student Info Box */
-    .student-info-box {
-        background: linear-gradient(135deg, #1e293b, #0f172a);
-        color: white;
-        padding: 15px;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    /* toggles */
+    .toggle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(245,158,11,.35);
+      background: rgba(245,158,11,.08);
+      border-radius: 999px;
+      margin-top: 14px;
     }
-    .st-details h2 { margin: 0; font-size: 20px; }
-    .st-details p { margin: 2px 0 0; opacity: 0.8; font-size: 14px; }
-    .st-roll {
-        background: rgba(255,255,255,0.1);
-        padding: 5px 12px;
-        border-radius: 8px;
-        font-weight: 700;
-        text-align: center;
+    .toggle input{
+      transform: scale(1.25);
+      accent-color: var(--warn);
+      cursor:pointer;
+      margin: 0;
     }
-    .st-roll span { display: block; font-size: 11px; opacity: 0.7; }
-    .st-roll strong { font-size: 18px; }
+    .toggle label{
+      cursor:pointer;
+      font-weight: 700;
+      color:#7c2d12;
+      font-size: 13px;
+      line-height: 1.25;
+    }
 
     /* Buttons */
     .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
@@ -318,6 +310,18 @@
       background: rgba(15,118,110,.04);
     }
 
+    /* Edit banner */
+    #edit-message{
+      display:none;
+      border:1px solid rgba(245,158,11,.35);
+      background: rgba(245,158,11,.10);
+      color:#7c2d12;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 900;
+      margin: 12px 0 14px;
+    }
+
     /* Result card */
     #result-area{
       display:none;
@@ -327,6 +331,54 @@
       border: 1px solid rgba(22,163,74,.22);
       background: linear-gradient(180deg, rgba(22,163,74,.07), rgba(255,255,255,.0));
     }
+    .result-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .res-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      text-align:center;
+      box-shadow: 0 8px 20px rgba(17,24,39,.06);
+    }
+    .res-box span{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight:700;
+    }
+    .res-box strong{
+      display:block;
+      font-size: 22px;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+    .full-width{ grid-column: span 2; }
+    .gpa-box{
+      background: linear-gradient(135deg, var(--brand2), var(--brand));
+      color:#fff;
+      border: none;
+      position:relative;
+      overflow:hidden;
+    }
+    .gpa-box::after{
+      content:"";
+      position:absolute;
+      inset:-60px -70px auto auto;
+      width:220px;height:220px;
+      background: radial-gradient(circle, rgba(255,255,255,.18), transparent 62%);
+      transform: rotate(10deg);
+    }
+    .gpa-box span{ color: rgba(255,255,255,.85); }
+    .gpa-box strong{ font-size: 42px; color:#fff; }
+    #r-grade{ display:block; margin-top: 6px; font-weight: 900; color:#fde047; font-size: 16px; }
+
+    .status-pass{ color: var(--ok); }
+    .status-fail{ color: var(--danger); }
+
     /* Merit table section */
     #merit-list-section{
       display:none;
@@ -374,20 +426,77 @@
     .row-fail td{ background: rgba(220,38,38,.08); color:#7f1d1d; font-weight: 800; }
     .row-pass td{ color:#111827; }
     .hl{ font-weight: 1000; }
-    .text-left { text-align: left !important; padding-left: 12px !important; }
 
     .btn-edit{
       border:none;
       border-radius: 10px;
-      padding: 6px 10px;
+      padding: 8px 10px;
       cursor:pointer;
       font-weight: 1000;
       background: linear-gradient(135deg, #fbbf24, #f59e0b);
       color:#111827;
       transition:.15s;
     }
+    .btn-edit:hover{ transform: translateY(-1px); }
+
     .footer{ margin-top: 14px; text-align:center; color: var(--muted); font-size: 13px; }
     .footer a{ color: var(--brand); text-decoration:none; font-weight: 900; }
+
+    /* PRINT */
+    @media print{
+      @page { margin: 10mm; }
+      body{ background:#fff; padding:0; }
+      body *{ visibility:hidden; }
+
+      #print-area, #print-area *{ visibility: visible; }
+      #print-area{ position:absolute; left:0; top:0; width:100%; }
+
+      .no-print, .action-col, .btn-edit { display:none !important; }
+      .section-title{ display:none !important; }
+#merit-list-section{
+      display:none;
+      margin-top: 0px;
+      border-top: 0px dashed rgba(107,114,128,.45);
+      padding-top: 0px;
+    }
+      .print-head{
+        display:block !important;
+        text-align:center;
+        padding: 0px 0 0px;
+        border-bottom: 0px solid #000;
+        margin-bottom: 10px;
+      }
+      .print-head h1{ margin:0; font-size: 20px; }
+      .print-head h2{ margin:4px 0 0; font-size: 14px; font-weight: 800; }
+      .print-head p{ margin:2px 0 0; font-size: 12px; }
+
+      .table-responsive{ border:none; border-radius: 0; }
+
+      .list-table{ min-width: 0 !important; width: 100% !important; font-size: 12px; border-collapse: collapse; }
+      .list-table th, .list-table td{ border: 1px solid #000 !important; color:#000 !important; }
+      .list-table td{ padding: 2px 3px !important; }
+      .list-table th{
+        background: #eee !important;
+        padding: 0 !important;
+        height: 105px;
+        vertical-align: bottom;
+      }
+          .row-pass td{ font-weight: normal !important ;}
+      .row-fail td{
+        font-weight: normal !important ;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .list-table th span{
+        display:block;
+        transform: rotate(-90deg);
+        width: 26px;
+        margin: 0 auto 6px;
+        font-weight: 900;
+        font-size: 12px;
+      }
+    }
 
     /* Toast (Alert Alternative) */
     .toast {
@@ -401,31 +510,116 @@
       border-radius: 14px;
       box-shadow: 0 14px 35px rgba(0,0,0,0.25);
       font-size: 14px;
+      line-height: 1.35;
+      max-width: 92vw;
+      width: min(520px, 92vw);
       z-index: 9999;
       opacity: 0;
       pointer-events: none;
       transition: opacity .18s ease, transform .18s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.16);
+      overflow: hidden;
     }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-    .toast.warn { background: rgba(245, 158, 11, 0.92); color: #111827; }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .toast-content{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .toast-icon{
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+      flex: 0 0 auto;
+      margin-top: 1px;
+      background: rgba(255,255,255,0.14);
+    }
+    .toast-text{
+      flex: 1 1 auto;
+      font-weight: 700;
+      letter-spacing: .1px;
+    }
+    .toast.warn { background: rgba(245, 158, 11, 0.92); color: #111827; border-color: rgba(17,24,39,0.08); }
+    .toast.warn .toast-icon{ background: rgba(17,24,39,0.12); }
+    .toast.danger { background: rgba(239, 68, 68, 0.92); color: #fff; border-color: rgba(255,255,255,0.18); }
     .toast.success { background: rgba(5, 150, 105, 0.92); }
 
-    /* PRINT */
-    @media print{
-      @page { margin: 10mm; }
-      body{ background:#fff; padding:0; }
-      body *{ visibility:hidden; }
-      #print-area, #print-area *{ visibility: visible; }
-      #print-area{ position:absolute; left:0; top:0; width:100%; }
-      .no-print, .action-col { display:none !important; }
-      .print-head{
-        display:block !important;
-        text-align:center;
-        margin-bottom: 10px;
-      }
-      .list-table{ width: 100% !important; font-size: 12px; border-collapse: collapse; }
-      .list-table th, .list-table td{ border: 1px solid #000 !important; color:#000 !important; padding: 4px !important;}
-      .list-table th{ background: #eee !important; color: #000 !important; }
+    /* Floating Focus Button (Premium) */
+    .fab-focus{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:45px;
+      height:45px;
+      border-radius:999px;
+      background: radial-gradient(120% 120% at 30% 20%, #10b981 0%, #00796b 40%, #004d40 100%);
+      color:#fff;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 16px 35px rgba(0,0,0,.30);
+      cursor:pointer;
+      z-index:9999;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      overflow:hidden;
+      transform: translateZ(0);
+      font-weight: 1000;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .fab-focus.show{
+      display:flex;
+      animation: fabFloat 2.8s ease-in-out infinite;
+    }
+    @keyframes fabFloat{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-4px); }
+    }
+    .fab-focus::after{
+      content:"";
+      position:absolute;
+      inset:-10px;
+      border-radius:999px;
+      border: 2px solid rgba(16,185,129,.0);
+      opacity:0;
+    }
+    .fab-focus.show::after{ animation: fabGlow 2.8s ease-in-out infinite; }
+    @keyframes fabGlow{
+      0%,100%{ opacity:.0; border-color: rgba(16,185,129,.0); }
+      50%{ opacity:.35; border-color: rgba(16,185,129,.55); }
+    }
+    .fab-focus:active{
+      transform: scale(.96);
+      animation: none;
+    }
+    .fab-focus:active::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      transform: translate(-50%,-50%);
+      background: rgba(255,255,255,.55);
+      animation: fabRipple .45s ease-out forwards;
+    }
+    @keyframes fabRipple{
+      to{ width:140px; height:140px; opacity:0; }
     }
   </style>
 </head>
@@ -449,63 +643,19 @@
     <div class="card">
       <div class="card-head">
         <div class="steps">
-          <div class="step-pill active" id="pill1"><span class="dot"></span> তথ্য</div>
-          <div class="step-pill" id="pill2"><span class="dot"></span> বিষয়</div>
-          <div class="step-pill" id="pill3"><span class="dot"></span> নম্বর</div>
+          <div class="step-pill active" id="pill1"><span class="dot"></span> ধাপ ১: বিষয়</div>
+          <div class="step-pill" id="pill2"><span class="dot"></span> ধাপ ২: নম্বর</div>
         </div>
+        <div class="autosave"><span class="pulse"></span> <b>Auto Save</b> চালু আছে</div>
       </div>
 
       <div class="card-body">
 
+        <!-- STEP 1 -->
         <div id="step1">
-          <h3><span class="hbar"></span> ধাপ ১: পরীক্ষার তথ্য</h3>
-          <p class="subtext">প্রথমে ক্লাস এবং পরীক্ষার তথ্য নির্বাচন করুন</p>
-
-          <div class="form-grid">
-             <div class="form-group">
-                 <label>শ্রেণি (Class)</label>
-                 <select id="class-select" class="form-select">
-                     <option value="">নির্বাচন করুন...</option>
-                     <option value="Class 1">প্রথম শ্রেণি</option>
-                     <option value="Class 2">দ্বিতীয় শ্রেণি</option>
-                     <option value="Class 3">তৃতীয় শ্রেণি</option>
-                     <option value="Class 4">চতুর্থ শ্রেণি</option>
-                     <option value="Class 5">পঞ্চম শ্রেণি</option>
-                     <option value="Class 6">ষষ্ঠ শ্রেণি</option>
-                     <option value="Class 7">সপ্তম শ্রেণি</option>
-                     <option value="Class 8">অষ্টম শ্রেণি</option>
-                     <option value="Class 9">নবম শ্রেণি</option>
-                     <option value="Class 10">দশম শ্রেণি</option>
-                 </select>
-             </div>
-             <div class="form-group">
-                <label>পরীক্ষার নাম</label>
-                <select id="exam-select" class="form-select">
-                    <option value="Annual Examination">বার্ষিক পরীক্ষা</option>
-                    <option value="Half Yearly Exam">অর্ধ-বার্ষিক পরীক্ষা</option>
-                    <option value="Pre-Test Exam">প্রাক-নির্বাচনী পরীক্ষা</option>
-                    <option value="Test Exam">নির্বাচনী পরীক্ষা</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>পরীক্ষার সাল</label>
-                <input type="number" id="year-input" class="form-input" value="2025">
-            </div>
-          </div>
-
-          <div class="btnrow">
-            <button class="btn btn-primary" onclick="goToStep2()">পরবর্তী ধাপ (বিষয় নির্বাচন) &raquo;</button>
-          </div>
-        </div>
-
-        <div id="step2" class="hidden">
-            <div class="btnrow no-print" style="margin-top:0">
-                <button class="btn btn-muted btn-small" onclick="backToStep1()">&laquo; তথ্য পরিবর্তন</button>
-            </div>
-
-          <h3><span class="hbar"></span> ধাপ ২: বিষয় নির্বাচন</h3>
+          <h3><span class="hbar"></span> ধাপ ১: বিষয় নির্বাচন</h3>
           <p class="subtext">
-            যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন এবং পূর্ণমান ঠিক করুন।
+            যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন। প্রয়োজনে পূর্ণমান পরিবর্তন বা নতুন বিষয় যুক্ত করুন।
           </p>
 
           <div class="subject-grid" id="subject-selection-area"></div>
@@ -514,51 +664,97 @@
             <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
           </div>
 
-          <div class="btnrow" style="margin-top:20px">
-            <button class="btn btn-primary" onclick="goToStep3()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
+          <div class="toggle">
+            <input type="checkbox" id="decimal-toggle" onchange="toggleDecimal()">
+            <label for="decimal-toggle">প্রাপ্ত নম্বর দশমিক হলে (যেমন: ৮০.৫০) এখানে টিক দিন</label>
+          </div>
+
+          <div class="toggle" style="margin-top:10px;">
+            <input type="checkbox" id="auto-result-toggle" checked onchange="toggleAutoResult()">
+            <label for="auto-result-toggle">শেষ বিষয়ের নম্বর পূর্ণ হলে অটো রেজাল্ট দেখাবে</label>
+          </div>
+
+          <div class="btnrow">
+            <button class="btn btn-primary" onclick="goToStep2()">পরবর্তী ধাপ (নম্বর প্রদান) &raquo;</button>
           </div>
         </div>
 
-        <div id="step3" class="hidden">
+        <!-- STEP 2 -->
+        <div id="step2" class="hidden">
           <div class="btnrow no-print" style="margin-top:0">
-            <button class="btn btn-muted btn-small" onclick="backToStep2()">&laquo; বিষয় পরিবর্তন করুন</button>
+            <button class="btn btn-muted btn-small" onclick="goBackToStep1()">&laquo; বিষয় পরিবর্তন করুন</button>
           </div>
 
-          <div class="student-info-box" id="student-header">
-               <div class="st-details">
-                   <h2 id="st-name-display">নাম লোড হচ্ছে...</h2>
-                   <p id="exam-info-display">Class - Exam</p>
-               </div>
-               <div class="st-roll">
-                   <span>Roll No</span>
-                   <strong id="st-roll-display">00</strong>
-               </div>
-           </div>
+          <h3 style="margin-top:6px;"><span class="hbar"></span> ধাপ ২: প্রাপ্ত নম্বর এন্ট্রি</h3>
+
+          <p id="edit-message">✏️ আপনি এখন সিরিয়াল নম্বর <span id="edit-serial-display"></span> এর তথ্য এডিট করছেন।</p>
 
           <table class="marks-table">
             <thead>
               <tr>
-                <th style="width: 50%">বিষয়</th>
+                <th style="width: 48%">বিষয়</th>
                 <th style="width: 20%; text-align:center;">পূর্ণমান</th>
-                <th style="width: 30%">নম্বর</th>
+                <th style="width: 32%">নম্বর</th>
               </tr>
             </thead>
             <tbody id="input-rows"></tbody>
           </table>
 
           <div class="btnrow no-print">
-            <button id="next-student-btn" class="btn btn-accent" style="width:100%" onclick="saveAndNext()">সংরক্ষণ করুন ও পরবর্তী শিক্ষার্থী &raquo;</button>
+            <button id="calculate-btn" class="btn btn-accent" onclick="calculateFinalResult()">ফলাফল দেখুন</button>
           </div>
 
+          <div id="result-area">
+            <h4 style="text-align:center;margin:0 0 12px;font-weight:1000;color:var(--brand2);">
+              ফলাফল বিবরণী
+            </h4>
+
+            <div class="result-grid">
+              <div class="res-box">
+                <span>মোট নম্বর</span>
+                <strong id="r-total-marks">0</strong>
+              </div>
+              <div class="res-box">
+                <span>পূর্ণমান</span>
+                <strong id="r-full-marks">0</strong>
+              </div>
+              <div class="res-box">
+                <span>গড় নম্বর (%)</span>
+                <strong id="r-avg">0</strong>
+              </div>
+              <div class="res-box">
+                <span>মোট জিপি (GP)</span>
+                <strong id="r-total-gp">0.00</strong>
+              </div>
+
+              <div class="res-box gpa-box full-width">
+                <span>অর্জিত জিপিএ (GPA)</span>
+                <strong id="r-gpa">0.00</strong>
+                <small id="r-grade"></small>
+              </div>
+
+              <div class="res-box">
+                <span>স্ট্যাটাস</span>
+                <strong id="r-status">--</strong>
+              </div>
+              <div class="res-box">
+                <span>ফেল করেছেন</span>
+                <strong id="r-fail-count" style="color:var(--danger);">0</strong> টি বিষয়ে
+              </div>
+            </div>
+          </div>
+
+          <!-- PRINT AREA -->
           <div id="print-area">
             <div class="print-head" style="display:none">
-              <h1 id="p-school">আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
-              <h2 id="p-exam-title">চূড়ান্ত ফলাফল তালিকা</h2>
-              <p id="p-exam-sub">Result Sheet</p>
+              <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
+              <h2>চূড়ান্ত ফলাফল তালিকা</h2>
+              <p>Result Sheet (Auto Generated)</p>
             </div>
 
             <div id="merit-list-section">
-              <div class="section-title">ফলাফল বিবরণী</div>
+              <div class="section-title">চূড়ান্ত ফলাফল তালিকা</div>
+
               <div class="table-responsive">
                 <table class="list-table" id="final-table">
                   <thead>
@@ -567,12 +763,14 @@
                   <tbody id="student-rows"></tbody>
                 </table>
               </div>
+
               <div class="btnrow no-print" style="margin-top:12px;">
                 <button class="btn btn-primary" style="flex:1" onclick="downloadExcel()">📥 Excel ডাউনলোড</button>
                 <button class="btn btn-add" style="flex:1" onclick="window.print()">🖨️ PDF / প্রিন্ট</button>
               </div>
-               <div class="btnrow no-print">
-                <button class="btn btn-danger" style="width:100%;" onclick="resetSystem()">নতুন করে শুরু করুন (Reset)</button>
+
+              <div class="btnrow no-print">
+                <button class="btn btn-danger" style="width:100%;" onclick="clearAllData()">সব মুছে ফেলুন (Reset)</button>
               </div>
             </div>
           </div>
@@ -583,414 +781,565 @@
     </div>
 
     <div class="footer">
-      Developed by <a href="https://www.facebook.com/raisulislamsaied" target="_blank">Raisul Islam Saied</a>
+      Developed by <a href="https://www.facebook.com/raisulislamsaied" target="_blank" rel="noreferrer">Raisul Islam Saied</a>
     </div>
   </div>
 
-  <div id="toast" class="toast"></div>
+  <!-- Toast + Floating Button (must be outside Excel export) -->
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <div id="fabFocus" class="fab-focus" title="প্রথম ইনপুটে যান" onclick="focusFirstMarkInput()">+</div>
 
 <script>
-  // DUMMY STUDENT DATA (10 Students)
-  const dummyStudents = [
-    { roll: 1, name: "আব্দুল্লাহ আল মামুন" },
-    { roll: 2, name: "মোঃ রাকিব হাসান" },
-    { roll: 3, name: "সায়মা আক্তার" },
-    { roll: 4, name: "হাসান মাহমুদ" },
-    { roll: 5, name: "ফাতেমা তুজ জোহরা" },
-    { roll: 6, name: "মোঃ ইব্রাহিম খলিল" },
-    { roll: 7, name: "সুমাইয়া জান্নাত" },
-    { roll: 8, name: "আরিফুল ইসলাম" },
-    { roll: 9, name: "নুসরাত জাহান" },
-    { roll: 10, name: "জুবায়ের আহমেদ" }
-  ];
-
-  // Global State
-  let currentStudentIndex = 0;
+  // Global Storage
+  let allStudents = [];
+  let entrySerial = 1;
   let selectedSubjects = [];
-  let studentResults = []; // Stores {roll, name, marks:[], total, gpa...}
-  let examInfo = { class: '', name: '', year: '' };
-  
+  let isDecimalEnabled = false;
+  let editModeId = null;
+
+  // Toast helper (replaces alert)
+  let toastTimer = null;
+  function showToast(message, type='danger', ms=1700){
+    const t = document.getElementById('toast');
+    if(!t) return;
+
+    const icon = (type==='success') ? '✓' : (type==='warn' ? '!' : '×');
+    t.className = 'toast ' + (type || 'danger');
+
+    t.innerHTML = `
+      <div class="toast-content">
+        <div class="toast-icon" aria-hidden="true">${icon}</div>
+        <div class="toast-text">${message}</div>
+      </div>
+    `;
+
+    t.onclick = () => t.classList.remove('show');
+
+    requestAnimationFrame(() => t.classList.add('show'));
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      t.classList.remove('show');
+    }, ms);
+  }
+
+  let autoResultEnabled = true; // auto result on last input
+
   const subjectsDB = [
     { name: 'কুরআন মাজিদ', short: 'Quran', def: 100 },
     { name: 'আকাইদ ও ফিকহ', short: 'Aqaid', def: 100 },
     { name: 'হাদিস শরীফ', short: 'Hadith', def: 100 },
-    { name: 'আরবি ১ম', short: 'Arb-1', def: 100 },
-    { name: 'আরবি ২য়', short: 'Arb-2', def: 100 },
-    { name: 'বাংলা ১ম', short: 'Ban-1', def: 100 },
-    { name: 'বাংলা ২য়', short: 'Ban-2', def: 100 },
-    { name: 'ইংরেজি ১ম', short: 'Eng-1', def: 100 },
-    { name: 'ইংরেজি ২য়', short: 'Eng-2', def: 100 },
+    { name: 'আরবি ১ম পত্র', short: 'Arabic 1st', def: 100 },
+    { name: 'আরবি ২য় পত্র', short: 'Arabic 2nd', def: 100 },
+    { name: 'বাংলা ১ম পত্র', short: 'Bangla 1st', def: 100 },
+    { name: 'বাংলা ২য় পত্র', short: 'Bangla 2nd', def: 100 },
+    { name: 'ইংরেজি ১ম পত্র', short: 'English 1st', def: 100 },
+    { name: 'ইংরেজি ২য় পত্র', short: 'English 2nd', def: 100 },
     { name: 'গণিত', short: 'Math', def: 100 },
-    { name: 'বাংলাদেশ ও বিশ্ব', short: 'BGS', def: 100 },
-    { name: 'আইসিটি', short: 'ICT', def: 50 }
+    { name: 'বাংলাদেশ ও বিশ্বপরিচয়', short: 'BGS', def: 100 },
+    { name: 'বিজ্ঞান', short: 'Science', def: 100 },
+    { name: 'কৃষি শিক্ষা', short: 'Agri', def: 100 },
+    { name: 'মানতিক', short: 'Mantiq', def: 100 },
+    { name: 'তথ্য ও যোগাযোগ প্রযুক্তি', short: 'ICT', def: 50 }
   ];
 
-  // --- INITIALIZATION ---
-  window.onload = function() {
-    renderSubjectCards();
-    // Load from local storage if exists (Optional: simplified for this request)
-    const saved = localStorage.getItem('madrasah_results_v2');
-    if(saved){
-        if(confirm("আগের সেভ করা ডাটা পাওয়া গেছে। লোড করবেন?")){
-           // Logic to restore state could go here
-        } else {
-            localStorage.removeItem('madrasah_results_v2');
+  // localStorage keys
+  const KEY_SUBS = 'madrasah_subs_ult_v3_edit';
+  const KEY_STDS = 'madrasah_stds_ult_v3_edit';
+  const KEY_DEC  = 'madrasah_dec_ult_v3_edit';
+
+  window.onload = function () {
+    const savedSubjects = localStorage.getItem(KEY_SUBS);
+    const savedStudents = localStorage.getItem(KEY_STDS);
+    const savedDecimal  = localStorage.getItem(KEY_DEC);
+
+    subjectsDB.forEach((sub, index) => {
+      let isChecked = index < 2 ? 'checked' : '';
+      if (savedSubjects) {
+        const parsed = JSON.parse(savedSubjects);
+        const found = parsed.find(s => s.name === sub.name);
+        if (found) isChecked = 'checked';
+        else isChecked = '';
+      }
+      createSubjectCard(sub.name, sub.short, sub.def, isChecked);
+    });
+
+    if (savedDecimal === 'true') isDecimalEnabled = true;
+    document.getElementById('decimal-toggle').checked = isDecimalEnabled;
+
+    if (savedSubjects) {
+      selectedSubjects = JSON.parse(savedSubjects);
+
+      if (savedStudents) {
+        allStudents = JSON.parse(savedStudents);
+        if (allStudents.length > 0) {
+          entrySerial = Math.max(...allStudents.map(s => s.id)) + 1;
         }
+      }
+
+      renderInputRows();
+      goToStep2UIOnly();
+
+      if (allStudents.length > 0) {
+        calculateMeritPositions();
+        renderStudentTable();
+        document.getElementById('merit-list-section').style.display = 'block';
+      }
     }
   };
 
-  function showToast(msg, type='warn'){
-    const t = document.getElementById('toast');
-    t.innerHTML = msg;
-    t.className = `toast show ${type}`;
-    setTimeout(() => t.classList.remove('show'), 2000);
-  }
-
-  function setPill(n){
-      document.querySelectorAll('.step-pill').forEach((p, i) => {
-          if(i+1 === n) p.classList.add('active');
-          else p.classList.remove('active');
-      });
-  }
-
-  // --- STEP 1 LOGIC ---
-  function goToStep2() {
-    const cls = document.getElementById('class-select').value;
-    const ex = document.getElementById('exam-select').value;
-    const yr = document.getElementById('year-input').value;
-
-    if(!cls || !ex || !yr){
-        showToast("সব তথ্য পূরণ করুন!"); 
-        return;
+  function setStepPills(step){
+    const p1 = document.getElementById('pill1');
+    const p2 = document.getElementById('pill2');
+    if(step===1){
+      p1.classList.add('active'); p2.classList.remove('active');
+    } else {
+      p2.classList.add('active'); p1.classList.remove('active');
     }
-
-    examInfo = { class: cls, name: ex, year: yr };
-    document.getElementById('step1').classList.add('hidden');
-    document.getElementById('step2').classList.remove('hidden');
-    setPill(2);
   }
 
-  function backToStep1(){
-    document.getElementById('step2').classList.add('hidden');
-    document.getElementById('step1').classList.remove('hidden');
-    setPill(1);
+  function saveData() {
+    localStorage.setItem(KEY_SUBS, JSON.stringify(selectedSubjects));
+    localStorage.setItem(KEY_STDS, JSON.stringify(allStudents));
+    localStorage.setItem(KEY_DEC, isDecimalEnabled);
   }
 
-  // --- STEP 2 LOGIC (Subjects) ---
-  function renderSubjectCards() {
+  function blurFocus(){
+    try{
+      const el = document.activeElement;
+      if(el && typeof el.blur === 'function') el.blur();
+    }catch(e){}
+  }
+
+  function clearAllData() {
+    localStorage.removeItem(KEY_SUBS);
+    localStorage.removeItem(KEY_STDS);
+    localStorage.removeItem(KEY_DEC);
+    location.reload();
+  }
+
+  function createSubjectCard(name, short, fullMark, checkedAttr) {
     const container = document.getElementById('subject-selection-area');
-    container.innerHTML = '';
-    subjectsDB.forEach((sub, idx) => {
-        const checked = idx < 3 ? 'checked' : '';
-        const div = document.createElement('div');
-        div.className = 'sub-card';
-        div.innerHTML = `
-            <div class="sub-row">
-                <label class="sub-label">
-                    <input type="checkbox" class="sub-check" data-name="${sub.name}" data-short="${sub.short}" ${checked}>
-                    <span>${sub.name}</span>
-                </label>
-                <div class="fm-wrap"><input type="number" class="fm-input" value="${sub.def}"></div>
-            </div>`;
-        container.appendChild(div);
-    });
+    const div = document.createElement('div');
+    div.className = 'sub-card';
+    div.innerHTML = `
+      <div class="sub-row">
+        <label class="sub-label">
+          <input type="checkbox" class="sub-check" data-name="${name}" data-short="${short}" ${checkedAttr}>
+          <span>${name}</span>
+        </label>
+        <div class="fm-wrap">
+          <input type="number" class="fm-input" value="${fullMark}" min="1">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
   }
 
   function addNewSubject() {
-    let name = prompt("বিষয়ের নাম (বাংলা):");
-    if(name){
-        let short = prompt("Subject Short Name (English):") || name;
-        const container = document.getElementById('subject-selection-area');
-        const div = document.createElement('div');
-        div.className = 'sub-card';
-        div.innerHTML = `
-            <div class="sub-row">
-                <label class="sub-label">
-                    <input type="checkbox" class="sub-check" data-name="${name}" data-short="${short}" checked>
-                    <span>${name}</span>
-                </label>
-                <div class="fm-wrap"><input type="number" class="fm-input" value="100"></div>
-            </div>`;
-        container.appendChild(div);
+    let name = prompt("নতুন বিষয়ের নাম লিখুন (বাংলায়):");
+    if (name && name.trim() !== "") {
+      let short = prompt("Subject Name (English - for Table):");
+      if (!short) short = name;
+      createSubjectCard(name.trim(), short.trim(), 100, 'checked');
     }
   }
 
-  function goToStep3() {
+  function toggleAutoResult(){
+    autoResultEnabled = document.getElementById('auto-result-toggle').checked;
+  }
+
+  function toggleDecimal() {
+    isDecimalEnabled = document.getElementById('decimal-toggle').checked;
+    saveData();
+  }
+
+  function goToStep2UIOnly(){
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+    setStepPills(2);
+  }
+
+  function goToStep2() {
     selectedSubjects = [];
-    document.querySelectorAll('.sub-card').forEach(card => {
-        const cb = card.querySelector('.sub-check');
-        const fm = card.querySelector('.fm-input');
-        if(cb.checked){
-            selectedSubjects.push({
-                name: cb.getAttribute('data-name'),
-                short: cb.getAttribute('data-short'),
-                full: parseInt(fm.value) || 100
-            });
-        }
+    const cards = document.querySelectorAll('.sub-card');
+
+    cards.forEach(card => {
+      const checkbox = card.querySelector('.sub-check');
+      const fullMark = card.querySelector('.fm-input').value;
+      if (checkbox.checked) {
+        selectedSubjects.push({
+          name: checkbox.getAttribute('data-name'),
+          short: checkbox.getAttribute('data-short'),
+          full: parseInt(fullMark) || 100
+        });
+      }
     });
 
-    if(selectedSubjects.length === 0){
-        showToast("অন্তত একটি বিষয় সিলেক্ট করুন!");
-        return;
+    if (selectedSubjects.length === 0) {
+      showToast("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন।",'warn');
+      return;
     }
 
-    document.getElementById('step2').classList.add('hidden');
-    document.getElementById('step3').classList.remove('hidden');
-    setPill(3);
+    saveData();
+    renderInputRows();
+    goToStep2UIOnly();
 
-    // Initialize Marks Table
-    renderInputTable();
-    loadStudentUI(0);
-  }
-
-  function backToStep2(){
-      if(confirm("পিছনে গেলে বর্তমান এন্ট্রি মুছে যেতে পারে। নিশ্চিত?")){
-        document.getElementById('step3').classList.add('hidden');
-        document.getElementById('step2').classList.remove('hidden');
-        setPill(2);
-        currentStudentIndex = 0;
-        studentResults = [];
-        document.getElementById('merit-list-section').style.display = 'none';
-      }
-  }
-
-  // --- STEP 3 LOGIC (Marks Entry) ---
-  function renderInputTable(){
-      const tbody = document.getElementById('input-rows');
-      tbody.innerHTML = '';
-      selectedSubjects.forEach((sub, i) => {
-          tbody.innerHTML += `
-            <tr>
-                <td>${sub.name}</td>
-                <td style="text-align:center;font-weight:bold">${sub.full}</td>
-                <td>
-                    <input type="number" class="input-mark" data-idx="${i}" data-full="${sub.full}" placeholder="Mark" onkeydown="focusNext(event, ${i})">
-                </td>
-            </tr>
-          `;
-      });
-  }
-
-  function loadStudentUI(index){
-      currentStudentIndex = index;
-      const btn = document.getElementById('next-student-btn');
-      
-      // Clear Inputs
-      document.querySelectorAll('.input-mark').forEach(inp => inp.value = '');
-      
-      if(index < dummyStudents.length){
-          // Show Student Info
-          const s = dummyStudents[index];
-          document.getElementById('st-name-display').innerText = s.name;
-          document.getElementById('st-roll-display').innerText = s.roll;
-          document.getElementById('exam-info-display').innerText = `${examInfo.class} | ${examInfo.name} - ${examInfo.year}`;
-          
-          btn.innerText = "সংরক্ষণ করুন ও পরবর্তী শিক্ষার্থী »";
-          btn.classList.remove('btn-muted');
-          btn.classList.add('btn-accent');
-          btn.disabled = false;
-          
-          // Focus first input
-          setTimeout(() => {
-              const first = document.querySelector('.input-mark');
-              if(first) first.focus();
-          }, 100);
-
-          // Check if already edited (for edit mode)
-          const existing = studentResults.find(r => r.roll === s.roll);
-          if(existing){
-               const inputs = document.querySelectorAll('.input-mark');
-               existing.marks.forEach((m, i) => { if(inputs[i]) inputs[i].value = m; });
-               showToast("পূর্বের তথ্য এডিট করা হচ্ছে", "warn");
-          }
-
-      } else {
-          // Finished
-          document.getElementById('st-name-display').innerText = "সম্পন্ন হয়েছে!";
-          document.getElementById('st-roll-display').innerText = "--";
-          btn.innerText = "সকল তথ্য সম্পন্ন";
-          btn.disabled = true;
-          btn.classList.add('btn-muted');
-          
-          generateMeritList();
-      }
-  }
-
-  function focusNext(e, i){
-      if(e.key === 'Enter'){
-          e.preventDefault();
-          const inputs = document.querySelectorAll('.input-mark');
-          if(i+1 < inputs.length) inputs[i+1].focus();
-          else saveAndNext();
-      }
-  }
-
-  function getGP(m, full){
-      let p = (m/full)*100;
-      if(p>=80) return 5.00;
-      if(p>=70) return 4.00;
-      if(p>=60) return 3.50;
-      if(p>=50) return 3.00;
-      if(p>=40) return 2.00;
-      if(p>=33) return 1.00;
-      return 0.00;
-  }
-
-  function saveAndNext(){
+    setTimeout(() => {
       const inputs = document.querySelectorAll('.input-mark');
-      let marksArr = [];
-      let totalObt = 0, totalFull = 0, totalGP = 0, failCount = 0;
-      let isValid = true;
-
-      inputs.forEach((inp, idx) => {
-          let val = parseFloat(inp.value);
-          let full = parseFloat(inp.getAttribute('data-full'));
-          if(isNaN(val)) { isValid = false; return; }
-          if(val > full) { showToast(`পূর্ণমানের বেশি নম্বর হতে পারে না!`, 'warn'); isValid = false; return; }
-          
-          marksArr.push(val);
-          totalObt += val;
-          totalFull += full;
-          
-          let gp = getGP(val, full);
-          totalGP += gp;
-          if(val/full < 0.33) failCount++;
-      });
-
-      if(!isValid){ showToast("সঠিক নম্বর প্রদান করুন"); return; }
-
-      // Calculation
-      let gpa = (totalGP / inputs.length).toFixed(2);
-      if(failCount > 0) gpa = "0.00";
-      else if(gpa > 5.00) gpa = "5.00"; // Should not happen with logic but safety
-
-      let grade = "";
-      if(failCount > 0) grade = "F";
-      else if(gpa == 5.00) grade = "A+";
-      else if(gpa >= 4.00) grade = "A";
-      else if(gpa >= 3.50) grade = "A-";
-      else if(gpa >= 3.00) grade = "B";
-      else if(gpa >= 2.00) grade = "C";
-      else grade = "D";
-
-      const currentStu = dummyStudents[currentStudentIndex];
-      
-      const resultObj = {
-          roll: currentStu.roll,
-          name: currentStu.name,
-          marks: marksArr,
-          total: totalObt,
-          full: totalFull,
-          gpa: parseFloat(gpa),
-          grade: grade,
-          fail: failCount,
-          avg: ((totalObt/totalFull)*100).toFixed(2)
-      };
-
-      // Remove existing if editing
-      studentResults = studentResults.filter(r => r.roll !== currentStu.roll);
-      studentResults.push(resultObj);
-      
-      // Save to LocalStorage
-      localStorage.setItem('madrasah_results_v2', JSON.stringify(studentResults));
-
-      showToast("তথ্য সংরক্ষিত হয়েছে", "success");
-      
-      // Load Next
-      loadStudentUI(currentStudentIndex + 1);
+      if (inputs.length > 0) inputs[0].focus();
+    }, 100);
   }
 
-  // --- MERIT LIST & OUTPUT ---
-  function generateMeritList(){
-      document.getElementById('merit-list-section').style.display = 'block';
-      
-      // Update Print Header
-      document.getElementById('p-exam-title').innerText = `${examInfo.name} - ${examInfo.year}`;
-      document.getElementById('p-exam-sub').innerText = `শ্রেণি: ${examInfo.class} | মেধা তালিকা`;
-
-      // Sort: Pass first, then GPA high to low, then Total Marks
-      studentResults.sort((a, b) => {
-          if(a.fail === 0 && b.fail > 0) return -1;
-          if(a.fail > 0 && b.fail === 0) return 1;
-          if(b.gpa !== a.gpa) return b.gpa - a.gpa;
-          return b.total - a.total;
-      });
-
-      const thead = document.getElementById('table-headers');
-      let thHTML = `<th>Merit</th><th>Roll</th><th class="text-left">Student Name</th>`;
-      selectedSubjects.forEach(s => thHTML += `<th>${s.short}</th>`);
-      thHTML += `<th>Total</th><th>GPA</th><th>Grade</th><th class="action-col">Act</th>`;
-      thead.innerHTML = thHTML;
-
-      const tbody = document.getElementById('student-rows');
-      tbody.innerHTML = '';
-
-      studentResults.forEach((r, idx) => {
-          let marksHTML = '';
-          r.marks.forEach(m => marksHTML += `<td>${m}</td>`);
-          
-          let statusClass = r.fail > 0 ? 'row-fail' : 'row-pass';
-          let merit = r.fail > 0 ? '--' : (idx+1);
-
-          tbody.innerHTML += `
-            <tr class="${statusClass}">
-                <td class="hl">${merit}</td>
-                <td class="hl">${r.roll}</td>
-                <td class="text-left hl" style="min-width:160px">${r.name}</td>
-                ${marksHTML}
-                <td class="hl">${r.total}</td>
-                <td class="hl">${Number(r.gpa).toFixed(2)}</td>
-                <td class="hl">${r.grade}</td>
-                <td class="action-col">
-                    <button class="btn-edit" onclick="editSingle(${r.roll})">Edit</button>
-                </td>
-            </tr>
-          `;
-      });
-      
-      // Scroll to result
-      document.getElementById('merit-list-section').scrollIntoView({behavior:'smooth'});
+  function goBackToStep1() {
+    localStorage.removeItem(KEY_SUBS);
+    location.reload();
   }
 
-  function editSingle(roll){
-      // Find index in dummy list
-      const idx = dummyStudents.findIndex(s => s.roll === roll);
-      if(idx > -1){
-          loadStudentUI(idx);
-          document.getElementById('step3').scrollIntoView({behavior:'smooth'});
-          showToast(`রোল ${roll} এডিট করা হচ্ছে...`, 'warn');
+  function renderInputRows() {
+    const tbody = document.getElementById('input-rows');
+    tbody.innerHTML = '';
+    const fabH = document.getElementById('fabFocus');
+    if(fabH){ fabH.style.display='none'; fabH.classList.remove('show'); }
+    const stepVal = isDecimalEnabled ? "0.01" : "1";
+
+    selectedSubjects.forEach((sub, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${sub.name}</td>
+        <td style="text-align:center; font-weight:1000; color:#374151;">${sub.full}</td>
+        <td>
+          <input type="number" class="input-mark" step="${stepVal}" data-full="${sub.full}"
+            placeholder="Mark" oninput="handleInput(this, ${index})" onkeydown="handleEnter(event, ${index})">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function handleEnter(event, index) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const allInputs = document.querySelectorAll('.input-mark');
+      if (index === allInputs.length - 1) {
+        calculateFinalResult();
+      } else {
+        if (index + 1 < allInputs.length) allInputs[index + 1].focus();
       }
+    }
   }
 
-  function resetSystem(){
-      if(confirm("সব ডাটা মুছে যাবে। আপনি কি নিশ্চিত?")){
-          localStorage.removeItem('madrasah_results_v2');
-          location.reload();
+  // Your requested handleInput (same logic)
+  function handleInput(input, index) {
+    let val = input.value;
+    const fullMark = parseFloat(input.getAttribute('data-full'));
+    const allInputs = document.querySelectorAll('.input-mark');
+    const isLast = index === allInputs.length - 1;
+
+    if (val !== "" && parseFloat(val) > fullMark) {
+      showToast(`দুঃখিত! এই বিষয়ের পূর্ণমান ${fullMark}।`, 'warn');
+      input.value = "";
+      return;
+    }
+
+    const jumpOrCalc = () => {
+      if (isLast && autoResultEnabled) {
+        setTimeout(() => calculateFinalResult(), 120);
+      } else if (!isLast) {
+        setTimeout(() => allInputs[index + 1].focus(), 90);
       }
+    };
+
+    if (!isDecimalEnabled) {
+      let requiredLength = fullMark.toString().length;
+      if (val.length >= requiredLength || (val !== "0" && parseInt(val) * 10 > fullMark)) {
+        jumpOrCalc();
+      }
+    } else {
+      if (val.includes('.')) {
+        const parts = val.split('.');
+        if (parts[1] && parts[1].length === 2) {
+          jumpOrCalc();
+        }
+      }
+    }
+  }
+
+  function getGP(percentage) {
+    if (percentage >= 80) return 5.00;
+    else if (percentage >= 70) return 4.00;
+    else if (percentage >= 60) return 3.50;
+    else if (percentage >= 50) return 3.00;
+    else if (percentage >= 40) return 2.00;
+    else if (percentage >= 33) return 1.00;
+    else return 0.00;
+  }
+
+  function calculateFinalResult() {
+    const inputs = document.querySelectorAll('.input-mark');
+    let totalObtained = 0;
+    let totalFullMarks = 0;
+    let totalGP = 0;
+    let failCount = 0;
+    let subjectCount = inputs.length;
+    let marksArray = [];
+
+    for (let inp of inputs) {
+      if (inp.value === "") {
+        showToast("সব বিষয়ের নম্বর পূরণ করুন!",'warn');
+        return;
+      }
+    }
+
+    inputs.forEach(inp => {
+      let marks = parseFloat(inp.value);
+      let full = parseFloat(inp.getAttribute('data-full'));
+
+      marksArray.push(marks);
+      totalObtained += marks;
+      totalFullMarks += full;
+
+      let percent = (marks / full) * 100;
+      let gp = getGP(percent);
+      totalGP += gp;
+
+      if (percent < 33) failCount++;
+    });
+
+    if (!Number.isInteger(totalObtained)) totalObtained = parseFloat(totalObtained.toFixed(2));
+
+    let finalGPA = (totalGP / subjectCount).toFixed(2);
+    let avgMarks = ((totalObtained / totalFullMarks) * 100).toFixed(2);
+    if (finalGPA > 5.00) finalGPA = "5.00";
+
+    document.getElementById('r-gpa').innerText = finalGPA;
+    document.getElementById('r-total-marks').innerText = totalObtained;
+    document.getElementById('r-full-marks').innerText = totalFullMarks;
+    document.getElementById('r-avg').innerText = avgMarks;
+    document.getElementById('r-total-gp').innerText = totalGP.toFixed(2);
+
+    let letter = "";
+    if (finalGPA == 5.00) letter = "(A+)";
+    else if (finalGPA >= 4.00) letter = "(A)";
+    else if (finalGPA >= 3.50) letter = "(A-)";
+    else if (finalGPA >= 3.00) letter = "(B)";
+    else if (finalGPA >= 2.00) letter = "(C)";
+    else letter = "(D)";
+    if (finalGPA < 1.00) letter = "(F)";
+    document.getElementById('r-grade').innerText = letter;
+
+    const statusElem = document.getElementById('r-status');
+    document.getElementById('r-fail-count').innerText = failCount;
+
+    if (failCount > 0) {
+      statusElem.innerText = "অকৃতকার্য";
+      statusElem.className = "status-fail";
+    } else {
+      statusElem.innerText = "কৃতকার্য";
+      statusElem.className = "status-pass";
+    }
+
+    const resArea = document.getElementById('result-area');
+    resArea.style.display = 'block';
+
+    const fab = document.getElementById('fabFocus');
+    if(fab){ fab.style.display = 'flex'; fab.classList.add('show'); }
+
+    resArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const studentData = {
+      id: editModeId !== null ? editModeId : entrySerial,
+      total: totalObtained,
+      gpa: parseFloat(finalGPA),
+      isPass: (failCount === 0),
+      merit: 0,
+      marks: marksArray,
+      grade: letter,
+      failCount: failCount,
+      full: totalFullMarks,
+      avg: avgMarks,
+      tgp: totalGP.toFixed(2)
+    };
+
+    if (editModeId !== null) {
+      const index = allStudents.findIndex(s => s.id === editModeId);
+      if (index !== -1) allStudents[index] = studentData;
+
+      editModeId = null;
+      document.getElementById('edit-message').style.display = 'none';
+
+      const calcBtn = document.getElementById('calculate-btn');
+      calcBtn.innerText = "ফলাফল দেখুন";
+      calcBtn.className = "btn btn-accent";
+    } else {
+      allStudents.push(studentData);
+      entrySerial++;
+    }
+
+    saveData();
+    calculateMeritPositions();
+    renderStudentTable();
+    document.getElementById('merit-list-section').style.display = 'block';
+
+    inputs.forEach(inp => inp.value = '');
+
+    blurFocus();
+    setTimeout(() => {
+      const res = document.getElementById('result-area');
+      if(res){
+        const y = res.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 120);
+  }
+
+  function editStudent(id) {
+    const student = allStudents.find(s => s.id === id);
+    if (!student) return;
+
+    const inputs = document.querySelectorAll('.input-mark');
+    if (inputs.length !== student.marks.length) {
+      showToast("বিষয় পরিবর্তন হওয়ায় এই ছাত্রের তথ্য এডিট করা সম্ভব নয়।",'warn');
+      return;
+    }
+
+    student.marks.forEach((mark, index) => inputs[index].value = mark);
+    editModeId = id;
+
+    document.getElementById('edit-message').style.display = 'block';
+    document.getElementById('edit-serial-display').innerText = id;
+
+    const calcBtn = document.getElementById('calculate-btn');
+    calcBtn.innerText = "আপডেট করুন (Update)";
+    calcBtn.className = "btn btn-warn";
+
+    document.getElementById('step2').scrollIntoView({ behavior: 'smooth' });
+    inputs[0].focus();
+  }
+
+  function calculateMeritPositions() {
+    let sortedList = [...allStudents];
+    sortedList.sort((a, b) => {
+      if (a.isPass && !b.isPass) return -1;
+      if (!a.isPass && b.isPass) return 1;
+      if (a.isPass && b.isPass) {
+        if (b.gpa !== a.gpa) return b.gpa - a.gpa;
+        return b.total - a.total;
+      }
+      return b.total - a.total;
+    });
+
+    sortedList.forEach((student, index) => {
+      const originalStudent = allStudents.find(s => s.id === student.id);
+      if (originalStudent) originalStudent.merit = index + 1;
+    });
+  }
+
+  function renderStudentTable() {
+    const headerRow = document.getElementById('table-headers');
+    let headerHtml = `<th><span>Sl No</span></th>`;
+
+    selectedSubjects.forEach(sub => headerHtml += `<th><span>${sub.short}</span></th>`);
+
+    headerHtml += `
+      <th><span>Total Marks</span></th>
+      <th><span>Average (%)</span></th>
+      <th><span>Full Marks</span></th>
+      <th><span>Highest Mark</span></th>
+      <th><span>Total GP</span></th>
+      <th><span>GPA</span></th>
+      <th><span>Grade</span></th>
+      <th><span>Merit Position</span></th>
+      <th><span>Status</span></th>
+      <th class="action-col"><span>Action</span></th>
+    `;
+    headerRow.innerHTML = headerHtml;
+
+    const tbody = document.getElementById('student-rows');
+    tbody.innerHTML = '';
+
+    let max = allStudents.length > 0 ? Math.max(...allStudents.map(s => s.total)) : 0;
+
+    allStudents.sort((a, b) => a.id - b.id).forEach(student => {
+      let rowClass = student.isPass ? "row-pass" : "row-fail";
+      let status = student.isPass ? "Pass" : `Fail(${student.failCount})`;
+
+      let marksCells = "";
+      student.marks.forEach(m => marksCells += `<td>${m}</td>`);
+
+      const row = `
+        <tr class="${rowClass}">
+          <td class="hl">${student.id}</td>
+          ${marksCells}
+          <td class="hl">${student.total}</td>
+          <td>${student.avg}</td>
+          <td>${student.full}</td>
+          <td>${max}</td>
+          <td class="hl">${student.tgp}</td>
+          <td class="hl">${student.gpa.toFixed(2)}</td>
+          <td class="hl">${student.grade}</td>
+          <td class="hl">${student.merit}</td>
+          <td class="hl">${status}</td>
+          <td class="action-col">
+            <button class="btn-edit" onclick="editStudent(${student.id})">✏️ Edit</button>
+          </td>
+        </tr>
+      `;
+      tbody.innerHTML += row;
+    });
   }
 
   function downloadExcel() {
     let table = document.getElementById("final-table");
     let tempTable = table.cloneNode(true);
-    tempTable.querySelectorAll(".action-col").forEach(c => c.remove());
-    
+
+    let actionCols = tempTable.querySelectorAll(".action-col");
+    actionCols.forEach(h => h.remove());
+
+    let headers = tempTable.querySelectorAll("th span");
+    headers.forEach(span => { span.parentNode.innerHTML = span.innerHTML; });
+
+    tempTable.setAttribute('border', '1');
+
     let html = `
-      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">
+      <html xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:x="urn:schemas-microsoft-com:office:excel"
+            xmlns="http://www.w3.org/TR/REC-html40">
         <head><meta charset="UTF-8"></head>
         <body>
-            <h3>${examInfo.class} - ${examInfo.name} ${examInfo.year}</h3>
-            ${tempTable.outerHTML}
+          <h2 style="text-align:center">Result Sheet</h2>
+          ${tempTable.outerHTML}
         </body>
       </html>`;
-    
+
     let blob = new Blob(['\ufeff', html], { type: 'application/vnd.ms-excel' });
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `Result_${examInfo.class}.xls`;
+    a.download = "Madrasah_Result.xls";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   }
+
+  // Make entire subject card clickable (without breaking checkbox/label clicks)
+  document.addEventListener('click', function(e){
+    const card = e.target.closest('.sub-card');
+    if(!card) return;
+
+    if (e.target.classList.contains('sub-check')) return;
+    if (e.target.closest('label')) return;
+    if(e.target.classList.contains('fm-input')) return;
+
+    const checkbox = card.querySelector('.sub-check');
+    if(checkbox){ checkbox.checked = !checkbox.checked; }
+  });
+
+  function focusFirstMarkInput(){
+    const first = document.querySelector('.input-mark');
+    if(!first) return;
+    try{ first.focus(); }catch(e){}
+    try{ first.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){ first.scrollIntoView(); }
+  }
 </script>
 </body>
-</html>
+  </html>
