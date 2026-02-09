@@ -7,7 +7,7 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
-
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;500;600;700&display=swap');
     :root{
       --bg:#f4f7fb;
       --card:#ffffff;
@@ -27,7 +27,7 @@
 
     *{box-sizing:border-box}
     body{
-      font-family:'Hind Siliguri',sans-serif;
+      font-family:'Hind Siliguri','Noto Serif Bengali', sans-serif;
       background:
         radial-gradient(1200px 600px at 10% 10%, rgba(15,118,110,.10), transparent 60%),
         radial-gradient(900px 500px at 90% 20%, rgba(37,99,235,.10), transparent 55%),
@@ -266,6 +266,7 @@
     .btn-warn{ background: linear-gradient(135deg, #f59e0b, #d97706); color:#111827; }
     .btn-danger{ background: linear-gradient(135deg, #ef4444, #b91c1c); }
     .btn-small{ padding: 9px 12px; border-radius: 10px; font-size: 14px; box-shadow:none; }
+    .btn-info { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; }
 
     /* Marks table */
     .marks-table{
@@ -442,23 +443,40 @@
     .footer{ margin-top: 14px; text-align:center; color: var(--muted); font-size: 13px; }
     .footer a{ color: var(--brand); text-decoration:none; font-weight: 900; }
 
-    /* PRINT */
+    /* PRINT STYLES FIXED */
     @media print{
       @page { margin: 10mm; }
-      body{ background:#fff; padding:0; }
+      body{ background:#fff; padding:0mm;  }
       body *{ visibility:hidden; }
 
+      /* Normal Print (List) */
       #print-area, #print-area *{ visibility: visible; }
       #print-area{ position:absolute; left:0; top:0; width:100%; }
 
-      .no-print, .action-col, .btn-edit { display:none !important; }
+      /* Overwrite for Individual Print Mode */
+      body.print-mode-individual #print-area { display: none !important; }
+      
+      body.print-mode-individual #individual-print-container { 
+        visibility: visible !important; 
+        display: block !important;
+        position: absolute; 
+        left: 0; 
+        top: 0; 
+        width: 100%; 
+      }
+      body.print-mode-individual #individual-print-container * { visibility: visible !important; }
+
+      /* General Print Resets */
+      .no-print, .action-col, .btn-edit, .api-control-box, .student-info-display { display:none !important; }
       .section-title{ display:none !important; }
-#merit-list-section{
-      display:none;
-      margin-top: 0px;
-      border-top: 0px dashed rgba(107,114,128,.45);
-      padding-top: 0px;
-    }
+      
+      /* List Table Print Specifics */
+      #merit-list-section{
+        display:none;
+        margin-top: 0px;
+        border-top: 0px dashed rgba(107,114,128,.45);
+        padding-top: 0px;
+      }
       .print-head{
         display:block !important;
         text-align:center;
@@ -471,7 +489,6 @@
       .print-head p{ margin:2px 0 0; font-size: 12px; }
 
       .table-responsive{ border:none; border-radius: 0; }
-
       .list-table{ min-width: 0 !important; width: 100% !important; font-size: 12px; border-collapse: collapse; }
       .list-table th, .list-table td{ border: 1px solid #000 !important; color:#000 !important; }
       .list-table td{ padding: 2px 3px !important; }
@@ -481,7 +498,7 @@
         height: 105px;
         vertical-align: bottom;
       }
-          .row-pass td{ font-weight: normal !important ;}
+      .row-pass td{ font-weight: normal !important ;}
       .row-fail td{
         font-weight: normal !important ;
         background: white !important;
@@ -496,6 +513,42 @@
         font-weight: 900;
         font-size: 12px;
       }
+
+      /* Individual Marksheet Style - FIXED BREAKS */
+      .print-page {
+          display: block;
+          page-break-after: always;
+          break-after: page;
+          width: 100%;
+          min-height: 95vh;
+          padding: 30px;
+          border: 2px solid #000;
+          box-sizing: border-box;
+          position: relative;
+          margin-bottom: 20px;
+      }
+      .print-page:last-child { page-break-after: auto; break-after: auto; }
+      
+      .sheet-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+      .sheet-header h1 { margin: 0; font-size: 26px; color: #000; }
+      .sheet-header p { margin: 4px 0; font-size: 14px; }
+      .exam-title-print { font-size: 18px; font-weight: 800; margin-top: 8px; border: 1px solid #000; display: inline-block; padding: 4px 15px; border-radius: 20px; }
+      
+      .student-info-box {
+          display: flex; justify-content: space-between; margin-bottom: 20px; border: 1px solid #000; padding: 10px; font-size: 14px;
+      }
+      .student-info-col div { margin-bottom: 4px; }
+
+      .sheet-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; }
+      .sheet-table th, .sheet-table td { border: 1px solid #000; padding: 6px 8px; text-align: center; color: #000; }
+      .sheet-table th { background: #eee !important; font-weight: 800; }
+      .sheet-table td:first-child { text-align: left; font-weight: 700; }
+
+      .summary-box { border: 1px solid #000; padding: 10px; margin-bottom: 40px; }
+      .sum-row { display: flex; justify-content: space-around; font-weight: 800; font-size: 16px; }
+      
+      .footer-sign { display: flex; justify-content: space-between; margin-top: 60px; font-size: 12px; }
+      .sign-line { border-top: 1px solid #000; width: 150px; text-align: center; padding-top: 5px; }
     }
 
     /* Toast (Alert Alternative) */
@@ -621,6 +674,42 @@
     @keyframes fabRipple{
       to{ width:140px; height:140px; opacity:0; }
     }
+
+    /* API Controls Style */
+    .api-control-box {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        padding: 14px;
+        border-radius: 14px;
+        margin-bottom: 16px;
+    }
+    .api-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .api-select {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        flex: 1;
+        font-weight: 700;
+        outline: none;
+    }
+    .student-info-display {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+        padding: 14px;
+        border-radius: 14px;
+        font-size: 16px;
+        margin-bottom: 14px;
+        font-weight: 700;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border-left: 5px solid #16a34a;
+    }
   </style>
 </head>
 
@@ -653,6 +742,39 @@
 
         <!-- STEP 1 -->
         <div id="step1">
+          <!-- API FETCH SECTION -->
+          <div class="api-control-box">
+             <h4 style="margin:0 0 10px; color:#1e40af; display:flex; align-items:center; gap:6px;">
+                 🌐 Student Information Fetching
+             </h4>
+             <div class="api-row">
+                 <select id="api-class" class="api-select">
+                     <option value="">শ্রেণি নির্বাচন করুন...</option>
+                     <option value="প্লে">প্লে (Play)</option>
+                     <option value="নার্সারি">নার্সারি (Nursery)</option>
+                     <option value="কেজি">কেজি (KG)</option>
+                     <option value="১ম">১ম (One)</option>
+                     <option value="২য়">২য় (Two)</option>
+                     <option value="৩য়">৩য় (Three)</option>
+                     <option value="৪র্থ">৪র্থ (Four)</option>
+                     <option value="৫ম">৫ম (Five)</option>
+                     <option value="৬ষ্ঠ">৬ষ্ঠ (Six)</option>
+                     <option value="৭ম">৭ম (Seven)</option>
+                     <option value="৮ম">৮ম (Eight)</option>
+                     <option value="৯ম">৯ম (Nine)</option>
+                     <option value="১০ম">১০ম (Ten)</option>
+                 </select>
+                 <select id="api-year" class="api-select">
+                     <option value="2024">2024</option>
+                     <option value="2025" selected>2025</option>
+                     <option value="2026">2026</option>
+                 </select>
+                 <button class="btn btn-add btn-small" id="btn-fetch" onclick="fetchOnlineStudents()">
+                     Online থেকে ছাত্র লোড করুন
+                 </button>
+             </div>
+          </div>
+
           <h3><span class="hbar"></span> ধাপ ১: বিষয় নির্বাচন</h3>
           <p class="subtext">
             যে বিষয়গুলো পরীক্ষার অন্তর্ভুক্ত সেগুলোতে টিক দিন। প্রয়োজনে পূর্ণমান পরিবর্তন বা নতুন বিষয় যুক্ত করুন।
@@ -663,7 +785,13 @@
           <div class="btnrow">
             <button class="btn btn-add" onclick="addNewSubject()">+ নতুন বিষয় এড করুন</button>
           </div>
+<div class="btnrow">
+<label class="btn btn-add btn-small">
+  📂 CSV আপলোড
+  <input type="file" accept=".csv" onchange="handleCSVUpload(event)" hidden>
+</label>
 
+</div>
           <div class="toggle">
             <input type="checkbox" id="decimal-toggle" onchange="toggleDecimal()">
             <label for="decimal-toggle">প্রাপ্ত নম্বর দশমিক হলে (যেমন: ৮০.৫০) এখানে টিক দিন</label>
@@ -687,7 +815,11 @@
 
           <h3 style="margin-top:6px;"><span class="hbar"></span> ধাপ ২: প্রাপ্ত নম্বর এন্ট্রি</h3>
 
-          <p id="edit-message">✏️ আপনি এখন সিরিয়াল নম্বর <span id="edit-serial-display"></span> এর তথ্য এডিট করছেন।</p>
+          <!-- AUTOMATIC INFO DISPLAY -->
+          <div id="active-student-info" class="student-info-display"></div>
+          
+          <!-- Hidden Edit Message (We reuse the main display for better look) -->
+          <p id="edit-message" style="display:none"></p>
 
           <table class="marks-table">
             <thead>
@@ -744,7 +876,7 @@
             </div>
           </div>
 
-          <!-- PRINT AREA -->
+          <!-- PRINT AREA (MERIT LIST) -->
           <div id="print-area">
             <div class="print-head" style="display:none">
               <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
@@ -766,7 +898,13 @@
 
               <div class="btnrow no-print" style="margin-top:12px;">
                 <button class="btn btn-primary" style="flex:1" onclick="downloadExcel()">📥 Excel ডাউনলোড</button>
-                <button class="btn btn-add" style="flex:1" onclick="window.print()">🖨️ PDF / প্রিন্ট</button>
+                <button class="btn btn-add" style="flex:1" onclick="printResultList()"
+">🖨️ PDF / প্রিন্ট (লিস্ট)</button>
+              </div>
+
+              <!-- NEW BUTTON FOR INDIVIDUAL MARK SHEET -->
+              <div class="btnrow no-print" style="margin-top:12px;">
+                 <button class="btn btn-info" style="width:100%; font-weight:1000;" onclick="printAllIndividualResults()">📄 সব রেজাল্ট শিট প্রিন্ট করুন (A4)</button>
               </div>
 
               <div class="btnrow no-print">
@@ -774,6 +912,9 @@
               </div>
             </div>
           </div>
+          
+          <!-- HIDDEN CONTAINER FOR INDIVIDUAL RESULTS -->
+          <div id="individual-print-container" style="display:none;"></div>
 
         </div>
 
@@ -796,6 +937,12 @@
   let selectedSubjects = [];
   let isDecimalEnabled = false;
   let editModeId = null;
+
+  // API NEW GLOBALS
+  let fetchedStudents = [];
+  let currentGradingStudent = null; // Store selected student object
+  let csvMode = false;
+  const API_URL = "https://script.google.com/macros/s/AKfycbwJdYyKraaP194D-byPE8zZnCtIRyRgJRIN-AoH4CT5N7joPY_D63ZgfgwpdzJbEea0kA/exec";
 
   // Toast helper (replaces alert)
   let toastTimer = null;
@@ -847,11 +994,13 @@
   const KEY_SUBS = 'madrasah_subs_ult_v3_edit';
   const KEY_STDS = 'madrasah_stds_ult_v3_edit';
   const KEY_DEC  = 'madrasah_dec_ult_v3_edit';
+  const KEY_FETCHED = 'madrasah_fetched_stds_v1'; // store fetched temporarily
 
   window.onload = function () {
     const savedSubjects = localStorage.getItem(KEY_SUBS);
     const savedStudents = localStorage.getItem(KEY_STDS);
     const savedDecimal  = localStorage.getItem(KEY_DEC);
+    const savedFetched  = localStorage.getItem(KEY_FETCHED);
 
     subjectsDB.forEach((sub, index) => {
       let isChecked = index < 2 ? 'checked' : '';
@@ -867,13 +1016,20 @@
     if (savedDecimal === 'true') isDecimalEnabled = true;
     document.getElementById('decimal-toggle').checked = isDecimalEnabled;
 
+    if (savedFetched) {
+        try { fetchedStudents = JSON.parse(savedFetched); } catch(e){}
+    }
+
     if (savedSubjects) {
       selectedSubjects = JSON.parse(savedSubjects);
 
       if (savedStudents) {
         allStudents = JSON.parse(savedStudents);
         if (allStudents.length > 0) {
-          entrySerial = Math.max(...allStudents.map(s => s.id)) + 1;
+          // Find max ID to prevent collision if API IDs are not used
+          let maxId = 0;
+          allStudents.forEach(s => { if(typeof s.id === 'number' && s.id < 9999) maxId = Math.max(maxId, s.id); });
+          entrySerial = maxId + 1;
         }
       }
 
@@ -887,6 +1043,115 @@
       }
     }
   };
+
+  // --- API FUNCTIONALITY ---
+  async function fetchOnlineStudents() {
+      const cls = document.getElementById('api-class').value;
+      const yr = document.getElementById('api-year').value;
+      const btn = document.getElementById('btn-fetch');
+
+      if(!cls || !yr) { showToast('শ্রেণি এবং বছর নির্বাচন করুন', 'warn'); return; }
+
+      btn.innerHTML = "লোড হচ্ছে...";
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(API_URL + "?action=read");
+        const json = await res.json();
+        if(json.status === 'success'){
+          // Filter by Class and Session
+          fetchedStudents = json.data.filter(s => s.ClassBn === cls && s.Session == yr);
+
+          if(fetchedStudents.length > 0){
+            showToast(`${fetchedStudents.length} জন ছাত্রের তথ্য পাওয়া গেছে!`, 'success');
+            // Sort by Roll
+            fetchedStudents.sort((a,b) => Number(a.Roll) - Number(b.Roll));
+            localStorage.setItem(KEY_FETCHED, JSON.stringify(fetchedStudents));
+          } else {
+            showToast('কোন ছাত্র পাওয়া যায়নি (ফিল্টার অনুযায়ী)', 'warn');
+            fetchedStudents = [];
+            localStorage.removeItem(KEY_FETCHED);
+          }
+        } else {
+          showToast('ডাটা আনতে সমস্যা হয়েছে', 'danger');
+        }
+      } catch(e) {
+        showToast('নেটওয়ার্ক এরর: ' + e.message, 'danger');
+      } finally {
+        btn.innerHTML = "Online থেকে ছাত্র লোড করুন";
+        btn.disabled = false;
+      }
+  }
+
+  // --- AUTO LOAD NEXT STUDENT LOGIC ---
+  function loadNextStudent() {
+    if(csvMode) return;
+      const display = document.getElementById('active-student-info');
+      
+      // If no API data loaded, use Manual Serial logic
+      if(fetchedStudents.length === 0) {
+          currentGradingStudent = null;
+          display.style.display = 'block';
+          display.style.background = '#f4f7fb';
+          display.style.borderColor = '#e5e7eb';
+          display.style.color = '#374151';
+          display.innerHTML = ` ম্যানুয়াল এন্ট্রি সিরিয়াল: <b>${entrySerial}</b>`;
+          toggleInputs(true);
+          return;
+      }
+
+      // Find first student from Fetched list whose ID is NOT in allStudents
+      // fetchedStudents IS ALREADY SORTED BY ROLL
+      const pendingStudent = fetchedStudents.find(fs => !allStudents.some(saved => saved.id == fs.ID));
+
+      if (pendingStudent) {
+          currentGradingStudent = pendingStudent;
+          display.style.display = 'block';
+          // Styling for active entry
+          display.style.background = '#f0fdf4';
+          display.style.borderColor = '#bbf7d0';
+          display.style.color = '#166534';
+          display.style.borderLeftColor = '#16a34a';
+
+          display.innerHTML = `
+            <div style="font-size:13px; color:#6b7280; margin-bottom:4px;">এখন এন্ট্রি হচ্ছে (Automatic):</div>
+            <div style="font-size:20px; font-weight:800; color:#15803d;">${currentGradingStudent.StudentNameEn}</div>
+            <div style="display:flex; gap:15px; margin-top:6px; font-size:15px;">
+               <span>Roll: <b>${currentGradingStudent.Roll}</b></span>
+               <span>ID: <b>${currentGradingStudent.ID}</b></span>
+            </div>
+          `;
+          toggleInputs(true);
+          // Focus first input
+          setTimeout(() => {
+              const inputs = document.querySelectorAll('.input-mark');
+              if(inputs.length > 0) inputs[0].focus();
+          }, 200);
+
+      } else {
+          // No pending students found
+          currentGradingStudent = null;
+          display.style.display = 'block';
+          display.style.background = '#fef2f2';
+          display.style.borderColor = '#fecaca';
+          display.style.color = '#b91c1c';
+          display.style.borderLeftColor = '#dc2626';
+          
+          display.innerHTML = `✅ এই তালিকার সকল ছাত্রের এন্ট্রি সম্পন্ন হয়েছে!`;
+          toggleInputs(false); // Disable inputs
+      }
+  }
+
+  function toggleInputs(enable) {
+      const inputs = document.querySelectorAll('.input-mark');
+      inputs.forEach(inp => {
+          inp.disabled = !enable;
+          if(!enable) inp.placeholder = "Locked";
+          else inp.placeholder = "Mark";
+      });
+      document.getElementById('calculate-btn').disabled = !enable;
+  }
+  // --- END API FUNC ---
 
   function setStepPills(step){
     const p1 = document.getElementById('pill1');
@@ -915,6 +1180,7 @@
     localStorage.removeItem(KEY_SUBS);
     localStorage.removeItem(KEY_STDS);
     localStorage.removeItem(KEY_DEC);
+    localStorage.removeItem(KEY_FETCHED);
     location.reload();
   }
 
@@ -958,6 +1224,7 @@
     document.getElementById('step1').classList.add('hidden');
     document.getElementById('step2').classList.remove('hidden');
     setStepPills(2);
+    loadNextStudent(); // Trigger Auto Load
   }
 
   function goToStep2() {
@@ -984,11 +1251,6 @@
     saveData();
     renderInputRows();
     goToStep2UIOnly();
-
-    setTimeout(() => {
-      const inputs = document.querySelectorAll('.input-mark');
-      if (inputs.length > 0) inputs[0].focus();
-    }, 100);
   }
 
   function goBackToStep1() {
@@ -1029,7 +1291,6 @@
     }
   }
 
-  // Your requested handleInput (same logic)
   function handleInput(input, index) {
     let val = input.value;
     const fullMark = parseFloat(input.getAttribute('data-full'));
@@ -1073,6 +1334,16 @@
     else if (percentage >= 40) return 2.00;
     else if (percentage >= 33) return 1.00;
     else return 0.00;
+  }
+  
+  function getGradeFromGP(gp) {
+      if (gp >= 5.00) return 'A+';
+      if (gp >= 4.00) return 'A';
+      if (gp >= 3.50) return 'A-';
+      if (gp >= 3.00) return 'B';
+      if (gp >= 2.00) return 'C';
+      if (gp >= 1.00) return 'D';
+      return 'F';
   }
 
   function calculateFinalResult() {
@@ -1147,8 +1418,20 @@
 
     resArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
+    // DETERMINE ID, NAME, ROLL
+    let studentId = entrySerial;
+    let studentName = "";
+    let studentRoll = "";
+
+    // If API student is selected and we are NOT in edit mode
+    if(editModeId === null && currentGradingStudent){
+        studentId = currentGradingStudent.ID;
+        studentName = currentGradingStudent.StudentNameEn;
+        studentRoll = currentGradingStudent.Roll;
+    }
+
     const studentData = {
-      id: editModeId !== null ? editModeId : entrySerial,
+      id: editModeId !== null ? editModeId : studentId,
       total: totalObtained,
       gpa: parseFloat(finalGPA),
       isPass: (failCount === 0),
@@ -1158,12 +1441,20 @@
       failCount: failCount,
       full: totalFullMarks,
       avg: avgMarks,
-      tgp: totalGP.toFixed(2)
+      tgp: totalGP.toFixed(2),
+      // NEW FIELDS
+      name: editModeId !== null ? allStudents.find(s=>s.id === editModeId).name : studentName,
+      roll: editModeId !== null ? allStudents.find(s=>s.id === editModeId).roll : studentRoll
     };
 
     if (editModeId !== null) {
       const index = allStudents.findIndex(s => s.id === editModeId);
-      if (index !== -1) allStudents[index] = studentData;
+      if (index !== -1) {
+          // Preserve name/roll during edit
+          studentData.name = allStudents[index].name;
+          studentData.roll = allStudents[index].roll;
+          allStudents[index] = studentData;
+      }
 
       editModeId = null;
       document.getElementById('edit-message').style.display = 'none';
@@ -1172,8 +1463,16 @@
       calcBtn.innerText = "ফলাফল দেখুন";
       calcBtn.className = "btn btn-accent";
     } else {
-      allStudents.push(studentData);
-      entrySerial++;
+      // Check for Duplicate ID if using API
+      const exists = allStudents.find(s => s.id == studentData.id);
+      if(exists){
+          // Should not happen in sequential flow, but safeguard
+          const idx = allStudents.findIndex(s => s.id == studentData.id);
+          allStudents[idx] = studentData;
+      } else {
+          allStudents.push(studentData);
+          if(!currentGradingStudent) entrySerial++;
+      }
     }
 
     saveData();
@@ -1182,6 +1481,9 @@
     document.getElementById('merit-list-section').style.display = 'block';
 
     inputs.forEach(inp => inp.value = '');
+    
+    // LOAD NEXT STUDENT IMMEDIATELY
+    loadNextStudent();
 
     blurFocus();
     setTimeout(() => {
@@ -1203,11 +1505,28 @@
       return;
     }
 
+    // Enable inputs in case they were locked
+    toggleInputs(true);
+document.getElementById('calculate-btn').disabled = false;
     student.marks.forEach((mark, index) => inputs[index].value = mark);
     editModeId = id;
 
-    document.getElementById('edit-message').style.display = 'block';
-    document.getElementById('edit-serial-display').innerText = id;
+    // Use the main display for Edit Info
+    const display = document.getElementById('active-student-info');
+    display.style.display = 'block';
+    display.style.background = '#fffbeb';
+    display.style.borderColor = '#fcd34d';
+    display.style.color = '#92400e';
+    display.style.borderLeftColor = '#f59e0b';
+    
+    display.innerHTML = `
+        <div style="font-size:13px; color:#92400e; margin-bottom:4px;">✏️ আপনি তথ্য পরিবর্তন করছেন (Edit Mode):</div>
+        <div style="font-size:20px; font-weight:800; color:#b45309;">${student.name || 'নাম নেই'}</div>
+        <div style="display:flex; gap:15px; margin-top:6px; font-size:15px;">
+           <span>Roll: <b>${student.roll || '-'}</b></span>
+           <span>ID: <b>${student.id}</b></span>
+        </div>
+    `;
 
     const calcBtn = document.getElementById('calculate-btn');
     calcBtn.innerText = "আপডেট করুন (Update)";
@@ -1237,9 +1556,10 @@
 
   function renderStudentTable() {
     const headerRow = document.getElementById('table-headers');
-    let headerHtml = `<th><span>Sl No</span></th>`;
+    // EDITED: Header now shows SL, then hidden ID, then Name
+    let headerHtml = `<th><span>SL</span></th><th class="col-id" style="display:none"><span>ID</span></th><th><span>Name</span></th><th><span>Roll</span></th>`;
 
-    selectedSubjects.forEach(sub => headerHtml += `<th><span>${sub.short}</span></th>`);
+    selectedSubjects.forEach(sub => headerHtml += `<th><span>${sub.short} </span></th>`);
 
     headerHtml += `
       <th><span>Total Marks</span></th>
@@ -1260,16 +1580,24 @@
 
     let max = allStudents.length > 0 ? Math.max(...allStudents.map(s => s.total)) : 0;
 
-    allStudents.sort((a, b) => a.id - b.id).forEach(student => {
+    // Sort by Roll if available, else by ID
+    allStudents.sort((a, b) => {
+        if(a.roll && b.roll) return Number(a.roll) - Number(b.roll);
+        return a.id - b.id;
+    }).forEach((student, index) => { // Use index for SL
       let rowClass = student.isPass ? "row-pass" : "row-fail";
       let status = student.isPass ? "Pass" : `Fail(${student.failCount})`;
 
       let marksCells = "";
       student.marks.forEach(m => marksCells += `<td>${m}</td>`);
 
+      // EDITED: First col is SL (index+1), second is hidden ID
       const row = `
         <tr class="${rowClass}">
-          <td class="hl">${student.id}</td>
+          <td class="hl">${index + 1}</td>
+          <td class="hl col-id" style="display:none">${student.id}</td>
+          <td style="text-align:left;padding-left:8px;font-weight:700;">${student.name || '-'}</td>
+          <td class="hl">${student.roll || '-'}</td>
           ${marksCells}
           <td class="hl">${student.total}</td>
           <td>${student.avg}</td>
@@ -1289,39 +1617,622 @@
     });
   }
 
-  function downloadExcel() {
-    let table = document.getElementById("final-table");
-    let tempTable = table.cloneNode(true);
+  // --- FIXED EXCEL DOWNLOAD FUNCTION ---
+function downloadExcel() {
 
-    let actionCols = tempTable.querySelectorAll(".action-col");
-    actionCols.forEach(h => h.remove());
+    if(allStudents.length === 0){
+        showToast('কোনো ডাটা নেই', 'warn');
+        return;
+    }
 
-    let headers = tempTable.querySelectorAll("th span");
-    headers.forEach(span => { span.parentNode.innerHTML = span.innerHTML; });
+    let csv = [];
 
-    tempTable.setAttribute('border', '1');
+    // ===== HEADER বানানো (এখানেই [100] থাকবে) =====
+    let headers = ["SL","ID","Name","Roll"];
 
-    let html = `
-      <html xmlns:o="urn:schemas-microsoft-com:office:office"
-            xmlns:x="urn:schemas-microsoft-com:office:excel"
-            xmlns="http://www.w3.org/TR/REC-html40">
-        <head><meta charset="UTF-8"></head>
-        <body>
-          <h2 style="text-align:center">Result Sheet</h2>
-          ${tempTable.outerHTML}
-        </body>
-      </html>`;
+    selectedSubjects.forEach(sub=>{
+        headers.push(`${sub.short} [${sub.full}]`);
+    });
 
-    let blob = new Blob(['\ufeff', html], { type: 'application/vnd.ms-excel' });
+    headers.push("Total Marks","Average (%)","Full Marks","Highest Mark","Total GP","GPA","Grade","Merit Position","Status");
+
+    csv.push(headers.join(","));
+
+    // ===== DATA ROW =====
+    allStudents.forEach((s, index)=>{
+
+        let row = [
+            index+1,
+            s.id,
+            `"${s.name}"`,
+            s.roll
+        ];
+
+        s.marks.forEach(m=> row.push(m));
+
+        row.push(
+            s.total,
+            s.avg,
+            s.full,
+            "", // highest mark optional
+            s.tgp,
+            s.gpa.toFixed(2),
+            s.grade,
+            s.merit,
+            s.isPass ? "Pass" : `Fail(${s.failCount})`
+        );
+
+        csv.push(row.join(","));
+    });
+
+    let blob = new Blob(["\ufeff"+csv.join("\n")], {type:"text/csv;charset=utf-8;"});
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Madrasah_Result.xls";
-    document.body.appendChild(a);
+    a.download = "Madrasah_Result.csv";
     a.click();
-    document.body.removeChild(a);
-  }
+}
 
-  // Make entire subject card clickable (without breaking checkbox/label clicks)
+
+  function handleCSVUpload(event){
+    const file = event.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+csvMode = true;
+        // ⚠️ পুরনো সব data delete (SAFE MODE)
+        allStudents = [];
+        fetchedStudents = [];
+        currentGradingStudent = null;
+
+        const rows = e.target.result.split(/\r?\n/).filter(r => r.trim());
+
+        const headers = rows[0].split(",").map(h => h.replace(/"/g,'').trim());
+
+        const subjectHeaders = headers.slice(4, headers.indexOf("Total Marks"));
+
+        // Subject auto set
+  selectedSubjects = subjectHeaders.map(h => {
+
+    // Bangla [100] → 100 বের করবে
+    let match = h.match(/\[(\d+)\]/);
+    let full = match ? Number(match[1]) : 100;
+
+    // Bangla [100] → Bangla
+    let shortName = h.replace(/\[\d+\]/, '').trim();
+
+    const found = subjectsDB.find(s => s.short === shortName);
+
+    return {
+        name: found ? found.name : shortName,
+        short: shortName,
+        full: full
+    };
+});
+
+        for(let i=1;i<rows.length;i++){
+            const cols = rows[i].split(",").map(c => c.replace(/"/g,'').trim());
+
+            const marks = cols.slice(4, 4 + subjectHeaders.length)
+                .map(m => Number(m) || 0);
+
+            let total = 0;
+            let totalGP = 0;
+            let failCount = 0;
+
+          marks.forEach((m, j) => {
+    let percent = (m / selectedSubjects[j].full) * 100;
+                let gp = getGP(percent);
+                total += m;
+                totalGP += gp;
+                if(percent < 33) failCount++;
+            });
+
+            let gpa = (totalGP / marks.length);
+            if(gpa > 5) gpa = 5;
+
+        let totalFull = 0;
+selectedSubjects.forEach(s => totalFull += s.full);
+
+let avg = ((total / totalFull) * 100).toFixed(2);
+
+            let grade = getGradeFromGP(gpa);
+
+            allStudents.push({
+              id: Number(cols[1]),
+
+                name: cols[2],
+                roll: cols[3],
+                marks: marks,
+                total: total,
+                gpa: gpa,
+                isPass: failCount===0,
+                merit: 0,
+                grade: grade,
+                failCount: failCount,
+               full: totalFull,
+
+                avg: avg,
+                tgp: totalGP.toFixed(2)
+            });
+         }
+
+        saveData();
+        calculateMeritPositions();
+        renderInputRows();
+        goToStep2UIOnly();
+        renderStudentTable();
+document.getElementById('merit-list-section').style.display = 'block';
+        // 🔒 ENTRY LOCK
+        toggleInputs(false);
+        document.getElementById('calculate-btn').disabled = true;
+
+        showToast("CSV থেকে সব ডাটা সফলভাবে লোড হয়েছে", "success");
+    };
+
+    reader.readAsText(file);
+    
+}
+  // --- INDIVIDUAL PRINT FUNCTION ---
+function printAllIndividualResults() {
+    // 1. Data Validation
+    if (typeof allStudents === 'undefined' || allStudents.length === 0) {
+        showToast('কোনো ফলাফল নেই প্রিন্ট করার জন্য', 'warn');
+        return;
+    }
+
+    // --- Helper Function: Convert English Numbers to Bengali ---
+    const toBn = (n) => {
+        if (n === undefined || n === null || n === '') return '-';
+        return n.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+    };
+    // -----------------------------------------------------------
+
+    // 2. Exam Name Input
+    let examName = prompt("পরীক্ষার নাম লিখুন (যেমন: বার্ষিক পরীক্ষা - ২০২৬):", "বার্ষিক পরীক্ষা - ২০২৬");
+    if (!examName || examName.trim() === "") return;
+    examName = examName.split('*').join('<br>'); // Allow multiline with *
+    // Convert numbers in Exam Name to Bengali automatically if user typed in English
+    examName = toBn(examName); 
+
+    // 3. Setup Variables
+    const container = document.getElementById('individual-print-container');
+    container.innerHTML = '';
+    
+    // Sort by Roll
+    let printList = [...allStudents].sort((a, b) => (Number(a.roll) || 0) - (Number(b.roll) || 0));
+    
+   let apiClass = document.getElementById('api-class').value;
+
+// যদি dropdown ফাঁকা থাকে, তাহলে প্রথম ছাত্রের class নেবে
+if(!apiClass && fetchedStudents.length > 0){
+    apiClass = fetchedStudents[0].ClassBn;
+}
+
+// যদি তাও না থাকে
+if(!apiClass) apiClass = '---';
+
+    // Convert Class name numbers if any
+    apiClass = toBn(apiClass);
+
+    let apiYear = document.getElementById('api-year').value || new Date().getFullYear();
+    const printDate = new Date().toLocaleDateString('bn-BD'); // This usually gives Bangla digits, but we can force it in template if needed.
+
+    // 4. Calculate Subject Highest Marks
+    let subjectHighest = [];
+    selectedSubjects.forEach((sub, i) => {
+        let maxMark = 0;
+        allStudents.forEach(st => {
+            if (st.marks[i] !== undefined) {
+                maxMark = Math.max(maxMark, st.marks[i]);
+            }
+        });
+        subjectHighest.push(maxMark);
+    });
+
+    // 5. CSS Styles (Beautiful Bengali Typography)
+    const cssStyles = `
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;500;600;700&display=swap');
+        
+        @media print {
+          @page { margin: 10mm; }
+            body { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                background: white; 
+            }
+        }
+
+        .print-container {
+            font-family: 'Hind Siliguri', serif;
+            width: 200mm;
+            height: 287mm;
+            padding: 0mm; 
+            margin: 0 auto;
+            background: white;
+            box-sizing: border-box;
+            page-break-after: always;
+            position: relative;
+        }
+
+        /* Border Frame Design */
+        .border-frame {
+             border: 3px double #000;
+            padding: 5px;
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        .inner-content {
+            border: 1px solid #ddd;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .inst-info h1 {
+            font-size: 36px; 
+            color: #000;
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .inst-address {
+            font-size: 15px;
+            color: #333;
+            margin: 3px 0;
+            font-weight: 500;
+        }
+
+        .exam-badge {
+            background: black;
+            color: white;
+            padding: 5px 25px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        /* Student Info - Elegant Card */
+        .student-info-card {
+            display: flex;
+            justify-content: space-between;
+           background-color: #fff;
+    border: 1px solid #000;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-column {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 48%;
+        }
+
+        .info-row {
+            display: flex;
+            border-bottom: 1px dashed #b1dfbb;
+            padding-bottom: 3px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label {
+            font-weight: 700;
+            color: #000;
+            width: 80px;
+        }
+        .info-val {
+            font-weight: bold;
+            color: #000;
+            flex-grow: 1;
+        }
+
+        /* Result Table - Font Size 14px */
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px; 
+            margin-bottom: 10px;
+        }
+        
+        .result-table th {
+            background-color: #eee;
+    color: #000;
+            padding: 4px 5px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #1a4d2e;
+        }
+        
+        .result-table td {
+            border: 1px solid #000; /* Soft Green border */
+            padding: 4px 5px;
+            text-align: center;
+            color: #000;
+          font-weight: bold;
+        }
+        
+        .result-table td:first-child {
+            text-align: left;
+            padding-left: 20px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .result-table tr:nth-child(even) {
+            background-color: #f9fff9;
+        }
+
+        /* Summary Section - Raised Up */
+        .summary-container {
+            margin-top: 10px; 
+            margin-bottom: 40px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .summary-title {
+           background-color: #eee;
+    color: #000;
+    border-bottom: 1px solid #000;
+            text-align: center;
+            font-weight: bold;
+            padding: 6px;
+            font-size: 16px;
+        }
+
+        .summary-content {
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #fdfffd;
+        }
+
+        .summary-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #d4edda;
+            border-radius: 5px;
+            padding: 5px 15px;
+            min-width: 90px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+        }
+
+        .sum-label {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 3px;
+        }
+        .sum-val {
+            font-size: 17px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Signatures */
+        .signature-area {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .sig-block {
+            text-align: center;
+            width: 160px;
+        }
+        
+        .sig-line {
+            border-top: 1px solid #333;
+            padding-top: 5px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .computer-credit {
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            left: 0;
+        }
+    </style>
+    `;
+
+    // 6. Generate Content
+    let allPages = cssStyles;
+
+    printList.forEach(std => {
+      // বাংলা নাম বের করা (API list থেকে)
+let banglaName = std.name;
+
+let apiStudent = fetchedStudents.find(s => s.ID == std.id);
+if(apiStudent && apiStudent.StudentNameBn){
+    banglaName = apiStudent.StudentNameBn;
+}
+
+        let rowsHtml = '';
+        
+        std.marks.forEach((m, i) => {
+            if(!selectedSubjects[i]) return;
+            let subObj = selectedSubjects[i];
+            let percent = (m / subObj.full) * 100;
+            let gp = getGP(percent);
+            let grade = getGradeFromGP(gp);
+            
+            // Converting numbers in table rows to Bengali
+            rowsHtml += `
+            <tr>
+                <td>${subObj.name}</td>
+                <td>${toBn(subObj.full)}</td>
+                <td>${toBn(m)}</td>
+                <td>${toBn(subjectHighest[i])}</td>
+                <td>${gp.toFixed(2)}</td>
+                <td>${grade}</td> <!-- Grade letters usually kept as English (A+, B) or user needs to specify mapping -->
+            </tr>`;
+        });
+
+        // Pass/Fail Logic Styling
+        const resultStatus = std.isPass ? 
+            `<span style="color:#155724;">উত্তীর্ণ</span>` : 
+            `<span style="color:#721c24;">অকৃতকার্য</span>`;
+
+        let pageHTML = `
+        <div class="print-container">
+            <div class="border-frame">
+                
+                <div class="inner-content">
+                    
+                    <!-- Header -->
+                    <div class="header-section">
+                        <div class="inst-info">
+                            <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
+                            <div class="inst-address">গ্রাম: মীরেরখীল, ডাকঘর: সরফভাটা, থানা: রাঙ্গুনিয়া, জেলা: চট্টগ্রাম।</div>
+                       
+                            <div class="exam-badge">${examName}</div>
+                        </div>
+                    </div>
+
+                    <!-- Student Info (Elegant Design with BN numbers) -->
+                    <div class="student-info-card">
+                        <div class="info-column">
+                            <div class="info-row">
+                                <span class="info-label">আইডি নং:</span>
+                                <span class="info-val">${toBn(std.id)}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">নাম:</span>
+                                <span class="info-val">${banglaName}</span>
+                            </div>
+                        </div>
+                        <div class="info-column">
+                            <div class="info-row">
+                                <span class="info-label">শ্রেণি:</span>
+                                <span class="info-val">${apiClass}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">রোল নং:</span>
+                                <span class="info-val">${toBn(std.roll)}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marks Table (Font 14px) -->
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th width="35%">বিষয়ের নাম</th>
+                                <th width="12%">পূর্ণমান</th>
+                                <th width="15%">প্রাপ্ত নম্বর</th>
+                                <th width="15%">সর্বোচ্চ</th>
+                                <th width="10%">জিপি</th>
+                                <th width="13%">গ্রেড</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+
+                    <!-- Summary Section (Raised Up, BN Numbers) -->
+                    <div class="summary-container">
+                        <div class="summary-title">চূড়ান্ত ফলাফল বিবরণী</div>
+                        <div class="summary-content">
+                            <div class="summary-badge">
+                                <span class="sum-label">মোট নম্বর</span>
+                                <span class="sum-val">${toBn(std.total)}</span>
+                            </div>
+                            <div class="summary-badge">
+                                <span class="sum-label">জিপিএ</span>
+                                <span class="sum-val">${std.gpa.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-badge">
+                                <span class="sum-label">গ্রেড</span>
+                                <span class="sum-val">${std.grade}</span>
+                            </div>
+                            <div class="summary-badge">
+                                <span class="sum-label">মেধা স্থান</span>
+                                <span class="sum-val">${toBn(std.merit)}</span>
+                            </div>
+                            <div class="summary-badge">
+                                <span class="sum-label">ফলাফল</span>
+                                <span class="sum-val">${resultStatus}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Signatures -->
+                    <div class="signature-area">
+                        <div class="sig-block">
+                            <div class="sig-line">অভিভাবক</div>
+                        </div>
+                        <div class="sig-block">
+                            <div class="sig-line">শ্রেণি শিক্ষক</div>
+                        </div>
+                        <div class="sig-block">
+                            <div class="sig-line">সুপারিনটেনডেন্ট</div>
+                        </div>
+                    </div>
+
+                    <div class="computer-credit">
+                        ইস্যু তারিখ: ${toBn(printDate)} | ফলাফল প্রস্তুতকারক: রেজাল্ট ম্যানেজমেন্ট সিস্টেম
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        allPages += pageHTML;
+    });
+
+    // 7. Inject and Print
+    container.innerHTML = allPages;
+    document.body.classList.add('print-mode-individual');
+    
+    // Allow images to load before print dialog
+    setTimeout(() => {
+        window.print();
+        setTimeout(() => {
+            document.body.classList.remove('print-mode-individual');
+        }, 500);
+    }, 500);
+}
+// Make entire subject card clickable (without breaking checkbox/label clicks)
   document.addEventListener('click', function(e){
     const card = e.target.closest('.sub-card');
     if(!card) return;
@@ -1340,6 +2251,36 @@
     try{ first.focus(); }catch(e){}
     try{ first.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){ first.scrollIntoView(); }
   }
+  function printResultList() {
+
+    if(allStudents.length === 0){
+        showToast('প্রিন্ট করার জন্য কোনো রেজাল্ট নেই', 'warn');
+        return;
+    }
+
+    let examName = prompt("পরীক্ষার নাম লিখুন (যেমন: বার্ষিক পরীক্ষা - ২০২৬):", "বার্ষিক পরীক্ষা - ২০২৬");
+    if(!examName || examName.trim() === "") return;
+
+    examName = examName.split('*').join('<br>');
+
+    const head = document.querySelector('.print-head');
+    head.style.display = 'block';
+
+    head.innerHTML = `
+        <h1>আবদুর রাজ্জাক দাখিল মাদ্রাসা</h1>
+        <h2>${examName}</h2>
+        <p>চূড়ান্ত ফলাফল তালিকা</p>
+    `;
+
+    window.print();
+
+    // 👉 প্রিন্ট শেষ হলে আবার hide
+    setTimeout(() => {
+        head.style.display = 'none';
+    }, 100);
+}
+
+
 </script>
 </body>
-  </html>
+</html>
